@@ -675,14 +675,14 @@
                     </Grid>
                 </TabItem>
                 <TabItem Header="Изменение">
-                    <Grid Background="#FFE5E5E5">
+                    <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="120*"/>
                             <ColumnDefinition Width="419*"/>
                         </Grid.ColumnDefinitions>
                         <TabControl Grid.ColumnSpan="2">
                             <TabItem Header="Факультет">
-                                <Grid Background="#FFE5E5E5">
+                                <Grid x:Name="gChangeFaculty" Background="#FFE5E5E5">
                                     <TextBox x:Name="tbChangeFacultyName" HorizontalAlignment="Left" Margin="10,37,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="186" Height="30" FontSize="20" BorderBrush="Black">
                                         <TextBox.Resources>
                                             <Style TargetType="{x:Type Border}">
@@ -718,7 +718,7 @@
                                 </Grid>
                             </TabItem>
                             <TabItem Header="Кафедра">
-                                <Grid Background="#FFE5E5E5">
+                                <Grid x:Name="gChangeChair" Background="#FFE5E5E5">
                                     <TextBox x:Name="tbChangeChairName" HorizontalAlignment="Left" Margin="10,37,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="186" Height="30" FontSize="20" BorderBrush="Black">
                                         <TextBox.Resources>
                                             <Style TargetType="{x:Type Border}">
@@ -734,15 +734,17 @@
                                             </Style>
                                         </TextBox.Resources>
                                     </TextBox>
-                                    <Label Content="Наименование факультета" HorizontalAlignment="Left" Margin="210,0,0,0" VerticalAlignment="Top" FontSize="20"/>
-                                    <Button x:Name="butChangeChair" Content="Изменить" Margin="0,0,10,10" FontSize="20" HorizontalAlignment="Right" Width="101" VerticalAlignment="Bottom">
-                                        <Button.Resources>
-                                            <Style TargetType="{x:Type Border}">
-                                                <Setter Property="CornerRadius" Value="5"/>
-                                            </Style>
-                                        </Button.Resources>
-                                    </Button>
-                                    <Button x:Name="butClearChangeChair" Content="Очистить" Margin="0,0,130,10" FontSize="20" HorizontalAlignment="Right" Width="101" VerticalAlignment="Bottom">
+                                    <Grid x:Name="gChangeChairOther">
+                                        <Label Content="Наименование факультета" HorizontalAlignment="Left" Margin="210,0,0,0" VerticalAlignment="Top" FontSize="20"/>
+                                        <Button x:Name="butChangeChair" Content="Изменить" Margin="0,0,10,10" FontSize="20" HorizontalAlignment="Right" Width="101" VerticalAlignment="Bottom" Click="butChangeChair_Click">
+                                            <Button.Resources>
+                                                <Style TargetType="{x:Type Border}">
+                                                    <Setter Property="CornerRadius" Value="5"/>
+                                                </Style>
+                                            </Button.Resources>
+                                        </Button>
+                                    </Grid>
+                                    <Button x:Name="butClearChangeChair" Content="Очистить" Margin="0,0,130,10" FontSize="20" HorizontalAlignment="Right" Width="101" VerticalAlignment="Bottom" Click="butClearChangeChair_Click">
                                         <Button.Resources>
                                             <Style TargetType="{x:Type Border}">
                                                 <Setter Property="CornerRadius" Value="5"/>
@@ -752,7 +754,7 @@
                                 </Grid>
                             </TabItem>
                             <TabItem Header="Направление">
-                                <Grid Background="#FFE5E5E5">
+                                <Grid x:Name="gChangeSpeciality" Background="#FFE5E5E5">
                                     <TextBox x:Name="tbChangeSpecialityName" HorizontalAlignment="Left" Margin="10,37,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="186" Height="30" FontSize="20" BorderBrush="Black">
                                         <TextBox.Resources>
                                             <Style TargetType="{x:Type Border}">
@@ -761,22 +763,24 @@
                                         </TextBox.Resources>
                                     </TextBox>
                                     <Label Content="Наименование" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Top" FontSize="20"/>
-                                    <TextBox x:Name="tbChangeSpecialityFacultyName" HorizontalAlignment="Left" Margin="210,37,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="186" Height="30" FontSize="20" BorderBrush="Black">
-                                        <TextBox.Resources>
-                                            <Style TargetType="{x:Type Border}">
-                                                <Setter Property="CornerRadius" Value="5"/>
-                                            </Style>
-                                        </TextBox.Resources>
-                                    </TextBox>
-                                    <Label Content="Наименование факультета" HorizontalAlignment="Left" Margin="210,0,0,0" VerticalAlignment="Top" FontSize="20"/>
-                                    <Button x:Name="butChangeSpeciality" Content="Изменить" Margin="0,0,10,10" FontSize="20" HorizontalAlignment="Right" Width="101" VerticalAlignment="Bottom">
+                                    <Grid x:Name="gChangeSpecialityOther">
+                                        <TextBox x:Name="tbChangeSpecialityFacultyName" HorizontalAlignment="Left" Margin="210,37,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="186" Height="30" FontSize="20" BorderBrush="Black">
+                                            <TextBox.Resources>
+                                                <Style TargetType="{x:Type Border}">
+                                                    <Setter Property="CornerRadius" Value="5"/>
+                                                </Style>
+                                            </TextBox.Resources>
+                                        </TextBox>
+                                        <Label Content="Наименование факультета" HorizontalAlignment="Left" Margin="210,0,0,0" VerticalAlignment="Top" FontSize="20"/>
+                                    </Grid>
+                                    <Button x:Name="butChangeSpeciality" Content="Изменить" Margin="0,0,10,10" FontSize="20" HorizontalAlignment="Right" Width="101" VerticalAlignment="Bottom" Click="butChangeSpeciality_Click">
                                         <Button.Resources>
                                             <Style TargetType="{x:Type Border}">
                                                 <Setter Property="CornerRadius" Value="5"/>
                                             </Style>
                                         </Button.Resources>
                                     </Button>
-                                    <Button x:Name="butClearChangeSpeciality" Content="Очистить" Margin="0,0,130,10" FontSize="20" HorizontalAlignment="Right" Width="101" VerticalAlignment="Bottom">
+                                    <Button x:Name="butClearChangeSpeciality" Content="Очистить" Margin="0,0,130,10" FontSize="20" HorizontalAlignment="Right" Width="101" VerticalAlignment="Bottom" Click="butClearChangeSpeciality_Click">
                                         <Button.Resources>
                                             <Style TargetType="{x:Type Border}">
                                                 <Setter Property="CornerRadius" Value="5"/>
@@ -786,7 +790,7 @@
                                 </Grid>
                             </TabItem>
                             <TabItem Header="Дисциплина">
-                                <Grid Background="#FFE5E5E5">
+                                <Grid x:Name="gChangeDiscipline" Background="#FFE5E5E5">
                                     <TextBox x:Name="tbChangeDisciplineName" HorizontalAlignment="Left" Margin="10,37,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="186" Height="30" FontSize="20" BorderBrush="Black">
                                         <TextBox.Resources>
                                             <Style TargetType="{x:Type Border}">
@@ -795,22 +799,24 @@
                                         </TextBox.Resources>
                                     </TextBox>
                                     <Label Content="Наименование" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Top" FontSize="20"/>
-                                    <TextBox x:Name="tbChangeDisciplineChairName" HorizontalAlignment="Left" Margin="210,37,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="186" Height="30" FontSize="20" BorderBrush="Black">
-                                        <TextBox.Resources>
-                                            <Style TargetType="{x:Type Border}">
-                                                <Setter Property="CornerRadius" Value="5"/>
-                                            </Style>
-                                        </TextBox.Resources>
-                                    </TextBox>
-                                    <Label Content="Наименование кафедры" HorizontalAlignment="Left" Margin="210,0,0,0" VerticalAlignment="Top" FontSize="20"/>
-                                    <Button x:Name="butChangeDiscipline" Content="Изменить" Margin="0,0,10,10" FontSize="20" HorizontalAlignment="Right" Width="101" VerticalAlignment="Bottom">
+                                    <Grid x:Name="gChangeDisciplineOther">
+                                        <TextBox x:Name="tbChangeDisciplineChairName" HorizontalAlignment="Left" Margin="210,37,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="186" Height="30" FontSize="20" BorderBrush="Black">
+                                            <TextBox.Resources>
+                                                <Style TargetType="{x:Type Border}">
+                                                    <Setter Property="CornerRadius" Value="5"/>
+                                                </Style>
+                                            </TextBox.Resources>
+                                        </TextBox>
+                                        <Label Content="Наименование кафедры" HorizontalAlignment="Left" Margin="210,0,0,0" VerticalAlignment="Top" FontSize="20"/>
+                                    </Grid>
+                                    <Button x:Name="butChangeDiscipline" Content="Изменить" Margin="0,0,10,10" FontSize="20" HorizontalAlignment="Right" Width="101" VerticalAlignment="Bottom" Click="butChangeDiscipline_Click">
                                         <Button.Resources>
                                             <Style TargetType="{x:Type Border}">
                                                 <Setter Property="CornerRadius" Value="5"/>
                                             </Style>
                                         </Button.Resources>
                                     </Button>
-                                    <Button x:Name="butClearChangeDiscipline" Content="Очистить" Margin="0,0,130,10" FontSize="20" HorizontalAlignment="Right" Width="101" VerticalAlignment="Bottom">
+                                    <Button x:Name="butClearChangeDiscipline" Content="Очистить" Margin="0,0,130,10" FontSize="20" HorizontalAlignment="Right" Width="101" VerticalAlignment="Bottom" Click="butClearChangeDiscipline_Click">
                                         <Button.Resources>
                                             <Style TargetType="{x:Type Border}">
                                                 <Setter Property="CornerRadius" Value="5"/>
@@ -820,7 +826,7 @@
                                 </Grid>
                             </TabItem>
                             <TabItem x:Name="butClearChangeEmployee" Header="Сотрудник">
-                                <Grid Background="#FFE5E5E5">
+                                <Grid x:Name="gChangeEmployee" Background="#FFE5E5E5">
                                     <TextBox x:Name="tbChangeEmployeeId" HorizontalAlignment="Left" Margin="10,37,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="140" Height="30" FontSize="20" BorderBrush="Black">
                                         <TextBox.Resources>
                                             <Style TargetType="{x:Type Border}">
@@ -829,126 +835,130 @@
                                         </TextBox.Resources>
                                     </TextBox>
                                     <Label Content="Код" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Top" FontSize="20"/>
-                                    <Label Content="Фамилия" HorizontalAlignment="Left" Margin="10,74,0,0" VerticalAlignment="Top" FontSize="20"/>
-                                    <TextBox x:Name="tbChangeEmployeeName" Margin="190,111,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="30" FontSize="20" BorderBrush="Black" HorizontalAlignment="Left" Width="160">
-                                        <TextBox.Resources>
-                                            <Style TargetType="{x:Type Border}">
-                                                <Setter Property="CornerRadius" Value="5"/>
-                                            </Style>
-                                        </TextBox.Resources>
-                                    </TextBox>
-                                    <Label Content="Имя" HorizontalAlignment="Left" Margin="190,74,0,0" VerticalAlignment="Top" FontSize="20"/>
-                                    <TextBox x:Name="tbChangeEmployeePatronymic" Margin="370,111,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="30" FontSize="20" BorderBrush="Black" HorizontalAlignment="Left" Width="160">
-                                        <TextBox.Resources>
-                                            <Style TargetType="{x:Type Border}">
-                                                <Setter Property="CornerRadius" Value="5"/>
-                                            </Style>
-                                        </TextBox.Resources>
-                                    </TextBox>
-                                    <Label Content="Отчество" HorizontalAlignment="Left" Margin="370,74,0,0" VerticalAlignment="Top" FontSize="20"/>
-                                    <TextBox x:Name="tbChangeEmployeeINN" Margin="550,111,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="30" FontSize="20" BorderBrush="Black" HorizontalAlignment="Left" Width="160">
-                                        <TextBox.Resources>
-                                            <Style TargetType="{x:Type Border}">
-                                                <Setter Property="CornerRadius" Value="5"/>
-                                            </Style>
-                                        </TextBox.Resources>
-                                    </TextBox>
-                                    <Label Content="ИНН" HorizontalAlignment="Left" Margin="550,74,0,0" VerticalAlignment="Top" FontSize="20"/>
-                                    <TextBox x:Name="tbChangeEmployeePhoneNumber" Margin="730,111,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="30" FontSize="20" BorderBrush="Black" HorizontalAlignment="Left" Width="170">
-                                        <TextBox.Resources>
-                                            <Style TargetType="{x:Type Border}">
-                                                <Setter Property="CornerRadius" Value="5"/>
-                                            </Style>
-                                        </TextBox.Resources>
-                                    </TextBox>
-                                    <Label Content="Номер телефона" HorizontalAlignment="Left" Margin="730,74,0,0" VerticalAlignment="Top" FontSize="20"/>
-                                    <TextBox x:Name="tbChangeEmployeeEmail" Margin="920,111,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="30" FontSize="20" BorderBrush="Black" HorizontalAlignment="Left" Width="167">
-                                        <TextBox.Resources>
-                                            <Style TargetType="{x:Type Border}">
-                                                <Setter Property="CornerRadius" Value="5"/>
-                                            </Style>
-                                        </TextBox.Resources>
-                                    </TextBox>
-                                    <Label Content="Email" HorizontalAlignment="Left" Margin="920,74,0,0" VerticalAlignment="Top" FontSize="20"/>
-                                    <TextBox x:Name="tbChangeEmployeeSurname" Margin="10,111,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="30" FontSize="20" BorderBrush="Black" HorizontalAlignment="Left" Width="160">
-                                        <TextBox.Resources>
-                                            <Style TargetType="{x:Type Border}">
-                                                <Setter Property="CornerRadius" Value="5"/>
-                                            </Style>
-                                        </TextBox.Resources>
-                                    </TextBox>
-                                    <TextBox x:Name="tbChangeEmployeePost" Margin="10,183,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="30" FontSize="20" BorderBrush="Black" HorizontalAlignment="Left" Width="160">
-                                        <TextBox.Resources>
-                                            <Style TargetType="{x:Type Border}">
-                                                <Setter Property="CornerRadius" Value="5"/>
-                                            </Style>
-                                        </TextBox.Resources>
-                                    </TextBox>
-                                    <Label Content="Должность" HorizontalAlignment="Left" Margin="10,146,0,0" VerticalAlignment="Top" FontSize="20"/>
-                                    <TextBox x:Name="tbChangeEmployeeSalary" Margin="190,183,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="30" FontSize="20" BorderBrush="Black" HorizontalAlignment="Left" Width="160">
-                                        <TextBox.Resources>
-                                            <Style TargetType="{x:Type Border}">
-                                                <Setter Property="CornerRadius" Value="5"/>
-                                            </Style>
-                                        </TextBox.Resources>
-                                    </TextBox>
-                                    <Label Content="Заработная плата" HorizontalAlignment="Left" Margin="190,146,0,0" VerticalAlignment="Top" FontSize="20"/>
-                                    <TextBox x:Name="tbChangeEmployeeDepartmentName" Margin="370,183,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="30" FontSize="20" BorderBrush="Black" HorizontalAlignment="Left" Width="160">
-                                        <TextBox.Resources>
-                                            <Style TargetType="{x:Type Border}">
-                                                <Setter Property="CornerRadius" Value="5"/>
-                                            </Style>
-                                        </TextBox.Resources>
-                                    </TextBox>
-                                    <Label Content="Наименование отдела" HorizontalAlignment="Left" Margin="370,146,0,0" VerticalAlignment="Top" FontSize="20"/>
-                                    <TextBox x:Name="tbChangeEmployeePassportSeries" Margin="10,255,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="30" FontSize="20" BorderBrush="Black" HorizontalAlignment="Left" Width="160">
-                                        <TextBox.Resources>
-                                            <Style TargetType="{x:Type Border}">
-                                                <Setter Property="CornerRadius" Value="5"/>
-                                            </Style>
-                                        </TextBox.Resources>
-                                    </TextBox>
-                                    <Label Content="Серия паспорта" HorizontalAlignment="Left" Margin="10,218,0,0" VerticalAlignment="Top" FontSize="20"/>
-                                    <TextBox x:Name="tbChangeEmployeePassportNumber" Margin="190,255,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="30" FontSize="20" BorderBrush="Black" HorizontalAlignment="Left" Width="160">
-                                        <TextBox.Resources>
-                                            <Style TargetType="{x:Type Border}">
-                                                <Setter Property="CornerRadius" Value="5"/>
-                                            </Style>
-                                        </TextBox.Resources>
-                                    </TextBox>
-                                    <Label Content="Номер паспорта" HorizontalAlignment="Left" Margin="190,218,0,0" VerticalAlignment="Top" FontSize="20"/>
-                                    <DatePicker x:Name="dpChangeEmployeePassportIssueDate" HorizontalAlignment="Left" Margin="370,255,0,0" VerticalAlignment="Top" Height="30" Width="160" FontSize="17" BorderBrush="Black">
-                                        <DatePicker.Resources>
-                                            <Style TargetType="{x:Type Border}">
-                                                <Setter Property="CornerRadius" Value="5"/>
-                                            </Style>
-                                        </DatePicker.Resources>
-                                    </DatePicker>
-                                    <Label Content="Дата выдачи" HorizontalAlignment="Left" Margin="370,218,0,0" VerticalAlignment="Top" FontSize="20"/>
-                                    <DatePicker x:Name="dpChangeEmployeePassportExpiryDate" HorizontalAlignment="Left" Margin="550,255,0,0" VerticalAlignment="Top" Height="30" Width="160" FontSize="17" BorderBrush="Black">
-                                        <DatePicker.Resources>
-                                            <Style TargetType="{x:Type Border}">
-                                                <Setter Property="CornerRadius" Value="5"/>
-                                            </Style>
-                                        </DatePicker.Resources>
-                                    </DatePicker>
-                                    <Label Content="Срок действия" HorizontalAlignment="Left" Margin="550,218,0,0" VerticalAlignment="Top" FontSize="20"/>
-                                    <TextBox x:Name="tbChangeEmployeePassportIssuingAuthority" Margin="730,255,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="30" FontSize="20" BorderBrush="Black" HorizontalAlignment="Left" Width="357">
-                                        <TextBox.Resources>
-                                            <Style TargetType="{x:Type Border}">
-                                                <Setter Property="CornerRadius" Value="5"/>
-                                            </Style>
-                                        </TextBox.Resources>
-                                    </TextBox>
-                                    <Label Content="Орган, выдавший паспорт" HorizontalAlignment="Left" Margin="730,218,0,0" VerticalAlignment="Top" FontSize="20"/>
-                                    <Button x:Name="butChangeEmployee" Content="Изменить" Margin="0,0,10,10" FontSize="20" HorizontalAlignment="Right" Width="101" VerticalAlignment="Bottom">
+                                    <Grid x:Name="gChangeEmployeeOther">
+                                        <Label Content="Фамилия" HorizontalAlignment="Left" Margin="10,74,0,0" VerticalAlignment="Top" FontSize="20"/>
+                                        <TextBox x:Name="tbChangeEmployeeName" Margin="190,110,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="30" FontSize="20" BorderBrush="Black" HorizontalAlignment="Left" Width="160">
+                                            <TextBox.Resources>
+                                                <Style TargetType="{x:Type Border}">
+                                                    <Setter Property="CornerRadius" Value="5"/>
+                                                </Style>
+                                            </TextBox.Resources>
+                                        </TextBox>
+                                        <Label Content="Имя" HorizontalAlignment="Left" Margin="190,74,0,0" VerticalAlignment="Top" FontSize="20"/>
+                                        <TextBox x:Name="tbChangeEmployeePatronymic" Margin="370,110,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="30" FontSize="20" BorderBrush="Black" HorizontalAlignment="Left" Width="160">
+                                            <TextBox.Resources>
+                                                <Style TargetType="{x:Type Border}">
+                                                    <Setter Property="CornerRadius" Value="5"/>
+                                                </Style>
+                                            </TextBox.Resources>
+                                        </TextBox>
+                                        <Label Content="Отчество" HorizontalAlignment="Left" Margin="370,74,0,0" VerticalAlignment="Top" FontSize="20"/>
+                                        <TextBox x:Name="tbChangeEmployeeINN" Margin="550,110,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="30" FontSize="20" BorderBrush="Black" HorizontalAlignment="Left" Width="160">
+                                            <TextBox.Resources>
+                                                <Style TargetType="{x:Type Border}">
+                                                    <Setter Property="CornerRadius" Value="5"/>
+                                                </Style>
+                                            </TextBox.Resources>
+                                        </TextBox>
+                                        <Label Content="ИНН" HorizontalAlignment="Left" Margin="550,74,0,0" VerticalAlignment="Top" FontSize="20"/>
+                                        <TextBox x:Name="tbChangeEmployeePhoneNumber" Margin="730,110,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="30" FontSize="20" BorderBrush="Black" HorizontalAlignment="Left" Width="170">
+                                            <TextBox.Resources>
+                                                <Style TargetType="{x:Type Border}">
+                                                    <Setter Property="CornerRadius" Value="5"/>
+                                                </Style>
+                                            </TextBox.Resources>
+                                        </TextBox>
+                                        <Label Content="Номер телефона" HorizontalAlignment="Left" Margin="730,74,0,0" VerticalAlignment="Top" FontSize="20"/>
+                                        <TextBox x:Name="tbChangeEmployeeEmail" Margin="920,110,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="30" FontSize="20" BorderBrush="Black" HorizontalAlignment="Left" Width="167">
+                                            <TextBox.Resources>
+                                                <Style TargetType="{x:Type Border}">
+                                                    <Setter Property="CornerRadius" Value="5"/>
+                                                </Style>
+                                            </TextBox.Resources>
+                                        </TextBox>
+                                        <Label Content="Email" HorizontalAlignment="Left" Margin="920,74,0,0" VerticalAlignment="Top" FontSize="20"/>
+                                        <TextBox x:Name="tbChangeEmployeeSurname" Margin="10,111,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="30" FontSize="20" BorderBrush="Black" HorizontalAlignment="Left" Width="160">
+                                            <TextBox.Resources>
+                                                <Style TargetType="{x:Type Border}">
+                                                    <Setter Property="CornerRadius" Value="5"/>
+                                                </Style>
+                                            </TextBox.Resources>
+                                        </TextBox>
+                                        <TextBox x:Name="tbChangeEmployeePost" Margin="10,183,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="30" FontSize="20" BorderBrush="Black" HorizontalAlignment="Left" Width="160">
+                                            <TextBox.Resources>
+                                                <Style TargetType="{x:Type Border}">
+                                                    <Setter Property="CornerRadius" Value="5"/>
+                                                </Style>
+                                            </TextBox.Resources>
+                                        </TextBox>
+                                        <Label Content="Должность" HorizontalAlignment="Left" Margin="10,146,0,0" VerticalAlignment="Top" FontSize="20"/>
+                                        <TextBox x:Name="tbChangeEmployeeSalary" Margin="190,183,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="30" FontSize="20" BorderBrush="Black" HorizontalAlignment="Left" Width="160">
+                                            <TextBox.Resources>
+                                                <Style TargetType="{x:Type Border}">
+                                                    <Setter Property="CornerRadius" Value="5"/>
+                                                </Style>
+                                            </TextBox.Resources>
+                                        </TextBox>
+                                        <Label Content="Заработная плата" HorizontalAlignment="Left" Margin="190,146,0,0" VerticalAlignment="Top" FontSize="20"/>
+                                        <TextBox x:Name="tbChangeEmployeeDepartmentName" Margin="370,183,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="30" FontSize="20" BorderBrush="Black" HorizontalAlignment="Left" Width="160">
+                                            <TextBox.Resources>
+                                                <Style TargetType="{x:Type Border}">
+                                                    <Setter Property="CornerRadius" Value="5"/>
+                                                </Style>
+                                            </TextBox.Resources>
+                                        </TextBox>
+                                        <Label Content="Наименование отдела" HorizontalAlignment="Left" Margin="370,146,0,0" VerticalAlignment="Top" FontSize="20"/>
+                                    </Grid>
+                                    <Grid x:Name="gChangeEmployeePassport">
+                                        <TextBox x:Name="tbChangeEmployeePassportSeries" Margin="10,255,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="30" FontSize="20" BorderBrush="Black" HorizontalAlignment="Left" Width="160">
+                                            <TextBox.Resources>
+                                                <Style TargetType="{x:Type Border}">
+                                                    <Setter Property="CornerRadius" Value="5"/>
+                                                </Style>
+                                            </TextBox.Resources>
+                                        </TextBox>
+                                        <Label Content="Серия паспорта" HorizontalAlignment="Left" Margin="10,218,0,0" VerticalAlignment="Top" FontSize="20"/>
+                                        <TextBox x:Name="tbChangeEmployeePassportNumber" Margin="190,255,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="30" FontSize="20" BorderBrush="Black" HorizontalAlignment="Left" Width="160">
+                                            <TextBox.Resources>
+                                                <Style TargetType="{x:Type Border}">
+                                                    <Setter Property="CornerRadius" Value="5"/>
+                                                </Style>
+                                            </TextBox.Resources>
+                                        </TextBox>
+                                        <Label Content="Номер паспорта" HorizontalAlignment="Left" Margin="190,218,0,0" VerticalAlignment="Top" FontSize="20"/>
+                                        <DatePicker x:Name="dpChangeEmployeePassportIssueDate" HorizontalAlignment="Left" Margin="370,255,0,0" VerticalAlignment="Top" Height="30" Width="160" FontSize="17" BorderBrush="Black">
+                                            <DatePicker.Resources>
+                                                <Style TargetType="{x:Type Border}">
+                                                    <Setter Property="CornerRadius" Value="5"/>
+                                                </Style>
+                                            </DatePicker.Resources>
+                                        </DatePicker>
+                                        <Label Content="Дата выдачи" HorizontalAlignment="Left" Margin="370,218,0,0" VerticalAlignment="Top" FontSize="20"/>
+                                        <DatePicker x:Name="dpChangeEmployeePassportExpiryDate" HorizontalAlignment="Left" Margin="550,255,0,0" VerticalAlignment="Top" Height="30" Width="160" FontSize="17" BorderBrush="Black">
+                                            <DatePicker.Resources>
+                                                <Style TargetType="{x:Type Border}">
+                                                    <Setter Property="CornerRadius" Value="5"/>
+                                                </Style>
+                                            </DatePicker.Resources>
+                                        </DatePicker>
+                                        <Label Content="Срок действия" HorizontalAlignment="Left" Margin="550,218,0,0" VerticalAlignment="Top" FontSize="20"/>
+                                        <TextBox x:Name="tbChangeEmployeePassportIssuingAuthority" Margin="730,255,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="30" FontSize="20" BorderBrush="Black" HorizontalAlignment="Left" Width="357">
+                                            <TextBox.Resources>
+                                                <Style TargetType="{x:Type Border}">
+                                                    <Setter Property="CornerRadius" Value="5"/>
+                                                </Style>
+                                            </TextBox.Resources>
+                                        </TextBox>
+                                        <Label Content="Орган, выдавший паспорт" HorizontalAlignment="Left" Margin="730,218,0,0" VerticalAlignment="Top" FontSize="20"/>
+                                    </Grid>
+                                    <Button x:Name="butChangeEmployee" Content="Изменить" Margin="0,0,10,10" FontSize="20" HorizontalAlignment="Right" Width="101" VerticalAlignment="Bottom" Click="butChangeEmployee_Click">
                                         <Button.Resources>
                                             <Style TargetType="{x:Type Border}">
                                                 <Setter Property="CornerRadius" Value="5"/>
                                             </Style>
                                         </Button.Resources>
                                     </Button>
-                                    <Button x:Name="butClearChangeEmployee1" Content="Очистить" Margin="0,0,130,10" FontSize="20" HorizontalAlignment="Right" Width="101" VerticalAlignment="Bottom">
+                                    <Button x:Name="butClearChangeEmployee1" Content="Очистить" Margin="0,0,130,10" FontSize="20" HorizontalAlignment="Right" Width="101" VerticalAlignment="Bottom" Click="butClearChangeEmployee1_Click">
                                         <Button.Resources>
                                             <Style TargetType="{x:Type Border}">
                                                 <Setter Property="CornerRadius" Value="5"/>
@@ -958,7 +968,7 @@
                                 </Grid>
                             </TabItem>
                             <TabItem Header="Преподаватель">
-                                <Grid Background="#FFE5E5E5">
+                                <Grid x:Name="gChangeTeacher" Background="#FFE5E5E5">
                                     <Label Content="Код сотрудника" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Top" FontSize="20"/>
                                     <TextBox x:Name="tbChangeTeacherEmployeeId" Margin="10,37,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="30" FontSize="20" BorderBrush="Black" HorizontalAlignment="Left" Width="160">
                                         <TextBox.Resources>
@@ -967,30 +977,32 @@
                                             </Style>
                                         </TextBox.Resources>
                                     </TextBox>
-                                    <Label Content="Наименование кафедры" HorizontalAlignment="Left" Margin="190,0,0,0" VerticalAlignment="Top" FontSize="20"/>
-                                    <TextBox x:Name="tbChangeTeacherChairName" Margin="190,37,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="30" FontSize="20" BorderBrush="Black" HorizontalAlignment="Left" Width="160">
-                                        <TextBox.Resources>
-                                            <Style TargetType="{x:Type Border}">
-                                                <Setter Property="CornerRadius" Value="5"/>
-                                            </Style>
-                                        </TextBox.Resources>
-                                    </TextBox>
-                                    <Label Content="Ученое звание" HorizontalAlignment="Left" Margin="442,0,0,0" VerticalAlignment="Top" FontSize="20"/>
-                                    <TextBox x:Name="tbChangeTeacherAcademicRank" Margin="442,37,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="30" FontSize="20" BorderBrush="Black" HorizontalAlignment="Left" Width="160">
-                                        <TextBox.Resources>
-                                            <Style TargetType="{x:Type Border}">
-                                                <Setter Property="CornerRadius" Value="5"/>
-                                            </Style>
-                                        </TextBox.Resources>
-                                    </TextBox>
-                                    <Button x:Name="butChangeTeacher" Content="Изменить" Margin="0,0,10,10" FontSize="20" HorizontalAlignment="Right" Width="101" VerticalAlignment="Bottom">
+                                    <Grid x:Name="gChangeTeacherOther">
+                                        <Label Content="Наименование кафедры" HorizontalAlignment="Left" Margin="190,0,0,0" VerticalAlignment="Top" FontSize="20"/>
+                                        <TextBox x:Name="tbChangeTeacherChairName" Margin="190,37,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="30" FontSize="20" BorderBrush="Black" HorizontalAlignment="Left" Width="160">
+                                            <TextBox.Resources>
+                                                <Style TargetType="{x:Type Border}">
+                                                    <Setter Property="CornerRadius" Value="5"/>
+                                                </Style>
+                                            </TextBox.Resources>
+                                        </TextBox>
+                                        <Label Content="Ученое звание" HorizontalAlignment="Left" Margin="442,0,0,0" VerticalAlignment="Top" FontSize="20"/>
+                                        <TextBox x:Name="tbChangeTeacherAcademicRank" Margin="442,37,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="30" FontSize="20" BorderBrush="Black" HorizontalAlignment="Left" Width="160">
+                                            <TextBox.Resources>
+                                                <Style TargetType="{x:Type Border}">
+                                                    <Setter Property="CornerRadius" Value="5"/>
+                                                </Style>
+                                            </TextBox.Resources>
+                                        </TextBox>
+                                    </Grid>
+                                    <Button x:Name="butChangeTeacher" Content="Изменить" Margin="0,0,10,10" FontSize="20" HorizontalAlignment="Right" Width="101" VerticalAlignment="Bottom" Click="butChangeTeacher_Click">
                                         <Button.Resources>
                                             <Style TargetType="{x:Type Border}">
                                                 <Setter Property="CornerRadius" Value="5"/>
                                             </Style>
                                         </Button.Resources>
                                     </Button>
-                                    <Button x:Name="butClearChangeTeacher" Content="Очистить" Margin="0,0,130,10" FontSize="20" HorizontalAlignment="Right" Width="101" VerticalAlignment="Bottom">
+                                    <Button x:Name="butClearChangeTeacher" Content="Очистить" Margin="0,0,130,10" FontSize="20" HorizontalAlignment="Right" Width="101" VerticalAlignment="Bottom" Click="butClearChangeTeacher_Click">
                                         <Button.Resources>
                                             <Style TargetType="{x:Type Border}">
                                                 <Setter Property="CornerRadius" Value="5"/>
@@ -1000,7 +1012,7 @@
                                 </Grid>
                             </TabItem>
                             <TabItem Header="Группа">
-                                <Grid Background="#FFE5E5E5">
+                                <Grid x:Name="gChangeGroup" Background="#FFE5E5E5">
                                     <Label Content="Наименование" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Top" FontSize="20"/>
                                     <TextBox x:Name="tbChangeGroupName" Margin="10,37,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="30" FontSize="20" BorderBrush="Black" HorizontalAlignment="Left" Width="160">
                                         <TextBox.Resources>
@@ -1009,22 +1021,24 @@
                                             </Style>
                                         </TextBox.Resources>
                                     </TextBox>
-                                    <Label Content="Наименование факультета" HorizontalAlignment="Left" Margin="190,0,0,0" VerticalAlignment="Top" FontSize="20"/>
-                                    <TextBox x:Name="tbChangeGroupFacultyName" Margin="190,37,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="30" FontSize="20" BorderBrush="Black" HorizontalAlignment="Left" Width="160">
-                                        <TextBox.Resources>
-                                            <Style TargetType="{x:Type Border}">
-                                                <Setter Property="CornerRadius" Value="5"/>
-                                            </Style>
-                                        </TextBox.Resources>
-                                    </TextBox>
-                                    <Button x:Name="butChangeGroup" Content="Изменить" Margin="0,0,10,10" FontSize="20" HorizontalAlignment="Right" Width="101" VerticalAlignment="Bottom">
+                                    <Grid x:Name="gChangeGroupOther">
+                                        <Label Content="Наименование факультета" HorizontalAlignment="Left" Margin="190,0,0,0" VerticalAlignment="Top" FontSize="20"/>
+                                        <TextBox x:Name="tbChangeGroupFacultyName" Margin="190,37,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="30" FontSize="20" BorderBrush="Black" HorizontalAlignment="Left" Width="160">
+                                            <TextBox.Resources>
+                                                <Style TargetType="{x:Type Border}">
+                                                    <Setter Property="CornerRadius" Value="5"/>
+                                                </Style>
+                                            </TextBox.Resources>
+                                        </TextBox>
+                                    </Grid>
+                                    <Button x:Name="butChangeGroup" Content="Изменить" Margin="0,0,10,10" FontSize="20" HorizontalAlignment="Right" Width="101" VerticalAlignment="Bottom" Click="butChangeGroup_Click">
                                         <Button.Resources>
                                             <Style TargetType="{x:Type Border}">
                                                 <Setter Property="CornerRadius" Value="5"/>
                                             </Style>
                                         </Button.Resources>
                                     </Button>
-                                    <Button x:Name="butClearChangeGroup" Content="Очистить" Margin="0,0,130,10" FontSize="20" HorizontalAlignment="Right" Width="101" VerticalAlignment="Bottom">
+                                    <Button x:Name="butClearChangeGroup" Content="Очистить" Margin="0,0,130,10" FontSize="20" HorizontalAlignment="Right" Width="101" VerticalAlignment="Bottom" Click="butClearChangeGroup_Click">
                                         <Button.Resources>
                                             <Style TargetType="{x:Type Border}">
                                                 <Setter Property="CornerRadius" Value="5"/>
@@ -1034,7 +1048,7 @@
                                 </Grid>
                             </TabItem>
                             <TabItem Header="Студент">
-                                <Grid Background="#FFE5E5E5">
+                                <Grid x:Name="gChangeStudent" Background="#FFE5E5E5">
                                     <TextBox x:Name="tbChangeStudentId" HorizontalAlignment="Left" Margin="10,37,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="140" Height="30" FontSize="20" BorderBrush="Black">
                                         <TextBox.Resources>
                                             <Style TargetType="{x:Type Border}">
@@ -1043,150 +1057,154 @@
                                         </TextBox.Resources>
                                     </TextBox>
                                     <Label Content="Код" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Top" FontSize="20"/>
-                                    <Label Content="Фамилия" HorizontalAlignment="Left" Margin="10,76,0,0" VerticalAlignment="Top" FontSize="20"/>
-                                    <TextBox x:Name="tbChangeStudentName" Margin="190,113,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="30" FontSize="20" BorderBrush="Black" HorizontalAlignment="Left" Width="160">
-                                        <TextBox.Resources>
-                                            <Style TargetType="{x:Type Border}">
-                                                <Setter Property="CornerRadius" Value="5"/>
-                                            </Style>
-                                        </TextBox.Resources>
-                                    </TextBox>
-                                    <Label Content="Имя" HorizontalAlignment="Left" Margin="190,76,0,0" VerticalAlignment="Top" FontSize="20"/>
-                                    <TextBox x:Name="tbChangeStudentPatronymic" Margin="370,113,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="30" FontSize="20" BorderBrush="Black" HorizontalAlignment="Left" Width="160">
-                                        <TextBox.Resources>
-                                            <Style TargetType="{x:Type Border}">
-                                                <Setter Property="CornerRadius" Value="5"/>
-                                            </Style>
-                                        </TextBox.Resources>
-                                    </TextBox>
-                                    <Label Content="Отчество" HorizontalAlignment="Left" Margin="370,76,0,0" VerticalAlignment="Top" FontSize="20"/>
-                                    <TextBox x:Name="tbChangeStudentINN" Margin="550,113,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="30" FontSize="20" BorderBrush="Black" HorizontalAlignment="Left" Width="160">
-                                        <TextBox.Resources>
-                                            <Style TargetType="{x:Type Border}">
-                                                <Setter Property="CornerRadius" Value="5"/>
-                                            </Style>
-                                        </TextBox.Resources>
-                                    </TextBox>
-                                    <Label Content="ИНН" HorizontalAlignment="Left" Margin="550,76,0,0" VerticalAlignment="Top" FontSize="20"/>
-                                    <TextBox x:Name="tbChangeStudentPhoneNumber" Margin="730,113,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="30" FontSize="20" BorderBrush="Black" HorizontalAlignment="Left" Width="170">
-                                        <TextBox.Resources>
-                                            <Style TargetType="{x:Type Border}">
-                                                <Setter Property="CornerRadius" Value="5"/>
-                                            </Style>
-                                        </TextBox.Resources>
-                                    </TextBox>
-                                    <Label Content="Номер телефона" HorizontalAlignment="Left" Margin="730,76,0,0" VerticalAlignment="Top" FontSize="20"/>
-                                    <TextBox x:Name="tbChangeStudentEmail" Margin="920,113,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="30" FontSize="20" BorderBrush="Black" HorizontalAlignment="Left" Width="167">
-                                        <TextBox.Resources>
-                                            <Style TargetType="{x:Type Border}">
-                                                <Setter Property="CornerRadius" Value="5"/>
-                                            </Style>
-                                        </TextBox.Resources>
-                                    </TextBox>
-                                    <Label Content="Email" HorizontalAlignment="Left" Margin="920,76,0,0" VerticalAlignment="Top" FontSize="20"/>
-                                    <TextBox x:Name="tbChangeStudentSurname" Margin="10,113,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="30" FontSize="20" BorderBrush="Black" HorizontalAlignment="Left" Width="160">
-                                        <TextBox.Resources>
-                                            <Style TargetType="{x:Type Border}">
-                                                <Setter Property="CornerRadius" Value="5"/>
-                                            </Style>
-                                        </TextBox.Resources>
-                                    </TextBox>
-                                    <Label Content="Наименование&#xA;направления" HorizontalAlignment="Left" Margin="10,148,0,0" VerticalAlignment="Top" FontSize="20"/>
-                                    <TextBox x:Name="tbChangeStudentSpecialityName" Margin="10,211,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="30" FontSize="20" BorderBrush="Black" HorizontalAlignment="Left" Width="160">
-                                        <TextBox.Resources>
-                                            <Style TargetType="{x:Type Border}">
-                                                <Setter Property="CornerRadius" Value="5"/>
-                                            </Style>
-                                        </TextBox.Resources>
-                                    </TextBox>
-                                    <Label Content="Наименование&#xA;кафедры" HorizontalAlignment="Left" Margin="190,148,0,0" VerticalAlignment="Top" FontSize="20"/>
-                                    <TextBox x:Name="tbChangeStudentChairName" Margin="190,211,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="30" FontSize="20" BorderBrush="Black" HorizontalAlignment="Left" Width="160">
-                                        <TextBox.Resources>
-                                            <Style TargetType="{x:Type Border}">
-                                                <Setter Property="CornerRadius" Value="5"/>
-                                            </Style>
-                                        </TextBox.Resources>
-                                    </TextBox>
-                                    <Label Content="Наименование&#xA;группы" HorizontalAlignment="Left" Margin="370,148,0,0" VerticalAlignment="Top" FontSize="20"/>
-                                    <TextBox x:Name="tbChangeStudentGroupName" Margin="370,211,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="30" FontSize="20" BorderBrush="Black" HorizontalAlignment="Left" Width="160">
-                                        <TextBox.Resources>
-                                            <Style TargetType="{x:Type Border}">
-                                                <Setter Property="CornerRadius" Value="5"/>
-                                            </Style>
-                                        </TextBox.Resources>
-                                    </TextBox>
-                                    <DatePicker x:Name="dpChangeStudentStartDate" HorizontalAlignment="Left" Margin="550,211,0,0" VerticalAlignment="Top" Height="30" Width="160" FontSize="17" BorderBrush="Black">
-                                        <DatePicker.Resources>
-                                            <Style TargetType="{x:Type Border}">
-                                                <Setter Property="CornerRadius" Value="5"/>
-                                            </Style>
-                                        </DatePicker.Resources>
-                                    </DatePicker>
-                                    <Label Content="Начало&#xA;обучения" HorizontalAlignment="Left" Margin="550,148,0,0" VerticalAlignment="Top" FontSize="20"/>
-                                    <DatePicker x:Name="dpChangeStudentEndDate" HorizontalAlignment="Left" Margin="730,211,0,0" VerticalAlignment="Top" Height="30" Width="170" FontSize="17" BorderBrush="Black">
-                                        <DatePicker.Resources>
-                                            <Style TargetType="{x:Type Border}">
-                                                <Setter Property="CornerRadius" Value="5"/>
-                                            </Style>
-                                        </DatePicker.Resources>
-                                    </DatePicker>
-                                    <Label Content="Конец&#xA;обучения" HorizontalAlignment="Left" Margin="730,148,0,0" VerticalAlignment="Top" FontSize="20"/>
-                                    <Label Content="Стоимость&#xA;обучения" HorizontalAlignment="Left" Margin="920,148,0,0" VerticalAlignment="Top" FontSize="20"/>
-                                    <TextBox x:Name="tbChangeStudentEduCost" Margin="920,211,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="30" FontSize="20" BorderBrush="Black" HorizontalAlignment="Left" Width="167">
-                                        <TextBox.Resources>
-                                            <Style TargetType="{x:Type Border}">
-                                                <Setter Property="CornerRadius" Value="5"/>
-                                            </Style>
-                                        </TextBox.Resources>
-                                    </TextBox>
-                                    <TextBox x:Name="tbChangeStudentPasspotSeries" Margin="11,284,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="30" FontSize="20" BorderBrush="Black" HorizontalAlignment="Left" Width="160">
-                                        <TextBox.Resources>
-                                            <Style TargetType="{x:Type Border}">
-                                                <Setter Property="CornerRadius" Value="5"/>
-                                            </Style>
-                                        </TextBox.Resources>
-                                    </TextBox>
-                                    <Label Content="Серия паспорта" HorizontalAlignment="Left" Margin="11,247,0,0" VerticalAlignment="Top" FontSize="20"/>
-                                    <TextBox x:Name="tbChangeStudentPassportNumber" Margin="191,284,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="30" FontSize="20" BorderBrush="Black" HorizontalAlignment="Left" Width="160">
-                                        <TextBox.Resources>
-                                            <Style TargetType="{x:Type Border}">
-                                                <Setter Property="CornerRadius" Value="5"/>
-                                            </Style>
-                                        </TextBox.Resources>
-                                    </TextBox>
-                                    <Label Content="Номер паспорта" HorizontalAlignment="Left" Margin="191,247,0,0" VerticalAlignment="Top" FontSize="20"/>
-                                    <DatePicker x:Name="dpChangeStudentPassportIssueDate" HorizontalAlignment="Left" Margin="370,284,0,0" VerticalAlignment="Top" Height="30" Width="160" FontSize="17" BorderBrush="Black">
-                                        <DatePicker.Resources>
-                                            <Style TargetType="{x:Type Border}">
-                                                <Setter Property="CornerRadius" Value="5"/>
-                                            </Style>
-                                        </DatePicker.Resources>
-                                    </DatePicker>
-                                    <Label Content="Дата выдачи" HorizontalAlignment="Left" Margin="370,247,0,0" VerticalAlignment="Top" FontSize="20"/>
-                                    <DatePicker x:Name="dpChangeStudentPassportExpiryDate" HorizontalAlignment="Left" Margin="550,284,0,0" VerticalAlignment="Top" Height="30" Width="160" FontSize="17" BorderBrush="Black">
-                                        <DatePicker.Resources>
-                                            <Style TargetType="{x:Type Border}">
-                                                <Setter Property="CornerRadius" Value="5"/>
-                                            </Style>
-                                        </DatePicker.Resources>
-                                    </DatePicker>
-                                    <Label Content="Срок действия" HorizontalAlignment="Left" Margin="550,247,0,0" VerticalAlignment="Top" FontSize="20"/>
-                                    <TextBox x:Name="tbChangeStudentPassportIssuingAuthority" Margin="730,284,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="30" FontSize="20" BorderBrush="Black" HorizontalAlignment="Left" Width="357">
-                                        <TextBox.Resources>
-                                            <Style TargetType="{x:Type Border}">
-                                                <Setter Property="CornerRadius" Value="5"/>
-                                            </Style>
-                                        </TextBox.Resources>
-                                    </TextBox>
-                                    <Label Content="Орган, выдавший паспорт" HorizontalAlignment="Left" Margin="730,247,0,0" VerticalAlignment="Top" FontSize="20"/>
-                                    <Button x:Name="butChangeStudent" Content="Изменить" Margin="0,0,10,10" FontSize="20" HorizontalAlignment="Right" Width="101" VerticalAlignment="Bottom">
+                                    <Grid x:Name="gChangeStudentOther">
+                                        <TextBox x:Name="tbChangeStudentSurname" Margin="10,113,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="30" FontSize="20" BorderBrush="Black" HorizontalAlignment="Left" Width="160">
+                                            <TextBox.Resources>
+                                                <Style TargetType="{x:Type Border}">
+                                                    <Setter Property="CornerRadius" Value="5"/>
+                                                </Style>
+                                            </TextBox.Resources>
+                                        </TextBox>
+                                        <Label Content="Фамилия" HorizontalAlignment="Left" Margin="10,76,0,0" VerticalAlignment="Top" FontSize="20"/>
+                                        <TextBox x:Name="tbChangeStudentName" Margin="190,113,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="30" FontSize="20" BorderBrush="Black" HorizontalAlignment="Left" Width="160">
+                                            <TextBox.Resources>
+                                                <Style TargetType="{x:Type Border}">
+                                                    <Setter Property="CornerRadius" Value="5"/>
+                                                </Style>
+                                            </TextBox.Resources>
+                                        </TextBox>
+                                        <Label Content="Имя" HorizontalAlignment="Left" Margin="190,76,0,0" VerticalAlignment="Top" FontSize="20"/>
+                                        <TextBox x:Name="tbChangeStudentPatronymic" Margin="370,113,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="30" FontSize="20" BorderBrush="Black" HorizontalAlignment="Left" Width="160">
+                                            <TextBox.Resources>
+                                                <Style TargetType="{x:Type Border}">
+                                                    <Setter Property="CornerRadius" Value="5"/>
+                                                </Style>
+                                            </TextBox.Resources>
+                                        </TextBox>
+                                        <Label Content="Отчество" HorizontalAlignment="Left" Margin="370,76,0,0" VerticalAlignment="Top" FontSize="20"/>
+                                        <TextBox x:Name="tbChangeStudentINN" Margin="550,113,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="30" FontSize="20" BorderBrush="Black" HorizontalAlignment="Left" Width="160">
+                                            <TextBox.Resources>
+                                                <Style TargetType="{x:Type Border}">
+                                                    <Setter Property="CornerRadius" Value="5"/>
+                                                </Style>
+                                            </TextBox.Resources>
+                                        </TextBox>
+                                        <Label Content="ИНН" HorizontalAlignment="Left" Margin="550,76,0,0" VerticalAlignment="Top" FontSize="20"/>
+                                        <TextBox x:Name="tbChangeStudentPhoneNumber" Margin="730,113,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="30" FontSize="20" BorderBrush="Black" HorizontalAlignment="Left" Width="170">
+                                            <TextBox.Resources>
+                                                <Style TargetType="{x:Type Border}">
+                                                    <Setter Property="CornerRadius" Value="5"/>
+                                                </Style>
+                                            </TextBox.Resources>
+                                        </TextBox>
+                                        <Label Content="Номер телефона" HorizontalAlignment="Left" Margin="730,76,0,0" VerticalAlignment="Top" FontSize="20"/>
+                                        <TextBox x:Name="tbChangeStudentEmail" Margin="920,113,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="30" FontSize="20" BorderBrush="Black" HorizontalAlignment="Left" Width="167">
+                                            <TextBox.Resources>
+                                                <Style TargetType="{x:Type Border}">
+                                                    <Setter Property="CornerRadius" Value="5"/>
+                                                </Style>
+                                            </TextBox.Resources>
+                                        </TextBox>
+                                        <Label Content="Email" HorizontalAlignment="Left" Margin="920,76,0,0" VerticalAlignment="Top" FontSize="20"/>
+                                        <Label Content="Наименование&#xA;направления" HorizontalAlignment="Left" Margin="10,148,0,0" VerticalAlignment="Top" FontSize="20"/>
+                                        <TextBox x:Name="tbChangeStudentSpecialityName" Margin="10,211,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="30" FontSize="20" BorderBrush="Black" HorizontalAlignment="Left" Width="160">
+                                            <TextBox.Resources>
+                                                <Style TargetType="{x:Type Border}">
+                                                    <Setter Property="CornerRadius" Value="5"/>
+                                                </Style>
+                                            </TextBox.Resources>
+                                        </TextBox>
+                                        <Label Content="Наименование&#xA;кафедры" HorizontalAlignment="Left" Margin="190,148,0,0" VerticalAlignment="Top" FontSize="20"/>
+                                        <TextBox x:Name="tbChangeStudentChairName" Margin="190,211,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="30" FontSize="20" BorderBrush="Black" HorizontalAlignment="Left" Width="160">
+                                            <TextBox.Resources>
+                                                <Style TargetType="{x:Type Border}">
+                                                    <Setter Property="CornerRadius" Value="5"/>
+                                                </Style>
+                                            </TextBox.Resources>
+                                        </TextBox>
+                                        <Label Content="Наименование&#xA;группы" HorizontalAlignment="Left" Margin="370,148,0,0" VerticalAlignment="Top" FontSize="20"/>
+                                        <TextBox x:Name="tbChangeStudentGroupName" Margin="370,211,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="30" FontSize="20" BorderBrush="Black" HorizontalAlignment="Left" Width="160">
+                                            <TextBox.Resources>
+                                                <Style TargetType="{x:Type Border}">
+                                                    <Setter Property="CornerRadius" Value="5"/>
+                                                </Style>
+                                            </TextBox.Resources>
+                                        </TextBox>
+                                        <DatePicker x:Name="dpChangeStudentStartDate" HorizontalAlignment="Left" Margin="550,211,0,0" VerticalAlignment="Top" Height="30" Width="160" FontSize="17" BorderBrush="Black">
+                                            <DatePicker.Resources>
+                                                <Style TargetType="{x:Type Border}">
+                                                    <Setter Property="CornerRadius" Value="5"/>
+                                                </Style>
+                                            </DatePicker.Resources>
+                                        </DatePicker>
+                                        <Label Content="Начало&#xA;обучения" HorizontalAlignment="Left" Margin="550,148,0,0" VerticalAlignment="Top" FontSize="20"/>
+                                        <DatePicker x:Name="dpChangeStudentEndDate" HorizontalAlignment="Left" Margin="730,211,0,0" VerticalAlignment="Top" Height="30" Width="170" FontSize="17" BorderBrush="Black">
+                                            <DatePicker.Resources>
+                                                <Style TargetType="{x:Type Border}">
+                                                    <Setter Property="CornerRadius" Value="5"/>
+                                                </Style>
+                                            </DatePicker.Resources>
+                                        </DatePicker>
+                                        <Label Content="Конец&#xA;обучения" HorizontalAlignment="Left" Margin="730,148,0,0" VerticalAlignment="Top" FontSize="20"/>
+                                        <Label Content="Стоимость&#xA;обучения" HorizontalAlignment="Left" Margin="920,148,0,0" VerticalAlignment="Top" FontSize="20"/>
+                                        <TextBox x:Name="tbChangeStudentEduCost" Margin="920,211,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="30" FontSize="20" BorderBrush="Black" HorizontalAlignment="Left" Width="167">
+                                            <TextBox.Resources>
+                                                <Style TargetType="{x:Type Border}">
+                                                    <Setter Property="CornerRadius" Value="5"/>
+                                                </Style>
+                                            </TextBox.Resources>
+                                        </TextBox>
+                                    </Grid>
+                                    <Grid x:Name="gChangeStudentPassport">
+                                        <TextBox x:Name="tbChangeStudentPasspotSeries" Margin="11,284,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="30" FontSize="20" BorderBrush="Black" HorizontalAlignment="Left" Width="160">
+                                            <TextBox.Resources>
+                                                <Style TargetType="{x:Type Border}">
+                                                    <Setter Property="CornerRadius" Value="5"/>
+                                                </Style>
+                                            </TextBox.Resources>
+                                        </TextBox>
+                                        <Label Content="Серия паспорта" HorizontalAlignment="Left" Margin="11,247,0,0" VerticalAlignment="Top" FontSize="20"/>
+                                        <TextBox x:Name="tbChangeStudentPassportNumber" Margin="191,284,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="30" FontSize="20" BorderBrush="Black" HorizontalAlignment="Left" Width="160">
+                                            <TextBox.Resources>
+                                                <Style TargetType="{x:Type Border}">
+                                                    <Setter Property="CornerRadius" Value="5"/>
+                                                </Style>
+                                            </TextBox.Resources>
+                                        </TextBox>
+                                        <Label Content="Номер паспорта" HorizontalAlignment="Left" Margin="191,247,0,0" VerticalAlignment="Top" FontSize="20"/>
+                                        <DatePicker x:Name="dpChangeStudentPassportIssueDate" HorizontalAlignment="Left" Margin="370,284,0,0" VerticalAlignment="Top" Height="30" Width="160" FontSize="17" BorderBrush="Black">
+                                            <DatePicker.Resources>
+                                                <Style TargetType="{x:Type Border}">
+                                                    <Setter Property="CornerRadius" Value="5"/>
+                                                </Style>
+                                            </DatePicker.Resources>
+                                        </DatePicker>
+                                        <Label Content="Дата выдачи" HorizontalAlignment="Left" Margin="370,247,0,0" VerticalAlignment="Top" FontSize="20"/>
+                                        <DatePicker x:Name="dpChangeStudentPassportExpiryDate" HorizontalAlignment="Left" Margin="550,284,0,0" VerticalAlignment="Top" Height="30" Width="160" FontSize="17" BorderBrush="Black">
+                                            <DatePicker.Resources>
+                                                <Style TargetType="{x:Type Border}">
+                                                    <Setter Property="CornerRadius" Value="5"/>
+                                                </Style>
+                                            </DatePicker.Resources>
+                                        </DatePicker>
+                                        <Label Content="Срок действия" HorizontalAlignment="Left" Margin="550,247,0,0" VerticalAlignment="Top" FontSize="20"/>
+                                        <TextBox x:Name="tbChangeStudentPassportIssuingAuthority" Margin="730,284,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="30" FontSize="20" BorderBrush="Black" HorizontalAlignment="Left" Width="357">
+                                            <TextBox.Resources>
+                                                <Style TargetType="{x:Type Border}">
+                                                    <Setter Property="CornerRadius" Value="5"/>
+                                                </Style>
+                                            </TextBox.Resources>
+                                        </TextBox>
+                                        <Label Content="Орган, выдавший паспорт" HorizontalAlignment="Left" Margin="730,247,0,0" VerticalAlignment="Top" FontSize="20"/>
+                                    </Grid>
+                                    <Button x:Name="butChangeStudent" Content="Изменить" Margin="0,0,10,10" FontSize="20" HorizontalAlignment="Right" Width="101" VerticalAlignment="Bottom" Click="butChangeStudent_Click">
                                         <Button.Resources>
                                             <Style TargetType="{x:Type Border}">
                                                 <Setter Property="CornerRadius" Value="5"/>
                                             </Style>
                                         </Button.Resources>
                                     </Button>
-                                    <Button x:Name="butClearChangeStudent" Content="Очистить" Margin="0,0,130,10" FontSize="20" HorizontalAlignment="Right" Width="101" VerticalAlignment="Bottom">
+                                    <Button x:Name="butClearChangeStudent" Content="Очистить" Margin="0,0,130,10" FontSize="20" HorizontalAlignment="Right" Width="101" VerticalAlignment="Bottom" Click="butClearChangeStudent_Click">
                                         <Button.Resources>
                                             <Style TargetType="{x:Type Border}">
                                                 <Setter Property="CornerRadius" Value="5"/>
@@ -1196,7 +1214,7 @@
                                 </Grid>
                             </TabItem>
                             <TabItem Header="Абитуриент">
-                                <Grid Background="#FFE5E5E5">
+                                <Grid x:Name="gChangeEnrollee" Background="#FFE5E5E5">
                                     <TextBox x:Name="tbChangeEnrolleeId" HorizontalAlignment="Left" Margin="10,37,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="140" Height="30" FontSize="20" BorderBrush="Black">
                                         <TextBox.Resources>
                                             <Style TargetType="{x:Type Border}">
@@ -1205,94 +1223,98 @@
                                         </TextBox.Resources>
                                     </TextBox>
                                     <Label Content="Код" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Top" FontSize="20"/>
-                                    <Label Content="Фамилия" HorizontalAlignment="Left" Margin="10,75,0,0" VerticalAlignment="Top" FontSize="20"/>
-                                    <TextBox x:Name="tbChangeEnrolleeName" Margin="190,112,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="30" FontSize="20" BorderBrush="Black" HorizontalAlignment="Left" Width="160">
-                                        <TextBox.Resources>
-                                            <Style TargetType="{x:Type Border}">
-                                                <Setter Property="CornerRadius" Value="5"/>
-                                            </Style>
-                                        </TextBox.Resources>
-                                    </TextBox>
-                                    <Label Content="Имя" HorizontalAlignment="Left" Margin="190,75,0,0" VerticalAlignment="Top" FontSize="20"/>
-                                    <TextBox x:Name="tbChangeEnrolleePatronymic" Margin="370,112,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="30" FontSize="20" BorderBrush="Black" HorizontalAlignment="Left" Width="160">
-                                        <TextBox.Resources>
-                                            <Style TargetType="{x:Type Border}">
-                                                <Setter Property="CornerRadius" Value="5"/>
-                                            </Style>
-                                        </TextBox.Resources>
-                                    </TextBox>
-                                    <Label Content="Отчество" HorizontalAlignment="Left" Margin="370,75,0,0" VerticalAlignment="Top" FontSize="20"/>
-                                    <TextBox x:Name="tbChangeEnrolleeDocumentType" Margin="550,112,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="30" FontSize="20" BorderBrush="Black" HorizontalAlignment="Left" Width="160">
-                                        <TextBox.Resources>
-                                            <Style TargetType="{x:Type Border}">
-                                                <Setter Property="CornerRadius" Value="5"/>
-                                            </Style>
-                                        </TextBox.Resources>
-                                    </TextBox>
-                                    <Label Content="Тип документа" HorizontalAlignment="Left" Margin="550,75,0,0" VerticalAlignment="Top" FontSize="20"/>
-                                    <TextBox x:Name="tbChangeEnrolleeTotalScore" Margin="730,112,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="30" FontSize="20" BorderBrush="Black" HorizontalAlignment="Left" Width="170">
-                                        <TextBox.Resources>
-                                            <Style TargetType="{x:Type Border}">
-                                                <Setter Property="CornerRadius" Value="5"/>
-                                            </Style>
-                                        </TextBox.Resources>
-                                    </TextBox>
-                                    <Label Content="Сумма баллов" HorizontalAlignment="Left" Margin="730,75,0,0" VerticalAlignment="Top" FontSize="20"/>
-                                    <TextBox x:Name="tbChangeEnrolleeSurname" Margin="10,112,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="30" FontSize="20" BorderBrush="Black" HorizontalAlignment="Left" Width="160">
-                                        <TextBox.Resources>
-                                            <Style TargetType="{x:Type Border}">
-                                                <Setter Property="CornerRadius" Value="5"/>
-                                            </Style>
-                                        </TextBox.Resources>
-                                    </TextBox>
-                                    <TextBox x:Name="tbChangeEnrolleePassportSeries" Margin="10,184,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="30" FontSize="20" BorderBrush="Black" HorizontalAlignment="Left" Width="160">
-                                        <TextBox.Resources>
-                                            <Style TargetType="{x:Type Border}">
-                                                <Setter Property="CornerRadius" Value="5"/>
-                                            </Style>
-                                        </TextBox.Resources>
-                                    </TextBox>
-                                    <Label Content="Серия паспорта" HorizontalAlignment="Left" Margin="10,147,0,0" VerticalAlignment="Top" FontSize="20"/>
-                                    <TextBox x:Name="tbChangeEnrolleePassportNumber" Margin="190,184,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="30" FontSize="20" BorderBrush="Black" HorizontalAlignment="Left" Width="160">
-                                        <TextBox.Resources>
-                                            <Style TargetType="{x:Type Border}">
-                                                <Setter Property="CornerRadius" Value="5"/>
-                                            </Style>
-                                        </TextBox.Resources>
-                                    </TextBox>
-                                    <Label Content="Номер паспорт" HorizontalAlignment="Left" Margin="190,147,0,0" VerticalAlignment="Top" FontSize="20"/>
-                                    <DatePicker x:Name="dpChangeEnrolleePassportIssueDate" HorizontalAlignment="Left" Margin="370,184,0,0" VerticalAlignment="Top" Height="30" Width="160" FontSize="17" BorderBrush="Black">
-                                        <DatePicker.Resources>
-                                            <Style TargetType="{x:Type Border}">
-                                                <Setter Property="CornerRadius" Value="5"/>
-                                            </Style>
-                                        </DatePicker.Resources>
-                                    </DatePicker>
-                                    <Label Content="Дата выдачи" HorizontalAlignment="Left" Margin="370,147,0,0" VerticalAlignment="Top" FontSize="20"/>
-                                    <DatePicker x:Name="dpChangeEnrolleePassportExpiryDate" HorizontalAlignment="Left" Margin="550,184,0,0" VerticalAlignment="Top" Height="30" Width="160" FontSize="17" BorderBrush="Black">
-                                        <DatePicker.Resources>
-                                            <Style TargetType="{x:Type Border}">
-                                                <Setter Property="CornerRadius" Value="5"/>
-                                            </Style>
-                                        </DatePicker.Resources>
-                                    </DatePicker>
-                                    <Label Content="Срок действия" HorizontalAlignment="Left" Margin="550,147,0,0" VerticalAlignment="Top" FontSize="20"/>
-                                    <TextBox x:Name="tbChangeEnrolleePassportIssuingAuthority" Margin="730,184,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="30" FontSize="20" BorderBrush="Black" HorizontalAlignment="Left" Width="357">
-                                        <TextBox.Resources>
-                                            <Style TargetType="{x:Type Border}">
-                                                <Setter Property="CornerRadius" Value="5"/>
-                                            </Style>
-                                        </TextBox.Resources>
-                                    </TextBox>
-                                    <Label Content="Орган, выдавший паспорт" HorizontalAlignment="Left" Margin="730,147,0,0" VerticalAlignment="Top" FontSize="20"/>
-                                    <Button x:Name="butChangeEnrollee" Content="Изменить" Margin="0,0,10,10" FontSize="20" HorizontalAlignment="Right" Width="101" VerticalAlignment="Bottom">
+                                    <Grid x:Name="gChangeEnrolleeOther">
+                                        <TextBox x:Name="tbChangeEnrolleeSurname" Margin="10,112,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="30" FontSize="20" BorderBrush="Black" HorizontalAlignment="Left" Width="160">
+                                            <TextBox.Resources>
+                                                <Style TargetType="{x:Type Border}">
+                                                    <Setter Property="CornerRadius" Value="5"/>
+                                                </Style>
+                                            </TextBox.Resources>
+                                        </TextBox>
+                                        <Label Content="Фамилия" HorizontalAlignment="Left" Margin="10,75,0,0" VerticalAlignment="Top" FontSize="20"/>
+                                        <TextBox x:Name="tbChangeEnrolleeName" Margin="190,112,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="30" FontSize="20" BorderBrush="Black" HorizontalAlignment="Left" Width="160">
+                                            <TextBox.Resources>
+                                                <Style TargetType="{x:Type Border}">
+                                                    <Setter Property="CornerRadius" Value="5"/>
+                                                </Style>
+                                            </TextBox.Resources>
+                                        </TextBox>
+                                        <Label Content="Имя" HorizontalAlignment="Left" Margin="190,75,0,0" VerticalAlignment="Top" FontSize="20"/>
+                                        <TextBox x:Name="tbChangeEnrolleePatronymic" Margin="370,112,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="30" FontSize="20" BorderBrush="Black" HorizontalAlignment="Left" Width="160">
+                                            <TextBox.Resources>
+                                                <Style TargetType="{x:Type Border}">
+                                                    <Setter Property="CornerRadius" Value="5"/>
+                                                </Style>
+                                            </TextBox.Resources>
+                                        </TextBox>
+                                        <Label Content="Отчество" HorizontalAlignment="Left" Margin="370,75,0,0" VerticalAlignment="Top" FontSize="20"/>
+                                        <TextBox x:Name="tbChangeEnrolleeDocumentType" Margin="550,112,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="30" FontSize="20" BorderBrush="Black" HorizontalAlignment="Left" Width="160">
+                                            <TextBox.Resources>
+                                                <Style TargetType="{x:Type Border}">
+                                                    <Setter Property="CornerRadius" Value="5"/>
+                                                </Style>
+                                            </TextBox.Resources>
+                                        </TextBox>
+                                        <Label Content="Тип документа" HorizontalAlignment="Left" Margin="550,75,0,0" VerticalAlignment="Top" FontSize="20"/>
+                                        <TextBox x:Name="tbChangeEnrolleeTotalScore" Margin="730,112,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="30" FontSize="20" BorderBrush="Black" HorizontalAlignment="Left" Width="170">
+                                            <TextBox.Resources>
+                                                <Style TargetType="{x:Type Border}">
+                                                    <Setter Property="CornerRadius" Value="5"/>
+                                                </Style>
+                                            </TextBox.Resources>
+                                        </TextBox>
+                                        <Label Content="Сумма баллов" HorizontalAlignment="Left" Margin="730,75,0,0" VerticalAlignment="Top" FontSize="20"/>
+                                    </Grid>
+                                    <Grid x:Name="gChangeEnrolleePassport">
+                                        <TextBox x:Name="tbChangeEnrolleePassportSeries" Margin="10,184,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="30" FontSize="20" BorderBrush="Black" HorizontalAlignment="Left" Width="160">
+                                            <TextBox.Resources>
+                                                <Style TargetType="{x:Type Border}">
+                                                    <Setter Property="CornerRadius" Value="5"/>
+                                                </Style>
+                                            </TextBox.Resources>
+                                        </TextBox>
+                                        <Label Content="Серия паспорта" HorizontalAlignment="Left" Margin="10,147,0,0" VerticalAlignment="Top" FontSize="20"/>
+                                        <TextBox x:Name="tbChangeEnrolleePassportNumber" Margin="190,184,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="30" FontSize="20" BorderBrush="Black" HorizontalAlignment="Left" Width="160">
+                                            <TextBox.Resources>
+                                                <Style TargetType="{x:Type Border}">
+                                                    <Setter Property="CornerRadius" Value="5"/>
+                                                </Style>
+                                            </TextBox.Resources>
+                                        </TextBox>
+                                        <Label Content="Номер паспорт" HorizontalAlignment="Left" Margin="190,147,0,0" VerticalAlignment="Top" FontSize="20"/>
+                                        <DatePicker x:Name="dpChangeEnrolleePassportIssueDate" HorizontalAlignment="Left" Margin="370,184,0,0" VerticalAlignment="Top" Height="30" Width="160" FontSize="17" BorderBrush="Black">
+                                            <DatePicker.Resources>
+                                                <Style TargetType="{x:Type Border}">
+                                                    <Setter Property="CornerRadius" Value="5"/>
+                                                </Style>
+                                            </DatePicker.Resources>
+                                        </DatePicker>
+                                        <Label Content="Дата выдачи" HorizontalAlignment="Left" Margin="370,147,0,0" VerticalAlignment="Top" FontSize="20"/>
+                                        <DatePicker x:Name="dpChangeEnrolleePassportExpiryDate" HorizontalAlignment="Left" Margin="550,184,0,0" VerticalAlignment="Top" Height="30" Width="160" FontSize="17" BorderBrush="Black">
+                                            <DatePicker.Resources>
+                                                <Style TargetType="{x:Type Border}">
+                                                    <Setter Property="CornerRadius" Value="5"/>
+                                                </Style>
+                                            </DatePicker.Resources>
+                                        </DatePicker>
+                                        <Label Content="Срок действия" HorizontalAlignment="Left" Margin="550,147,0,0" VerticalAlignment="Top" FontSize="20"/>
+                                        <TextBox x:Name="tbChangeEnrolleePassportIssuingAuthority" Margin="730,184,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="30" FontSize="20" BorderBrush="Black" HorizontalAlignment="Left" Width="357">
+                                            <TextBox.Resources>
+                                                <Style TargetType="{x:Type Border}">
+                                                    <Setter Property="CornerRadius" Value="5"/>
+                                                </Style>
+                                            </TextBox.Resources>
+                                        </TextBox>
+                                        <Label Content="Орган, выдавший паспорт" HorizontalAlignment="Left" Margin="730,147,0,0" VerticalAlignment="Top" FontSize="20"/>
+                                    </Grid>
+                                    <Button x:Name="butChangeEnrollee" Content="Изменить" Margin="0,0,10,10" FontSize="20" HorizontalAlignment="Right" Width="101" VerticalAlignment="Bottom" Click="butChangeEnrollee_Click">
                                         <Button.Resources>
                                             <Style TargetType="{x:Type Border}">
                                                 <Setter Property="CornerRadius" Value="5"/>
                                             </Style>
                                         </Button.Resources>
                                     </Button>
-                                    <Button x:Name="butClearChangeEnrollee" Content="Очистить" Margin="0,0,130,10" FontSize="20" HorizontalAlignment="Right" Width="101" VerticalAlignment="Bottom">
+                                    <Button x:Name="butClearChangeEnrollee" Content="Очистить" Margin="0,0,130,10" FontSize="20" HorizontalAlignment="Right" Width="101" VerticalAlignment="Bottom" Click="butClearChangeEnrollee_Click">
                                         <Button.Resources>
                                             <Style TargetType="{x:Type Border}">
                                                 <Setter Property="CornerRadius" Value="5"/>
