@@ -23,6 +23,10 @@ namespace Institute
     {   
         const string PassportColumns = "series,number,issue_date,expiry_date,issuing_authority";
 
+        private readonly string[] FacultyFields = new string[] { "department_name" };
+        
+
+
         public MainWindow()
         {
             InitializeComponent();
@@ -38,6 +42,10 @@ namespace Institute
             MessageBox.Show("НЕ реализовал!");
         }
 
+        /// <summary>
+        /// Очищает все поля ввода в гриде.
+        /// </summary>
+        /// <param name="grid">Грид, в которм надо очистить поля.</param>
         private void ClearGrid(Grid grid)
         {
             var childs = LogicalTreeHelper.GetChildren(grid);
@@ -60,7 +68,12 @@ namespace Institute
             }
         }
 
-        private bool IsFieldsFilled(Grid grid)
+        /// <summary>
+        /// Проверяет все поля ввода в гриде на пустоту.
+        /// </summary>
+        /// <param name="grid">Грид, в которм проверяются поля.</param>
+        /// <returns></returns>
+        private bool IsFieldsFilled(Grid grid, bool showMB = true)
         {
             var childs = LogicalTreeHelper.GetChildren(grid);
 
@@ -68,12 +81,18 @@ namespace Institute
             {
                 if (child is TextBox textBox && textBox.Text.Equals(String.Empty))
                 {
-                    MessageBox.Show("Не все поля заполнены!", "Внимание!");
+                    if (showMB)
+                    {
+                        MessageBox.Show("Не все поля заполнены!", "Внимание!");
+                    }
                     return false;
                 }
                 else if (child is DatePicker datePicker && datePicker.Text.Equals(String.Empty))
                 {
-                    MessageBox.Show("Не все поля даты заполнены!", "Внимание!");
+                    if (showMB)
+                    {
+                        MessageBox.Show("Не все поля даты заполнены!", "Внимание!");
+                    }
                     return false;
                 }
             }
@@ -81,6 +100,34 @@ namespace Institute
             return true;
         }
 
+        private bool IsFieldsNotEmpty(Grid grid)
+        {
+            var childs = LogicalTreeHelper.GetChildren(grid);
+
+            foreach (var child in childs)
+            {
+                if (child is TextBox textBox && !textBox.Text.Equals(String.Empty))
+                {
+                    return true;
+                }
+                else if (child is DatePicker datePicker && !datePicker.Text.Equals(String.Empty))
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        /// <summary>
+        /// Удобная штука но только если нужно делать запрос для всех полей на форме.
+        /// То есть для студента, например, не подходит так как там нужно и в паспорт и в студента.
+        /// Но сейчас подумал, что можно еще два разных грида запихнуть и из них собирать текст боксы.
+        /// Может так и сделаю если будет время.
+        /// </summary>
+        /// <param name="table">Название таблицы.</param>
+        /// <param name="grid">Грид где находятся боксы с данными.</param>
+        /// <param name="columns">Опцинально. Если запись не во все поля таблицы (когда, например, айдишник сам пишется), то нужно указать порядок столбцов.</param>
+        /// <returns></returns>
         private string MakeAddQuery(string table, Grid grid, string columns)
         {
             var querySB = new StringBuilder($"insert into {table} ({columns}) values (");
@@ -105,6 +152,12 @@ namespace Institute
             return querySB.ToString();
         }
 
+        /// <summary>
+        /// Производит добавление записи.
+        /// </summary>
+        /// <param name="table">Название таблицы для записи.</param>
+        /// <param name="grid">Грид, из которого беруться данные.</param>
+        /// <param name="columns">Опцинально. Если запись не во все поля таблицы (когда, например, айдишник сам пишется), то нужно указать порядок столбцов.</param>
         private void Add(string table, Grid grid, string columns = "")
         {
             if (!IsFieldsFilled(grid)) return;
@@ -304,6 +357,61 @@ namespace Institute
         private void butClearAddEnrollee_Click(object sender, RoutedEventArgs e)
         {
             ClearGrid(gAddEnrollee);
+        }
+
+        private void Change(Grid grid, string table, string[] columns, string keyColumnName, string key)
+        {
+            bool isOtherFieldsNotEmpty = IsFieldsNotEmpty(grid);
+            if (!isOtherFieldsNotEmpty)
+            {
+                string query = $"delete from {table} where {keyColumnName} = '{key}'";
+                if (DBConnection.ChangeData(query))
+                {
+                    MessageBox.Show("Удаление прошло успешно", "Ура!");
+                }
+
+                return;
+            }
+            else
+            {
+                StringBuilder querySB = new StringBuilder($"update {table} set ");
+
+                var childs = LogicalTreeHelper.GetChildren(grid);
+
+                int i = 0;
+                foreach (var child in childs)
+                {
+                    if (child is TextBox textBox && !textBox.Text.Equals(""))
+                    {
+                        querySB.Append(columns[i] + $" = '{textBox.Text}',");
+                    }
+                    i++;
+                }
+                querySB.Remove(querySB.Length - 1, 1);
+                querySB.Append($" where {keyColumnName} = '{key}'");
+                Trace.WriteLine(querySB.ToString());
+                if (DBConnection.ChangeData(querySB.ToString()))
+                {
+                    MessageBox.Show("Изменение прошло успешно!", "Ура!");
+                }
+            }
+        }
+        private void butChangeFaculty_Click(object sender, RoutedEventArgs e)
+        {
+            bool isKeyEmpty = tbChangeFacultyName.Text == "";
+
+            if (isKeyEmpty)
+            {
+                MessageBox.Show("Вы не заполнили поля!", "Внимание!");
+                return;
+            }
+
+            Change(gChangeFacultyOther, "faculty", FacultyFields, "name", tbChangeFacultyName.Text);
+        }
+
+        private void butClearChangeFaculty_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }

@@ -73,5 +73,27 @@ namespace Institute
             }
             return table;
         }
+
+        public static bool ChangeData(string query)
+        {
+            bool result = false;
+            try
+            {
+                _mySqlConnection.Open();
+                MySqlCommand command = new MySqlCommand(query, _mySqlConnection);
+                command.ExecuteNonQuery();
+                result = true;
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Ошибка изменения данных.");
+            }
+            finally
+            {
+                _mySqlConnection.Close();
+            }
+
+            return result;
+        }
     }
 }
