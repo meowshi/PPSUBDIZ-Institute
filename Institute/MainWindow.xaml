@@ -44,7 +44,7 @@
                     <Grid>
                         <TabControl>
                             <TabItem Header="Отдел">
-                                <Grid Background="#FFE5E5E5">
+                                <Grid x:Name="gAddDepartment" Background="#FFE5E5E5">
                                     <TextBox x:Name="tbAddDepartmentName" HorizontalAlignment="Left" Margin="10,37,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="186" Height="30" FontSize="20" BorderBrush="Black">
                                         <TextBox.Resources>
                                             <Style TargetType="Border">
@@ -61,14 +61,14 @@
                                         </TextBox.Resources>
                                     </TextBox>
                                     <Label Content="Штат" HorizontalAlignment="Left" Margin="210,0,0,0" VerticalAlignment="Top" FontSize="20"/>
-                                    <Button x:Name="butAddDepartment" Content="Добавить" Margin="0,0,10,10" FontSize="20" HorizontalAlignment="Right" Width="101" VerticalAlignment="Bottom">
+                                    <Button x:Name="butAddDepartment" Content="Добавить" Margin="0,0,10,10" FontSize="20" HorizontalAlignment="Right" Width="101" VerticalAlignment="Bottom" Click="butAddDepartment_Click">
                                         <Button.Resources>
                                             <Style TargetType="Border">
                                                 <Setter Property="CornerRadius" Value="5"/>
                                             </Style>
                                         </Button.Resources>
                                     </Button>
-                                    <Button x:Name="butClearAddDepartment" Content="Очистить" Margin="0,0,130,10" FontSize="20" HorizontalAlignment="Right" Width="101" VerticalAlignment="Bottom">
+                                    <Button x:Name="butClearAddDepartment" Content="Очистить" Margin="0,0,130,10" FontSize="20" HorizontalAlignment="Right" Width="101" VerticalAlignment="Bottom" Click="butClearAddDepartment_Click">
                                         <Button.Resources>
                                             <Style TargetType="{x:Type Border}">
                                                 <Setter Property="CornerRadius" Value="5"/>
@@ -78,7 +78,7 @@
                                 </Grid>
                             </TabItem>
                             <TabItem Header="Факультет">
-                                <Grid Background="#FFE5E5E5">
+                                <Grid x:Name="gAddFaculty" Background="#FFE5E5E5">
                                     <TextBox x:Name="tbAddFacultyName" HorizontalAlignment="Left" Margin="10,37,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="186" Height="30" FontSize="20" BorderBrush="Black">
                                         <TextBox.Resources>
                                             <Style TargetType="{x:Type Border}">
@@ -95,14 +95,14 @@
                                         </TextBox.Resources>
                                     </TextBox>
                                     <Label Content="Наименование отдела" HorizontalAlignment="Left" Margin="210,0,0,0" VerticalAlignment="Top" FontSize="20"/>
-                                    <Button x:Name="butAddFaculty" Content="Добавить" Margin="0,0,10,10" FontSize="20" HorizontalAlignment="Right" Width="101" VerticalAlignment="Bottom">
+                                    <Button x:Name="butAddFaculty" Content="Добавить" Margin="0,0,10,10" FontSize="20" HorizontalAlignment="Right" Width="101" VerticalAlignment="Bottom" Click="butAddFaculty_Click">
                                         <Button.Resources>
                                             <Style TargetType="{x:Type Border}">
                                                 <Setter Property="CornerRadius" Value="5"/>
                                             </Style>
                                         </Button.Resources>
                                     </Button>
-                                    <Button x:Name="butClearAddFaculty" Content="Очистить" Margin="0,0,130,10" FontSize="20" HorizontalAlignment="Right" Width="101" VerticalAlignment="Bottom">
+                                    <Button x:Name="butClearAddFaculty" Content="Очистить" Margin="0,0,130,10" FontSize="20" HorizontalAlignment="Right" Width="101" VerticalAlignment="Bottom" Click="butClearAddFaculty_Click">
                                         <Button.Resources>
                                             <Style TargetType="{x:Type Border}">
                                                 <Setter Property="CornerRadius" Value="5"/>
@@ -112,7 +112,7 @@
                                 </Grid>
                             </TabItem>
                             <TabItem Header="Кафедра">
-                                <Grid Background="#FFE5E5E5">
+                                <Grid x:Name="gAddChair" Background="#FFE5E5E5">
                                     <TextBox x:Name="tbAddChairName" HorizontalAlignment="Left" Margin="10,37,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="186" Height="30" FontSize="20" BorderBrush="Black">
                                         <TextBox.Resources>
                                             <Style TargetType="{x:Type Border}">
@@ -129,14 +129,14 @@
                                         </TextBox.Resources>
                                     </TextBox>
                                     <Label Content="Наименование факультета" HorizontalAlignment="Left" Margin="210,0,0,0" VerticalAlignment="Top" FontSize="20"/>
-                                    <Button x:Name="butAddChair" Content="Добавить" Margin="0,0,10,10" FontSize="20" HorizontalAlignment="Right" Width="101" VerticalAlignment="Bottom">
+                                    <Button x:Name="butAddChair" Content="Добавить" Margin="0,0,10,10" FontSize="20" HorizontalAlignment="Right" Width="101" VerticalAlignment="Bottom" Click="butAddChair_Click">
                                         <Button.Resources>
                                             <Style TargetType="{x:Type Border}">
                                                 <Setter Property="CornerRadius" Value="5"/>
                                             </Style>
                                         </Button.Resources>
                                     </Button>
-                                    <Button x:Name="butClearAddChair" Content="Очистить" Margin="0,0,130,10" FontSize="20" HorizontalAlignment="Right" Width="101" VerticalAlignment="Bottom">
+                                    <Button x:Name="butClearAddChair" Content="Очистить" Margin="0,0,130,10" FontSize="20" HorizontalAlignment="Right" Width="101" VerticalAlignment="Bottom" Click="butClearAddChair_Click">
                                         <Button.Resources>
                                             <Style TargetType="{x:Type Border}">
                                                 <Setter Property="CornerRadius" Value="5"/>
@@ -146,7 +146,7 @@
                                 </Grid>
                             </TabItem>
                             <TabItem Header="Направление">
-                                <Grid Background="#FFE5E5E5">
+                                <Grid x:Name="gAddSpeciality" Background="#FFE5E5E5">
                                     <TextBox x:Name="tbAddSpecialityName" HorizontalAlignment="Left" Margin="10,37,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="186" Height="30" FontSize="20" BorderBrush="Black">
                                         <TextBox.Resources>
                                             <Style TargetType="{x:Type Border}">
@@ -163,14 +163,14 @@
                                         </TextBox.Resources>
                                     </TextBox>
                                     <Label Content="Наименование факультета" HorizontalAlignment="Left" Margin="210,0,0,0" VerticalAlignment="Top" FontSize="20"/>
-                                    <Button x:Name="butAddSpeciality" Content="Добавить" Margin="0,0,10,10" FontSize="20" HorizontalAlignment="Right" Width="101" VerticalAlignment="Bottom">
+                                    <Button x:Name="butAddSpeciality" Content="Добавить" Margin="0,0,10,10" FontSize="20" HorizontalAlignment="Right" Width="101" VerticalAlignment="Bottom" Click="butAddSpeciality_Click">
                                         <Button.Resources>
                                             <Style TargetType="{x:Type Border}">
                                                 <Setter Property="CornerRadius" Value="5"/>
                                             </Style>
                                         </Button.Resources>
                                     </Button>
-                                    <Button x:Name="butClearAddSpeciality" Content="Очистить" Margin="0,0,130,10" FontSize="20" HorizontalAlignment="Right" Width="101" VerticalAlignment="Bottom">
+                                    <Button x:Name="butClearAddSpeciality" Content="Очистить" Margin="0,0,130,10" FontSize="20" HorizontalAlignment="Right" Width="101" VerticalAlignment="Bottom" Click="butClearAddSpeciality_Click">
                                         <Button.Resources>
                                             <Style TargetType="{x:Type Border}">
                                                 <Setter Property="CornerRadius" Value="5"/>
@@ -180,7 +180,7 @@
                                 </Grid>
                             </TabItem>
                             <TabItem Header="Дисциплина">
-                                <Grid Background="#FFE5E5E5">
+                                <Grid x:Name="gAddDiscipline" Background="#FFE5E5E5">
                                     <TextBox x:Name="tbAddDisciplineName" HorizontalAlignment="Left" Margin="10,37,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="186" Height="30" FontSize="20" BorderBrush="Black">
                                         <TextBox.Resources>
                                             <Style TargetType="{x:Type Border}">
@@ -197,14 +197,14 @@
                                         </TextBox.Resources>
                                     </TextBox>
                                     <Label Content="Наименование кафедры" HorizontalAlignment="Left" Margin="210,0,0,0" VerticalAlignment="Top" FontSize="20"/>
-                                    <Button x:Name="butAddDiscipline" Content="Добавить" Margin="0,0,10,10" FontSize="20" HorizontalAlignment="Right" Width="101" VerticalAlignment="Bottom">
+                                    <Button x:Name="butAddDiscipline" Content="Добавить" Margin="0,0,10,10" FontSize="20" HorizontalAlignment="Right" Width="101" VerticalAlignment="Bottom" Click="butAddDiscipline_Click">
                                         <Button.Resources>
                                             <Style TargetType="{x:Type Border}">
                                                 <Setter Property="CornerRadius" Value="5"/>
                                             </Style>
                                         </Button.Resources>
                                     </Button>
-                                    <Button x:Name="butClearAddDiscipline" Content="Очистить" Margin="0,0,130,10" FontSize="20" HorizontalAlignment="Right" Width="101" VerticalAlignment="Bottom">
+                                    <Button x:Name="butClearAddDiscipline" Content="Очистить" Margin="0,0,130,10" FontSize="20" HorizontalAlignment="Right" Width="101" VerticalAlignment="Bottom" Click="butClearAddDiscipline_Click">
                                         <Button.Resources>
                                             <Style TargetType="{x:Type Border}">
                                                 <Setter Property="CornerRadius" Value="5"/>
@@ -214,8 +214,8 @@
                                 </Grid>
                             </TabItem>
                             <TabItem Header="Сотрудник">
-                                <Grid Background="#FFE5E5E5">
-                                    <TextBox Margin="10,37,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="30" FontSize="20" BorderBrush="Black" HorizontalAlignment="Left" Width="160">
+                                <Grid x:Name="gAddEmployee" Background="#FFE5E5E5">
+                                    <TextBox x:Name="tbAddEmployeeSurname" Margin="10,37,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="30" FontSize="20" BorderBrush="Black" HorizontalAlignment="Left" Width="160">
                                         <TextBox.Resources>
                                             <Style TargetType="{x:Type Border}">
                                                 <Setter Property="CornerRadius" Value="5"/>
@@ -263,14 +263,6 @@
                                         </TextBox.Resources>
                                     </TextBox>
                                     <Label Content="Email" HorizontalAlignment="Left" Margin="920,0,0,0" VerticalAlignment="Top" FontSize="20"/>
-                                    <TextBox x:Name="tbAddEmployeeSurname" Margin="10,37,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="30" FontSize="20" BorderBrush="Black" HorizontalAlignment="Left" Width="160">
-                                        <TextBox.Resources>
-                                            <Style TargetType="{x:Type Border}">
-                                                <Setter Property="CornerRadius" Value="5"/>
-                                            </Style>
-                                        </TextBox.Resources>
-                                    </TextBox>
-                                    <Label Content="" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Top" FontSize="20"/>
                                     <TextBox x:Name="tbAddEmployeePost" Margin="10,109,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="30" FontSize="20" BorderBrush="Black" HorizontalAlignment="Left" Width="160">
                                         <TextBox.Resources>
                                             <Style TargetType="{x:Type Border}">
@@ -335,14 +327,14 @@
                                         </TextBox.Resources>
                                     </TextBox>
                                     <Label Content="Орган, выдавший паспорт" HorizontalAlignment="Left" Margin="730,144,0,0" VerticalAlignment="Top" FontSize="20"/>
-                                    <Button x:Name="butAddEmployee" Content="Добавить" Margin="0,0,10,10" FontSize="20" HorizontalAlignment="Right" Width="101" VerticalAlignment="Bottom">
+                                    <Button x:Name="butAddEmployee" Content="Добавить" Margin="0,0,10,10" FontSize="20" HorizontalAlignment="Right" Width="101" VerticalAlignment="Bottom" Click="butAddEmployee_Click">
                                         <Button.Resources>
                                             <Style TargetType="{x:Type Border}">
                                                 <Setter Property="CornerRadius" Value="5"/>
                                             </Style>
                                         </Button.Resources>
                                     </Button>
-                                    <Button x:Name="butClearAddEmployee" Content="Очистить" Margin="0,0,130,10" FontSize="20" HorizontalAlignment="Right" Width="101" VerticalAlignment="Bottom">
+                                    <Button x:Name="butClearAddEmployee" Content="Очистить" Margin="0,0,130,10" FontSize="20" HorizontalAlignment="Right" Width="101" VerticalAlignment="Bottom" Click="butClearAddEmployee_Click">
                                         <Button.Resources>
                                             <Style TargetType="{x:Type Border}">
                                                 <Setter Property="CornerRadius" Value="5"/>
@@ -351,8 +343,8 @@
                                     </Button>
                                 </Grid>
                             </TabItem>
-                            <TabItem Header="Преподаватель">
-                                <Grid Background="#FFE5E5E5">
+                            <TabItem x:Name="___Без_имени_" Header="Преподаватель">
+                                <Grid x:Name="gAddTeacher" Background="#FFE5E5E5">
                                     <Label Content="Код сотрудника" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Top" FontSize="20"/>
                                     <TextBox x:Name="tbAddTeacherEmployeeId" Margin="10,37,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="30" FontSize="20" BorderBrush="Black" HorizontalAlignment="Left" Width="160">
                                         <TextBox.Resources>
@@ -377,14 +369,14 @@
                                             </Style>
                                         </TextBox.Resources>
                                     </TextBox>
-                                    <Button x:Name="butAddTeacher" Content="Добавить" Margin="0,0,10,10" FontSize="20" HorizontalAlignment="Right" Width="101" VerticalAlignment="Bottom">
+                                    <Button x:Name="butAddTeacher" Content="Добавить" Margin="0,0,10,10" FontSize="20" HorizontalAlignment="Right" Width="101" VerticalAlignment="Bottom" Click="butAddTeacher_Click">
                                         <Button.Resources>
                                             <Style TargetType="{x:Type Border}">
                                                 <Setter Property="CornerRadius" Value="5"/>
                                             </Style>
                                         </Button.Resources>
                                     </Button>
-                                    <Button x:Name="butClearAddTeacher" Content="Очистить" Margin="0,0,130,10" FontSize="20" HorizontalAlignment="Right" Width="101" VerticalAlignment="Bottom">
+                                    <Button x:Name="butClearAddTeacher" Content="Очистить" Margin="0,0,130,10" FontSize="20" HorizontalAlignment="Right" Width="101" VerticalAlignment="Bottom" Click="butClearAddTeacher_Click">
                                         <Button.Resources>
                                             <Style TargetType="{x:Type Border}">
                                                 <Setter Property="CornerRadius" Value="5"/>
@@ -394,7 +386,7 @@
                                 </Grid>
                             </TabItem>
                             <TabItem Header="Группа">
-                                <Grid Background="#FFE5E5E5">
+                                <Grid x:Name="gAddGroup" Background="#FFE5E5E5">
                                     <Label Content="Наименование" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Top" FontSize="20"/>
                                     <TextBox x:Name="tbAddGroupName" Margin="10,37,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="30" FontSize="20" BorderBrush="Black" HorizontalAlignment="Left" Width="160">
                                         <TextBox.Resources>
@@ -411,14 +403,14 @@
                                             </Style>
                                         </TextBox.Resources>
                                     </TextBox>
-                                    <Button Content="Добавить" Margin="0,0,10,10" FontSize="20" HorizontalAlignment="Right" Width="101" VerticalAlignment="Bottom">
+                                    <Button x:Name="butAddGroup" Content="Добавить" Margin="0,0,10,10" FontSize="20" HorizontalAlignment="Right" Width="101" VerticalAlignment="Bottom" Click="butAddGroup_Click">
                                         <Button.Resources>
                                             <Style TargetType="{x:Type Border}">
                                                 <Setter Property="CornerRadius" Value="5"/>
                                             </Style>
                                         </Button.Resources>
                                     </Button>
-                                    <Button x:Name="butClearAddGroup" Content="Очистить" Margin="0,0,130,10" FontSize="20" HorizontalAlignment="Right" Width="101" VerticalAlignment="Bottom">
+                                    <Button x:Name="butClearAddGroup" Content="Очистить" Margin="0,0,130,10" FontSize="20" HorizontalAlignment="Right" Width="101" VerticalAlignment="Bottom" Click="butClearAddGroup_Click">
                                         <Button.Resources>
                                             <Style TargetType="{x:Type Border}">
                                                 <Setter Property="CornerRadius" Value="5"/>
@@ -428,7 +420,14 @@
                                 </Grid>
                             </TabItem>
                             <TabItem Header="Студент">
-                                <Grid Background="#FFE5E5E5">
+                                <Grid x:Name="gAddStudent" Background="#FFE5E5E5">
+                                    <TextBox x:Name="tbAddStudentSurname" Margin="10,37,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="30" FontSize="20" BorderBrush="Black" HorizontalAlignment="Left" Width="160">
+                                        <TextBox.Resources>
+                                            <Style TargetType="{x:Type Border}">
+                                                <Setter Property="CornerRadius" Value="5"/>
+                                            </Style>
+                                        </TextBox.Resources>
+                                    </TextBox>
                                     <Label Content="Фамилия" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Top" FontSize="20"/>
                                     <TextBox x:Name="tbAddStudentName" Margin="190,37,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="30" FontSize="20" BorderBrush="Black" HorizontalAlignment="Left" Width="160">
                                         <TextBox.Resources>
@@ -470,13 +469,6 @@
                                         </TextBox.Resources>
                                     </TextBox>
                                     <Label Content="Email" HorizontalAlignment="Left" Margin="920,0,0,0" VerticalAlignment="Top" FontSize="20"/>
-                                    <TextBox x:Name="tbAddStudentSurname" Margin="10,37,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="30" FontSize="20" BorderBrush="Black" HorizontalAlignment="Left" Width="160">
-                                        <TextBox.Resources>
-                                            <Style TargetType="{x:Type Border}">
-                                                <Setter Property="CornerRadius" Value="5"/>
-                                            </Style>
-                                        </TextBox.Resources>
-                                    </TextBox>
                                     <Label Content="Наименование&#xD;&#xA;направления" HorizontalAlignment="Left" Margin="10,72,0,0" VerticalAlignment="Top" FontSize="20"/>
                                     <TextBox x:Name="tbAddStudentSpecialityName" Margin="10,135,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="30" FontSize="20" BorderBrush="Black" HorizontalAlignment="Left" Width="160">
                                         <TextBox.Resources>
@@ -565,14 +557,14 @@
                                         </TextBox.Resources>
                                     </TextBox>
                                     <Label Content="Орган, выдавший паспорт" HorizontalAlignment="Left" Margin="730,171,0,0" VerticalAlignment="Top" FontSize="20"/>
-                                    <Button x:Name="butAddStudent" Content="Добавить" Margin="0,0,10,10" FontSize="20" HorizontalAlignment="Right" Width="101" VerticalAlignment="Bottom">
+                                    <Button x:Name="butAddStudent" Content="Добавить" Margin="0,0,10,10" FontSize="20" HorizontalAlignment="Right" Width="101" VerticalAlignment="Bottom" Click="butAddStudent_Click">
                                         <Button.Resources>
                                             <Style TargetType="{x:Type Border}">
                                                 <Setter Property="CornerRadius" Value="5"/>
                                             </Style>
                                         </Button.Resources>
                                     </Button>
-                                    <Button x:Name="butClearAddStudent" Content="Очистить" Margin="0,0,130,10" FontSize="20" HorizontalAlignment="Right" Width="101" VerticalAlignment="Bottom">
+                                    <Button x:Name="butClearAddStudent" Content="Очистить" Margin="0,0,130,10" FontSize="20" HorizontalAlignment="Right" Width="101" VerticalAlignment="Bottom" Click="butClearAddStudent_Click">
                                         <Button.Resources>
                                             <Style TargetType="{x:Type Border}">
                                                 <Setter Property="CornerRadius" Value="5"/>
@@ -582,7 +574,7 @@
                                 </Grid>
                             </TabItem>
                             <TabItem Header="Абитуриент">
-                                <Grid Background="#FFE5E5E5">
+                                <Grid x:Name="gAddEnrollee" Background="#FFE5E5E5">
                                     <Label Content="Фамилия" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Top" FontSize="20"/>
                                     <TextBox x:Name="tbAddEnrolleeName" Margin="190,37,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="30" FontSize="20" BorderBrush="Black" HorizontalAlignment="Left" Width="160">
                                         <TextBox.Resources>
@@ -663,14 +655,14 @@
                                         </TextBox.Resources>
                                     </TextBox>
                                     <Label Content="Орган, выдавший паспорт" HorizontalAlignment="Left" Margin="730,72,0,0" VerticalAlignment="Top" FontSize="20"/>
-                                    <Button x:Name="butAddEnrollee" Content="Добавить" Margin="0,0,10,10" FontSize="20" HorizontalAlignment="Right" Width="101" VerticalAlignment="Bottom">
+                                    <Button x:Name="butAddEnrollee" Content="Добавить" Margin="0,0,10,10" FontSize="20" HorizontalAlignment="Right" Width="101" VerticalAlignment="Bottom" Click="butAddEnrollee_Click">
                                         <Button.Resources>
                                             <Style TargetType="{x:Type Border}">
                                                 <Setter Property="CornerRadius" Value="5"/>
                                             </Style>
                                         </Button.Resources>
                                     </Button>
-                                    <Button x:Name="butClearAddEnrollee" Content="Очистить" Margin="0,0,130,10" FontSize="20" HorizontalAlignment="Right" Width="101" VerticalAlignment="Bottom">
+                                    <Button x:Name="butClearAddEnrollee" Content="Очистить" Margin="0,0,130,10" FontSize="20" HorizontalAlignment="Right" Width="101" VerticalAlignment="Bottom" Click="butClearAddEnrollee_Click">
                                         <Button.Resources>
                                             <Style TargetType="{x:Type Border}">
                                                 <Setter Property="CornerRadius" Value="5"/>
