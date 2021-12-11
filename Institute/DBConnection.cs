@@ -11,7 +11,8 @@ namespace Institute
     internal static class DBConnection
     {
         private static MySqlConnection _mySqlConnection = null;
-        private static string _connectionString = "SERVER=localhost;DATABASE=institute;UID=root;PASSWORD=d18594604";
+        private static string _connectionString = "Server=141.8.192.151;Database=f0608526_ppsubdiz;port=3306;User Id=f0608526_ppsubdiz;password=ppsubdiz";
+        // private static string _connectionString = "SERVER=localhost;DATABASE=institute;UID=root;PASSWORD=d18594604";
 
         /// <summary>
         /// Подключение к базе данных. При исключении показывает MessageBox c сообщением из исключения.
