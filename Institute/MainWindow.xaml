@@ -671,9 +671,9 @@
                                     </Button>
                                 </Grid>
                             </TabItem>
-                            <TabItem Header="Препод.-Дисц.">
+                            <TabItem Header="Дисц.-Препод.">
                                 <Grid x:Name="gAddTeacherDisc" Background="#FFE5E5E5">
-                                    <TextBox x:Name="tbAddTeacherDiscTeacherId_Copy" Margin="10,47,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="30" FontSize="20" BorderBrush="Black" HorizontalAlignment="Left" Width="188">
+                                    <TextBox x:Name="tbAddTeacherDiscDiscName" Margin="10,47,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="30" FontSize="20" BorderBrush="Black" HorizontalAlignment="Left" Width="188">
                                         <TextBox.Resources>
                                             <Style TargetType="{x:Type Border}">
                                                 <Setter Property="CornerRadius" Value="5"/>
@@ -703,7 +703,40 @@
                                             </Style>
                                         </Button.Resources>
                                     </Button>
-
+                                </Grid>
+                            </TabItem>
+                            <TabItem Header="Абитур.-Направ.">
+                                <Grid x:Name="gAddEnrolleeSpec" Background="#FFE5E5E5">
+                                    <TextBox x:Name="tbAddEnrolleeSpecEnrolleeId" Margin="10,47,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="30" FontSize="20" BorderBrush="Black" HorizontalAlignment="Left" Width="188">
+                                        <TextBox.Resources>
+                                            <Style TargetType="{x:Type Border}">
+                                                <Setter Property="CornerRadius" Value="5"/>
+                                            </Style>
+                                        </TextBox.Resources>
+                                    </TextBox>
+                                    <Label Content="Код абитуриента" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" FontSize="20"/>
+                                    <TextBox x:Name="tbAddEnrolleeSpecSpecName" Margin="220,47,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="30" FontSize="20" BorderBrush="Black" HorizontalAlignment="Left" Width="188">
+                                        <TextBox.Resources>
+                                            <Style TargetType="{x:Type Border}">
+                                                <Setter Property="CornerRadius" Value="5"/>
+                                            </Style>
+                                        </TextBox.Resources>
+                                    </TextBox>
+                                    <Label Content="Наименование направления" HorizontalAlignment="Left" Margin="220,10,0,0" VerticalAlignment="Top" FontSize="20"/>
+                                    <Button x:Name="butAddEnrolleeSpec" Content="Добавить" Margin="0,0,10,10" FontSize="20" HorizontalAlignment="Right" Width="101" VerticalAlignment="Bottom" Click="butAddEnrolleeSpec_Click">
+                                        <Button.Resources>
+                                            <Style TargetType="{x:Type Border}">
+                                                <Setter Property="CornerRadius" Value="5"/>
+                                            </Style>
+                                        </Button.Resources>
+                                    </Button>
+                                    <Button x:Name="butClearAddEnrolleeSpec" Content="Очистить" Margin="0,0,130,10" FontSize="20" HorizontalAlignment="Right" Width="101" VerticalAlignment="Bottom" Click="butClearAddEnrolleeSpec_Click">
+                                        <Button.Resources>
+                                            <Style TargetType="{x:Type Border}">
+                                                <Setter Property="CornerRadius" Value="5"/>
+                                            </Style>
+                                        </Button.Resources>
+                                    </Button>
                                 </Grid>
                             </TabItem>
                         </TabControl>
@@ -1356,6 +1389,75 @@
                                             </Style>
                                         </Button.Resources>
                                     </Button>
+                                </Grid>
+                            </TabItem>
+                            <TabItem Header="Дисц.-Препод.">
+                                <Grid x:Name="gChangeDiscTeacher" Background="#FFE5E5E5">
+                                    <TextBox x:Name="tbCangeTeacherDiscDiscName" Margin="10,47,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="30" FontSize="20" BorderBrush="Black" HorizontalAlignment="Left" Width="188">
+                                        <TextBox.Resources>
+                                            <Style TargetType="{x:Type Border}">
+                                                <Setter Property="CornerRadius" Value="5"/>
+                                            </Style>
+                                        </TextBox.Resources>
+                                    </TextBox>
+                                    <Label Content="Наименование дисциплины" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" FontSize="20"/>
+                                    <TextBox x:Name="tbChangeTeacherDiscTeacherId" Margin="294,47,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="30" FontSize="20" BorderBrush="Black" HorizontalAlignment="Left" Width="188">
+                                        <TextBox.Resources>
+                                            <Style TargetType="{x:Type Border}">
+                                                <Setter Property="CornerRadius" Value="5"/>
+                                            </Style>
+                                        </TextBox.Resources>
+                                    </TextBox>
+                                    <Label Content="Код преподавателя" HorizontalAlignment="Left" Margin="294,10,0,0" VerticalAlignment="Top" FontSize="20"/>
+                                    <Button x:Name="butChangeDiscTeacher" Content="Удалить" Margin="0,0,10,10" FontSize="20" HorizontalAlignment="Right" Width="101" VerticalAlignment="Bottom" Click="butChangeDiscTeacher_Click">
+                                        <Button.Resources>
+                                            <Style TargetType="{x:Type Border}">
+                                                <Setter Property="CornerRadius" Value="5"/>
+                                            </Style>
+                                        </Button.Resources>
+                                    </Button>
+                                    <Button x:Name="butClearChangeDiscTeacher" Content="Очистить" Margin="0,0,130,10" FontSize="20" HorizontalAlignment="Right" Width="101" VerticalAlignment="Bottom" Click="butClearChangeDiscTeacher_Click">
+                                        <Button.Resources>
+                                            <Style TargetType="{x:Type Border}">
+                                                <Setter Property="CornerRadius" Value="5"/>
+                                            </Style>
+                                        </Button.Resources>
+                                    </Button>
+                                </Grid>
+                            </TabItem>
+                            <TabItem Header="Абитур.-Напр.">
+                                <Grid x:Name="gChangeEnrolleeSpec" Background="#FFE5E5E5">
+                                    <TextBox x:Name="tbChangeEnrolleeSpecEnrolleeId" Margin="10,47,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="30" FontSize="20" BorderBrush="Black" HorizontalAlignment="Left" Width="188">
+                                        <TextBox.Resources>
+                                            <Style TargetType="{x:Type Border}">
+                                                <Setter Property="CornerRadius" Value="5"/>
+                                            </Style>
+                                        </TextBox.Resources>
+                                    </TextBox>
+                                    <Label Content="Код абитуриента" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" FontSize="20"/>
+                                    <TextBox x:Name="tbChangeEnrolleeSpecSpecName" Margin="220,47,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="30" FontSize="20" BorderBrush="Black" HorizontalAlignment="Left" Width="188">
+                                        <TextBox.Resources>
+                                            <Style TargetType="{x:Type Border}">
+                                                <Setter Property="CornerRadius" Value="5"/>
+                                            </Style>
+                                        </TextBox.Resources>
+                                    </TextBox>
+                                    <Label Content="Наименование направления" HorizontalAlignment="Left" Margin="220,10,0,0" VerticalAlignment="Top" FontSize="20"/>
+                                    <Button x:Name="butChangeEnrolleeSpec" Content="Удалить" Margin="0,0,10,10" FontSize="20" HorizontalAlignment="Right" Width="101" VerticalAlignment="Bottom" Click="butChangeEnrolleeSpec_Click">
+                                        <Button.Resources>
+                                            <Style TargetType="{x:Type Border}">
+                                                <Setter Property="CornerRadius" Value="5"/>
+                                            </Style>
+                                        </Button.Resources>
+                                    </Button>
+                                    <Button x:Name="butClearChangeEnrolleeSpec" Content="Очистить" Margin="0,0,130,10" FontSize="20" HorizontalAlignment="Right" Width="101" VerticalAlignment="Bottom" Click="butClearChangeEnrolleeSpec_Click">
+                                        <Button.Resources>
+                                            <Style TargetType="{x:Type Border}">
+                                                <Setter Property="CornerRadius" Value="5"/>
+                                            </Style>
+                                        </Button.Resources>
+                                    </Button>
+
                                 </Grid>
                             </TabItem>
                         </TabControl>

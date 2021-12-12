@@ -375,7 +375,17 @@ namespace Institute
 
         private void butClearAddTeacherDisc_Click(object sender, RoutedEventArgs e)
         {
-            NotImplemented();
+            ClearGrid(gAddTeacherDisc);
+        }
+
+        private void butAddEnrolleeSpec_Click(object sender, RoutedEventArgs e)
+        {
+            Add("enrollee_speciality", gAddEnrolleeSpec);
+        }
+
+        private void butClearAddEnrolleeSpec_Click(object sender, RoutedEventArgs e)
+        {
+            ClearGrid(gAddEnrolleeSpec);
         }
 
         private void Change(Grid grid, string table, string[] columns, string keyColumnName, string key, bool canDelete = true)
@@ -639,6 +649,46 @@ namespace Institute
             {
                 MessageBox.Show(ex.Message, "Что-то пошло не так...");
             }
+        }
+
+        private void butChangeDiscTeacher_Click(object sender, RoutedEventArgs e)
+        {
+            if (!IsFieldsFilled(gChangeDiscTeacher))
+            {
+                MessageBox.Show("Вы не заполнили поля!", "Внимание!");
+                return;
+            }
+
+            string query = $"delete from discipline_teacher where discipline_name = '{tbCangeTeacherDiscDiscName.Text}' and employee_id = '{tbChangeTeacherDiscTeacherId.Text}'";
+            if (DBConnection.ChangeData(query))
+            {
+                MessageBox.Show("Данные успешно удалены!", "Ура!");
+            }
+        }
+
+        private void butClearChangeDiscTeacher_Click(object sender, RoutedEventArgs e)
+        {
+            ClearGrid(gChangeDiscTeacher);
+        }
+
+        private void butChangeEnrolleeSpec_Click(object sender, RoutedEventArgs e)
+        {
+            if (!IsFieldsFilled(gChangeEnrolleeSpec))
+            {
+                MessageBox.Show("Вы не заполнили поля!", "Внимание!");
+                return;
+            }
+
+            string query = $"delete from enrollee_speciality where enrollee_id = '{tbChangeEnrolleeSpecEnrolleeId.Text}' and speciality_name = '{tbChangeEnrolleeSpecSpecName.Text}'";
+            if (DBConnection.ChangeData(query))
+            {
+                MessageBox.Show("Данные успешно удалены!", "Ура!");
+            }
+        }
+
+        private void butClearChangeEnrolleeSpec_Click(object sender, RoutedEventArgs e)
+        {
+            ClearGrid(gChangeEnrolleeSpec);
         }
     }
 }
