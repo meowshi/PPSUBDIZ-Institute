@@ -856,5 +856,71 @@ namespace Institute
                 MessageBox.Show("Ничего не найдено");
             }
         }
+
+        private void butClearSearchEnrolleeClick(object sender, RoutedEventArgs e)
+        {
+            ClearGrid(erolleeGrid);
+        }
+
+        private void butSearchEnrolleeClick(object sender, RoutedEventArgs e)
+        {
+            if (tbSearchErolleeSurname.Text == "" && tbSearchErolleeName.Text == "" &&
+                tbSearchErolleePatronymic.Text == "" && tbSearchErolleeDocumentType.Text == "" &&
+                tbSearchErolleeTotalScore.Text == "")
+            {
+                MessageBox.Show("Заполните любое поле", "Внимание!");
+                return;
+            }
+            List<Enrollee> enrollee = new List<Enrollee>();
+
+            List<string> where = new List<string>();
+            if (tbSearchErolleeSurname.Text != "")
+                where.Add($"enrollee.surname = '{tbSearchErolleeSurname.Text}'");
+            if (tbSearchErolleeName.Text != "")
+                where.Add($"enrollee.name = '{tbSearchErolleeName.Text}'");
+            if (tbSearchErolleePatronymic.Text != "")
+                where.Add($"enrollee.patronymic = '{tbSearchErolleePatronymic.Text}'");
+            if (tbSearchErolleeDocumentType.Text != "")
+                where.Add($"enrollee.docunebt_type = '{tbSearchErolleeDocumentType.Text}'");
+            if (tbSearchErolleeTotalScore.Text != "")
+                where.Add($"enrollee.total_scope = '{tbSearchErolleeTotalScore.Text}'");
+
+            var table = DBConnection.SelectData($"SELECT enrollee.surname, enrollee.name, enrollee.patronymic, enrollee.document_type, enrollee.total_score, passport_data.series, passport_data.number, passport_data.issue_date, passport_data.expiry_date, passport_data.issuing_authority FROM enrollee INNER JOIN passport_data ON passport_data.id = enrollee.passport_data_id WHERE { String.Join(" AND ", where.ToArray())};");
+            if (table.Rows.Count != 0)
+            {
+                for (int i = 0; i < table.Rows.Count; i++)
+                {
+                    enrollee.Add(new Enrollee()
+                    {
+                        Surname = table.Rows[i][0].ToString(),
+                        Name = table.Rows[i][1].ToString(),
+                        Patronymic = table.Rows[i][2].ToString(),
+                        Document_type = table.Rows[i][3].ToString(),
+                        Total_scope = table.Rows[i][4].ToString(),
+                        Series = table.Rows[i][5].ToString(),
+                        Number = table.Rows[i][6].ToString(),
+                        Issue_date = table.Rows[i][7].ToString(),
+                        Expiry_date = table.Rows[i][8].ToString(),
+                        Issuing_authority = table.Rows[i][9].ToString()
+                    });
+                }
+
+                dgSearchEnrolleeTable.ItemsSource = enrollee;
+                dgSearchEnrolleeTable.Columns[0].Header = "Фамилия";
+                dgSearchEnrolleeTable.Columns[1].Header = "Имя";
+                dgSearchEnrolleeTable.Columns[2].Header = "Отчетсво";
+                dgSearchEnrolleeTable.Columns[3].Header = "Тип документа";
+                dgSearchEnrolleeTable.Columns[4].Header = "Набрано баллов";
+                dgSearchEnrolleeTable.Columns[5].Header = "Серия паспорта";
+                dgSearchEnrolleeTable.Columns[6].Header = "Номер паспорта";
+                dgSearchEnrolleeTable.Columns[7].Header = "Дата выдачи";
+                dgSearchEnrolleeTable.Columns[8].Header = "Срок действия";
+                dgSearchEnrolleeTable.Columns[9].Header = "Орган, выдавший паспорт";
+            }
+            else
+            {
+                MessageBox.Show("Ничего не найдено");
+            }
+        }
     }
 }

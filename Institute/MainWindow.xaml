@@ -1880,7 +1880,7 @@
                     </Grid>
                 </TabItem>
                 <TabItem x:Name="dgSearchEnrollee" Header="Абитуриент">
-                    <Grid Background="#FFE5E5E5">
+                    <Grid x:Name="erolleeGrid" Background="#FFE5E5E5">
                         <Label Content="Фамилия" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Top" FontSize="20"/>
                         <TextBox x:Name="tbSearchErolleeName" Margin="190,37,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="30" FontSize="20" BorderBrush="Black" HorizontalAlignment="Left" Width="160">
                             <TextBox.Resources>
@@ -1962,21 +1962,21 @@
                             </TextBox.Resources>
                         </TextBox>
                         <Label Content="Орган, выдавший паспорт" HorizontalAlignment="Left" Margin="730,72,0,0" VerticalAlignment="Top" FontSize="20"/>
-                        <Button x:Name="butSearchEnrollee" Content="Поиск" Margin="0,155,10,0" FontSize="20" HorizontalAlignment="Right" Width="101" VerticalAlignment="Top">
+                        <Button x:Name="butSearchEnrollee" Content="Поиск" Margin="0,155,10,0" FontSize="20" HorizontalAlignment="Right" Width="101" VerticalAlignment="Top" Click="butSearchEnrolleeClick">
                             <Button.Resources>
                                 <Style TargetType="{x:Type Border}">
                                     <Setter Property="CornerRadius" Value="5"/>
                                 </Style>
                             </Button.Resources>
                         </Button>
-                        <Button x:Name="butClearSearchEnrollee" Content="Очистить" Margin="0,155,130,0" FontSize="20" HorizontalAlignment="Right" Width="101" VerticalAlignment="Top">
+                        <Button x:Name="butClearSearchEnrollee" Content="Очистить" Margin="0,155,130,0" FontSize="20" HorizontalAlignment="Right" Width="101" VerticalAlignment="Top" Click="butClearSearchEnrolleeClick">
                             <Button.Resources>
                                 <Style TargetType="{x:Type Border}">
                                     <Setter Property="CornerRadius" Value="5"/>
                                 </Style>
                             </Button.Resources>
                         </Button>
-                        <DataGrid Margin="0,204,0,0"/>
+                        <DataGrid x:Name="dgSearchEnrolleeTable" ColumnWidth="*" Margin="0,204,0,0"/>
                     </Grid>
                 </TabItem>
             </TabControl>
