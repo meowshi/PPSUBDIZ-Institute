@@ -1309,7 +1309,10 @@
                 <TabItem Header="Отдел">
                     <Grid x:Name="departmentGrid" Background="#FFE5E5E5">
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="759*"/>
+                            <ColumnDefinition Width="291*"/>
+                            <ColumnDefinition Width="20*"/>
+                            <ColumnDefinition Width="67*"/>
+                            <ColumnDefinition Width="381*"/>
                             <ColumnDefinition Width="145*"/>
                             <ColumnDefinition Width="219*"/>
                         </Grid.ColumnDefinitions>
@@ -1321,22 +1324,22 @@
                             </TextBox.Resources>
                         </TextBox>
                         <Label Content="Наименование" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Top" FontSize="20"/>
-                        <Button x:Name="butSearchDepartment" Content="Поиск" Margin="0,91,10,0" FontSize="20" HorizontalAlignment="Right" Width="101" VerticalAlignment="Top" Click="butSearchDepartmentClick" Grid.Column="2">
+                        <Button x:Name="butSearchDepartment" Content="Поиск" Margin="0,91,10,0" FontSize="20" HorizontalAlignment="Right" Width="101" VerticalAlignment="Top" Click="butSearchDepartmentClick" Grid.Column="5">
                             <Button.Resources>
                                 <Style TargetType="Border">
                                     <Setter Property="CornerRadius" Value="5"/>
                                 </Style>
                             </Button.Resources>
                         </Button>
-                        <Button x:Name="butClearSearchDepartment" Content="Очистить" Margin="0,91,130,0" FontSize="20" HorizontalAlignment="Right" Width="101" VerticalAlignment="Top" Click="butClearSearchDepartmentClick" Grid.Column="1" Grid.ColumnSpan="2">
+                        <Button x:Name="butClearSearchDepartment" Content="Очистить" Margin="0,91,130,0" FontSize="20" HorizontalAlignment="Right" Width="101" VerticalAlignment="Top" Click="butClearSearchDepartmentClick" Grid.Column="4" Grid.ColumnSpan="2">
                             <Button.Resources>
                                 <Style TargetType="{x:Type Border}">
                                     <Setter Property="CornerRadius" Value="5"/>
                                 </Style>
                             </Button.Resources>
                         </Button>
-                        <DataGrid x:Name="dgSearchDepartment" Margin="0,143,0,0" Grid.ColumnSpan="3"/>
-                        <Grid Visibility="Hidden" x:Name="departmentSearchResalt" >
+                        <DataGrid x:Name="dgSearchDepartment" Margin="0,143,0,0" Grid.ColumnSpan="6"/>
+                        <Grid Visibility="Hidden" x:Name="departmentSearchResalt" Grid.ColumnSpan="4" >
                             <Label Content="Наименование:" HorizontalAlignment="Left" Margin="10,169,0,0" VerticalAlignment="Top" FontSize="20"/>
                             <Label Content="Штат:" HorizontalAlignment="Left" Margin="10,211,0,0" VerticalAlignment="Top" FontSize="20"/>
                             <Label x:Name="departmentSearchResaltName" Content="Учебный отдел" HorizontalAlignment="Left" Margin="175,169,0,0" VerticalAlignment="Top" FontSize="20"/>
@@ -1377,7 +1380,7 @@
                         </TextBox>
                         <Label Content="Наименование отдела" HorizontalAlignment="Left" Margin="210,0,0,0" VerticalAlignment="Top" FontSize="20"/>
                         <DataGrid x:Name="dgSearchFaculty" ColumnWidth="*" Margin="0,143,0,0">
-                            
+
                         </DataGrid>
                     </Grid>
                 </TabItem>
@@ -1397,7 +1400,7 @@
                                 </Style>
                             </Button.Resources>
                         </Button>
-                        
+
                         <TextBox x:Name="tbSearchChairName" HorizontalAlignment="Left" Margin="10,37,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="186" Height="30" FontSize="20" BorderBrush="Black">
                             <TextBox.Resources>
                                 <Style TargetType="{x:Type Border}">
@@ -1491,7 +1494,7 @@
                     </Grid>
                 </TabItem>
                 <TabItem Header="Сотрудник">
-                    <Grid Background="#FFE5E5E5">
+                    <Grid x:Name="employeeGrid" Background="#FFE5E5E5">
                         <TextBox Margin="10,37,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="30" FontSize="20" BorderBrush="Black" HorizontalAlignment="Left" Width="160">
                             <TextBox.Resources>
                                 <Style TargetType="{x:Type Border}">
@@ -1612,21 +1615,21 @@
                             </TextBox.Resources>
                         </TextBox>
                         <Label Content="Орган, выдавший паспорт" HorizontalAlignment="Left" Margin="730,144,0,0" VerticalAlignment="Top" FontSize="20"/>
-                        <Button x:Name="butSearchEmployee" Content="Поиск" Margin="0,231,10,0" FontSize="20" HorizontalAlignment="Right" Width="101" VerticalAlignment="Top">
+                        <Button x:Name="butSearchEmployee" Content="Поиск" Margin="0,231,10,0" FontSize="20" HorizontalAlignment="Right" Width="101" VerticalAlignment="Top" Click="butSearchEmployeeClick">
                             <Button.Resources>
                                 <Style TargetType="{x:Type Border}">
                                     <Setter Property="CornerRadius" Value="5"/>
                                 </Style>
                             </Button.Resources>
                         </Button>
-                        <Button x:Name="butClearSearchEmployee" Content="Очистить" Margin="0,231,130,0" FontSize="20" HorizontalAlignment="Right" Width="102" VerticalAlignment="Top">
+                        <Button x:Name="butClearSearchEmployee" Content="Очистить" Margin="0,231,130,0" FontSize="20" HorizontalAlignment="Right" Width="102" VerticalAlignment="Top" Click="butClearSearchEmployeeClick">
                             <Button.Resources>
                                 <Style TargetType="{x:Type Border}">
                                     <Setter Property="CornerRadius" Value="5"/>
                                 </Style>
                             </Button.Resources>
                         </Button>
-                        <DataGrid x:Name="dgSearchEmployee" Margin="0,282,0,0"/>
+                        <DataGrid x:Name="dgSearchEmployee" Margin="0,282,0,0"></DataGrid>
                     </Grid>
                 </TabItem>
                 <TabItem x:Name="dgSearchTeacher" Header="Преподаватель">

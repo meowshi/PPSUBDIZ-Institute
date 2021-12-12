@@ -588,6 +588,89 @@ namespace Institute
                 MessageBox.Show("Ничего не найдено");
             }
         }
-        
+
+        private void butClearSearchEmployeeClick(object sender, RoutedEventArgs e)
+        {
+            ClearGrid(employeeGrid);
+        }
+
+        private void butSearchEmployeeClick(object sender, RoutedEventArgs e)
+        {
+            if (tbSearchEmployeeSurname.Text == "" && tbSearchEmployeeName.Text == "" &&
+                tbSearchEmployeePatronymic.Text == "" && tbSearchEmployeeINN.Text == "" &&
+                tbSearchEmployeePost.Text == "" && tbSearchEmployeeSalary.Text == "" &&
+                tbSearchEmployeeDepartmentName.Text == "" && tbSearchEmployeeEmail.Text == "" &&
+                tbSearchEmployeePhoneNumber.Text == "")
+            {
+                MessageBox.Show("Заполните любое поле", "Внимание!");
+                return;
+            }
+            List<Employee> employee = new List<Employee>();
+
+            List<string> where = new List<string>();
+            if (tbSearchEmployeeSurname.Text != "")
+                where.Add($"employee.surname = '{tbSearchEmployeeSurname.Text}'");
+            if (tbSearchEmployeeName.Text != "")
+                where.Add($"employee.name = '{tbSearchEmployeeName.Text}'");
+            if (tbSearchEmployeePatronymic.Text != "")
+                where.Add($"employee.patronymic = '{tbSearchEmployeePatronymic.Text}'");
+            if (tbSearchEmployeeINN.Text != "")
+                where.Add($"employee.inn = '{tbSearchEmployeeINN.Text}'");
+            if (tbSearchEmployeePhoneNumber.Text != "")
+                where.Add($"employee.phone_number = '{tbSearchEmployeePhoneNumber.Text}'");
+            if (tbSearchEmployeeEmail.Text != "")
+                where.Add($"employee.email = '{tbSearchEmployeeEmail.Text}'");
+            if (tbSearchEmployeePost.Text != "")
+                where.Add($"employee.post = '{tbSearchEmployeePost.Text}'");
+            if (tbSearchEmployeeSalary.Text != "")
+                where.Add($"employee.salary = '{tbSearchEmployeeSalary.Text}'");
+            if (tbSearchEmployeeDepartmentName.Text != "")
+                where.Add($"employee.department_name = '{tbSearchEmployeeDepartmentName.Text}'");
+
+            var table = DBConnection.SelectData($"SELECT employee.surname, employee.name, employee.patronymic, employee.inn, employee.phone_number, employee.email, employee.post, employee.salary, employee.department_name, passport_data.series, passport_data.number, passport_data.issue_date, passport_data.expiry_date, passport_data.issuing_authority FROM employee INNER JOIN passport_data ON passport_data.id = employee.passport_data_id WHERE { String.Join(" AND ", where.ToArray())};");
+            if (table.Rows.Count != 0)
+            {
+                for (int i = 0; i < table.Rows.Count; i++)
+                {
+                    employee.Add(new Employee()
+                    {
+                        Surname = table.Rows[i][0].ToString(),
+                        Name = table.Rows[i][1].ToString(),
+                        Patronymic = table.Rows[i][2].ToString(),
+                        Inn = table.Rows[i][3].ToString(),
+                        Phone_number = table.Rows[i][4].ToString(),
+                        Email = table.Rows[i][5].ToString(),
+                        Post = table.Rows[i][6].ToString(),
+                        Salary = table.Rows[i][7].ToString(),
+                        Department_name = table.Rows[i][8].ToString(),
+                        Series = table.Rows[i][9].ToString(),
+                        Number = table.Rows[i][10].ToString(),
+                        Issue_date = table.Rows[i][11].ToString(),
+                        Expiry_date = table.Rows[i][12].ToString(),
+                        Issuing_authority = table.Rows[i][13].ToString()
+                    });
+                }
+
+                dgSearchEmployee.ItemsSource = employee;
+                dgSearchEmployee.Columns[0].Header = "Фамилия";
+                dgSearchEmployee.Columns[1].Header = "Имя";
+                dgSearchEmployee.Columns[2].Header = "Отчетсво";
+                dgSearchEmployee.Columns[3].Header = "ИНН";
+                dgSearchEmployee.Columns[4].Header = "Номер телефона";
+                dgSearchEmployee.Columns[5].Header = "Email";
+                dgSearchEmployee.Columns[6].Header = "Должность";
+                dgSearchEmployee.Columns[7].Header = "Зарплата";
+                dgSearchEmployee.Columns[8].Header = "Отдел";
+                dgSearchEmployee.Columns[9].Header = "Серия паспорта";
+                dgSearchEmployee.Columns[10].Header = "Номер паспорта";
+                dgSearchEmployee.Columns[11].Header = "Дата выдачи";
+                dgSearchEmployee.Columns[12].Header = "Срок действия";
+                dgSearchEmployee.Columns[13].Header = "Орган, выдавший паспорт";
+            }
+            else
+            {
+                MessageBox.Show("Ничего не найдено");
+            }
+        }
     }
 }
