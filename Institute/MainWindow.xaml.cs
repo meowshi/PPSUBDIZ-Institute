@@ -672,5 +672,189 @@ namespace Institute
                 MessageBox.Show("Ничего не найдено");
             }
         }
+
+        private void butClearSearchTeacherClick(object sender, RoutedEventArgs e)
+        {
+            ClearGrid(teacherGrid);
+        }
+
+        private void butSearchTeacherClick(object sender, RoutedEventArgs e)
+        {
+            if (tbSearchTeacherEmployeeId.Text == "" && tbSearchTeacherChairName.Text == "" &&
+                tbSearchTeacherAcademicRank.Text == "")
+            {
+                MessageBox.Show("Заполните любое поле", "Внимание!");
+                return;
+            }
+            List<Teacher> teacher = new List<Teacher>();
+
+            List<string> where = new List<string>();
+
+            if (tbSearchTeacherEmployeeId.Text != "")
+                where.Add($"teacher.employee_id = '{tbSearchTeacherEmployeeId.Text}'");
+            if (tbSearchTeacherChairName.Text != "")
+                where.Add($"teacher.chair_name = '{tbSearchTeacherChairName.Text}'");
+            if (tbSearchTeacherAcademicRank.Text != "")
+                where.Add($"teacher.academic_rank = '{tbSearchTeacherAcademicRank.Text}'");
+
+            var table = DBConnection.SelectData($"SELECT employee.surname, employee.name, employee.patronymic, teacher.chair_name, teacher.academic_rank FROM teacher INNER JOIN employee ON employee.id = teacher.employee_id WHERE { String.Join(" AND ", where.ToArray())};");
+            if (table.Rows.Count != 0)
+            {
+                for (int i = 0; i < table.Rows.Count; i++)
+                {
+                    teacher.Add(new Teacher(){
+                        Surname = table.Rows[i][0].ToString(), 
+                        Name = table.Rows[i][1].ToString(), 
+                        Patronymic = table.Rows[i][2].ToString(),
+                        Chaur_name = table.Rows[i][3].ToString(),
+                        Acedemic_rank = table.Rows[i][4].ToString()
+                    });
+                }
+
+                dgSearchTeacherTable.ItemsSource = teacher;
+                dgSearchTeacherTable.Columns[0].Header = "Фамилия";
+                dgSearchTeacherTable.Columns[1].Header = "Имя";
+                dgSearchTeacherTable.Columns[2].Header = "Отчетсво";
+                dgSearchTeacherTable.Columns[3].Header = "Кафедра";
+                dgSearchTeacherTable.Columns[4].Header = "Должность";
+            }
+            else
+            {
+                MessageBox.Show("Ничего не найдено");
+            }
+        }
+
+        private void butClearSearchGroupClick(object sender, RoutedEventArgs e)
+        {
+            ClearGrid(groupGrid);
+        }
+
+        private void butSearchGroupClick(object sender, RoutedEventArgs e)
+        {
+            if (tbSearchGroupName.Text == "" && tbSearchGroupFacultyName.Text == "")
+            {
+                MessageBox.Show("Заполните любое поле", "Внимание!");
+                return;
+            }
+            List<Group> group = new List<Group>();
+
+            List<string> where = new List<string>();
+
+            if (tbSearchGroupName.Text != "")
+                where.Add($"group.name = '{tbSearchGroupName.Text}'");
+            if (tbSearchGroupFacultyName.Text != "")
+                where.Add($"group.faculty_name = '{tbSearchGroupFacultyName.Text}'");
+
+            var table = DBConnection.SelectData($"SELECT group.name, group.faculty_name FROM `group` WHERE { String.Join(" AND ", where.ToArray())};");
+            if (table.Rows.Count != 0)
+            {
+                for (int i = 0; i < table.Rows.Count; i++)
+                {
+                    group.Add(new Group()
+                    {
+                        Name = table.Rows[i][0].ToString(),
+                        Faculty_name = table.Rows[i][1].ToString(),
+                    });
+                }
+
+                dgSearchGroup.ItemsSource = group;
+                dgSearchGroup.Columns[0].Header = "Название";
+                dgSearchGroup.Columns[1].Header = "Факультет";
+            }
+            else
+            {
+                MessageBox.Show("Ничего не найдено");
+            }
+        }
+
+        private void butClearSearchStudentClick(object sender, RoutedEventArgs e)
+        {
+            ClearGrid(studentGrid);
+        }
+
+        private void butSearchStudentClick(object sender, RoutedEventArgs e)
+        {
+            if (tbSearchStudentSurname.Text == "" && tbSearchStudentName.Text == "" &&
+                tbSearchStudentPatronymic.Text == "" && tbSearchStudentINN.Text == "" &&
+                tbSearchStudentPhoneNumber.Text == "" && tbSearchStudentEmail.Text == "" &&
+                tbSearchStudentSpecialityName.Text == "" && tbSearchStudentChairName.Text == "" &&
+                tbSearchStudentGroupName.Text == "")
+            {
+                MessageBox.Show("Заполните любое поле", "Внимание!");
+                return;
+            }
+            List<Student> student = new List<Student>();
+
+            List<string> where = new List<string>();
+            if (tbSearchStudentSurname.Text != "")
+                where.Add($"student.surname = '{tbSearchStudentSurname.Text}'");
+            if (tbSearchStudentName.Text != "")
+                where.Add($"student.name = '{tbSearchStudentName.Text}'");
+            if (tbSearchStudentPatronymic.Text != "")
+                where.Add($"student.patronymic = '{tbSearchStudentPatronymic.Text}'");
+            if (tbSearchStudentINN.Text != "")
+                where.Add($"student.inn = '{tbSearchStudentINN.Text}'");
+            if (tbSearchStudentPhoneNumber.Text != "")
+                where.Add($"student.phone_number = '{tbSearchStudentPhoneNumber.Text}'");
+            if (tbSearchStudentEmail.Text != "")
+                where.Add($"student.email = '{tbSearchStudentEmail.Text}'");
+            if (tbSearchStudentSpecialityName.Text != "")
+                where.Add($"student.speciality_name = '{tbSearchStudentSpecialityName.Text}'");
+            if (tbSearchStudentChairName.Text != "")
+                where.Add($"student.chair_name = '{tbSearchStudentChairName.Text}'");
+            if (tbSearchStudentGroupName.Text != "")
+                where.Add($"student.group_name = '{tbSearchStudentGroupName.Text}'");
+
+            var table = DBConnection.SelectData($"SELECT student.surname, student.name, student.patronymic, student.speciality_name, student.chair_name, student.group_name, student.start_date, student.end_date, student.education_cost, student.inn, student.phone_number, student.email, passport_data.series, passport_data.number, passport_data.issue_date, passport_data.expiry_date, passport_data.issuing_authority FROM student INNER JOIN passport_data ON passport_data.id = student.passport_data_id WHERE { String.Join(" AND ", where.ToArray())};");
+            if (table.Rows.Count != 0)
+            {
+                for (int i = 0; i < table.Rows.Count; i++)
+                {
+                    student.Add(new Student()
+                    {
+                        Surname = table.Rows[i][0].ToString(),
+                        Name = table.Rows[i][1].ToString(),
+                        Patronymic = table.Rows[i][2].ToString(),
+                        Speciality_name = table.Rows[i][3].ToString(),
+                        Chair_name = table.Rows[i][4].ToString(),
+                        Group_name = table.Rows[i][5].ToString(),
+                        Start_date = table.Rows[i][6].ToString(),
+                        End_date = table.Rows[i][7].ToString(),
+                        Education_cost = table.Rows[i][8].ToString(),
+                        Inn = table.Rows[i][9].ToString(),
+                        Phone_number = table.Rows[i][10].ToString(),
+                        Email = table.Rows[i][11].ToString(),
+                        Series = table.Rows[i][12].ToString(),
+                        Number = table.Rows[i][13].ToString(),
+                        Issue_date = table.Rows[i][14].ToString(),
+                        Expiry_date = table.Rows[i][15].ToString(),
+                        Issuing_authority = table.Rows[i][16].ToString()
+                    });
+                }
+
+                dgSearchStudentTable.ItemsSource = student;
+                dgSearchStudentTable.Columns[0].Header = "Фамилия";
+                dgSearchStudentTable.Columns[1].Header = "Имя";
+                dgSearchStudentTable.Columns[2].Header = "Отчетсво";
+                dgSearchStudentTable.Columns[3].Header = "Специальность";
+                dgSearchStudentTable.Columns[4].Header = "Кафедра";
+                dgSearchStudentTable.Columns[5].Header = "Группа";
+                dgSearchStudentTable.Columns[6].Header = "Начало обучения";
+                dgSearchStudentTable.Columns[7].Header = "Конец обучения";
+                dgSearchStudentTable.Columns[8].Header = "Стоимость обучения";
+                dgSearchStudentTable.Columns[9].Header = "Инн";
+                dgSearchStudentTable.Columns[10].Header = "Телефон";
+                dgSearchStudentTable.Columns[11].Header = "Email";
+                dgSearchStudentTable.Columns[12].Header = "Серия паспорта";
+                dgSearchStudentTable.Columns[13].Header = "Номер паспорта";
+                dgSearchStudentTable.Columns[14].Header = "Дата выдачи";
+                dgSearchStudentTable.Columns[15].Header = "Срок действия";
+                dgSearchStudentTable.Columns[16].Header = "Орган, выдавший паспорт";
+            }
+            else
+            {
+                MessageBox.Show("Ничего не найдено");
+            }
+        }
     }
 }
