@@ -13,6 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Institute.tables;
 
 namespace Institute
 {
@@ -413,5 +414,180 @@ namespace Institute
         {
 
         }
+
+        private void mainSubsystemTab_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
+        private void butSearchDepartmentClick(object sender, RoutedEventArgs e)
+        {
+            bool isKeyEmpty = tbSearchDepartmentName.Text == "";
+
+            if (isKeyEmpty)
+            {
+                MessageBox.Show("Введите наименование", "Внимание!");
+                return;
+            }
+            var table = DBConnection.SelectData("SELECT department.name, count(employee.department_name) FROM department INNER JOIN employee ON employee.department_name = department.name WHERE department.name = 'Учебный отдел' GROUP BY employee.department_name; ");
+
+            departmentSearchResaltName.Content = table.Rows[0][0];
+            departmentSearchResaltStuff.Content = table.Rows[0][1];
+
+            departmentSearchResalt.Visibility = Visibility.Visible;
+        }
+
+        private void butClearSearchDepartmentClick(object sender, RoutedEventArgs e)
+        {
+            ClearGrid(departmentGrid);
+        }
+        private void butClearSearchFacultyClick(object sender, RoutedEventArgs e)
+        {
+            ClearGrid(facultyGrid);
+        }
+
+        private void butSearchFacultyClick(object sender, RoutedEventArgs e)
+        {
+            if (tbSearchFacultyName.Text == "" && tbSearchFacultyDepartmentName.Text == "")
+            {
+                MessageBox.Show("Введите наименование или отдел", "Внимание!");
+                return;
+            }
+            List<Faculty> facultys = new List<Faculty>();
+
+            List<string> where = new List<string>();
+            if (tbSearchFacultyName.Text != "")
+                where.Add($"faculty.name = '{tbSearchFacultyName.Text}'");
+            if (tbSearchFacultyDepartmentName.Text != "")
+                where.Add($"faculty.department_name = '{tbSearchFacultyDepartmentName.Text}'");
+
+            var table = DBConnection.SelectData($"SELECT faculty.name, faculty.department_name FROM faculty WHERE {String.Join(" AND ", where.ToArray())};");
+            if (table.Rows.Count != 0)
+            {
+                for(int i =0; i<table.Rows.Count; i++)
+                {
+                    facultys.Add(new Faculty() { Name = table.Rows[i][0].ToString(), Department = table.Rows[i][1].ToString() });
+                }
+            
+                dgSearchFaculty.ItemsSource = facultys;
+                dgSearchFaculty.Columns[0].Header = "Название";
+                dgSearchFaculty.Columns[1].Header = "Департамент";
+            }
+            else
+            {
+                MessageBox.Show("Ничего не найдено");
+            }
+        }
+
+        private void butClearSearchChairClick(object sender, RoutedEventArgs e)
+        {
+            ClearGrid(chairGrid);
+        }
+
+        private void butSearchChairlick(object sender, RoutedEventArgs e)
+        {
+            if (tbSearchChairName.Text == "" && tbSearchChairFacultyName.Text == "")
+            {
+                MessageBox.Show("Введите наименование кафедры или факультета", "Внимание!");
+                return;
+            }
+            List<Chair> chair = new List<Chair>();
+
+            List<string> where = new List<string>();
+            if (tbSearchChairName.Text != "")
+                where.Add($"chair.name = '{tbSearchChairName.Text}'");
+            if (tbSearchChairFacultyName.Text != "")
+                where.Add($"chair.faculty_name = '{tbSearchChairFacultyName.Text}'");
+
+            var table = DBConnection.SelectData($"SELECT chair.name, chair.faculty_name FROM chair WHERE { String.Join(" AND ", where.ToArray())};");
+            if (table.Rows.Count != 0)
+            {
+                for (int i = 0; i < table.Rows.Count; i++)
+                {
+                    chair.Add(new Chair() { Name = table.Rows[i][0].ToString(), Faculty = table.Rows[i][1].ToString() });
+                }
+
+                dgSearchChair.ItemsSource = chair;
+                dgSearchChair.Columns[0].Header = "Название";
+                dgSearchChair.Columns[1].Header = "Факультет";
+            }
+            else
+            {
+                MessageBox.Show("Ничего не найдено");
+            }
+        }
+
+        private void butClearSearchSpecialityClick(object sender, RoutedEventArgs e)
+        {
+            ClearGrid(specialityGrid);
+        }
+        private void butSearchSpecialityClick(object sender, RoutedEventArgs e)
+        {
+            if (tbSearchSpecialityName.Text == "" && tbSearchSpecialityFacultyName.Text == "")
+            {
+                MessageBox.Show("Введите наименование кафедры или факультета", "Внимание!");
+                return;
+            }
+            List<Speciality> speciality = new List<Speciality>();
+
+            List<string> where = new List<string>();
+            if (tbSearchSpecialityName.Text != "")
+                where.Add($"speciality.name = '{tbSearchSpecialityName.Text}'");
+            if (tbSearchSpecialityFacultyName.Text != "")
+                where.Add($"speciality.faculty_name = '{tbSearchSpecialityFacultyName.Text}'");
+
+            var table = DBConnection.SelectData($"SELECT speciality.name, speciality.faculty_name FROM speciality WHERE { String.Join(" AND ", where.ToArray())};");
+            if (table.Rows.Count != 0)
+            {
+                for (int i = 0; i < table.Rows.Count; i++)
+                {
+                    speciality.Add(new Speciality() { Name = table.Rows[i][0].ToString(), Faculty = table.Rows[i][1].ToString() });
+                }
+
+                dgSearchSpecialityGrid.ItemsSource = speciality;
+                dgSearchSpecialityGrid.Columns[0].Header = "Название";
+                dgSearchSpecialityGrid.Columns[1].Header = "Факультет";
+            }
+            else
+            {
+                MessageBox.Show("Ничего не найдено");
+            }
+        }
+        private void butClearSearchDisciplineClick(object sender, RoutedEventArgs e)
+        {
+            ClearGrid(disciplineGrid);
+        }
+        private void butSearchDisciplineClick(object sender, RoutedEventArgs e)
+        {
+            if (tbSearchDisciplineName.Text == "" && tbSearchDisciplineChairName.Text == "")
+            {
+                MessageBox.Show("Введите наименование кафедры или дисциплины", "Внимание!");
+                return;
+            }
+            List<Discipline> discipline = new List<Discipline>();
+
+            List<string> where = new List<string>();
+            if (tbSearchDisciplineName.Text != "")
+                where.Add($"discipline.name = '{tbSearchDisciplineName.Text}'");
+            if (tbSearchDisciplineChairName.Text != "")
+                where.Add($"discipline.chair_name = '{tbSearchDisciplineChairName.Text}'");
+
+            var table = DBConnection.SelectData($"SELECT discipline.name, discipline.chair_name FROM discipline WHERE { String.Join(" AND ", where.ToArray())};");
+            if (table.Rows.Count != 0)
+            {
+                for (int i = 0; i < table.Rows.Count; i++)
+                {
+                    discipline.Add(new Discipline() { Name = table.Rows[i][0].ToString(), Chair = table.Rows[i][1].ToString() });
+                }
+
+                dbSearchDiscipline.ItemsSource = discipline;
+                dbSearchDiscipline.Columns[0].Header = "Название";
+                dbSearchDiscipline.Columns[1].Header = "Кафедра";
+            }
+            else
+            {
+                MessageBox.Show("Ничего не найдено");
+            }
+        }
+        
     }
 }
