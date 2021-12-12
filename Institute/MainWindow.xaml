@@ -575,6 +575,13 @@
                             </TabItem>
                             <TabItem Header="Абитуриент">
                                 <Grid x:Name="gAddEnrollee" Background="#FFE5E5E5">
+                                    <TextBox x:Name="tbAddEnrolleeSurname" Margin="10,37,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="30" FontSize="20" BorderBrush="Black" HorizontalAlignment="Left" Width="160">
+                                        <TextBox.Resources>
+                                            <Style TargetType="{x:Type Border}">
+                                                <Setter Property="CornerRadius" Value="5"/>
+                                            </Style>
+                                        </TextBox.Resources>
+                                    </TextBox>
                                     <Label Content="Фамилия" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Top" FontSize="20"/>
                                     <TextBox x:Name="tbAddEnrolleeName" Margin="190,37,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="30" FontSize="20" BorderBrush="Black" HorizontalAlignment="Left" Width="160">
                                         <TextBox.Resources>
@@ -608,13 +615,6 @@
                                         </TextBox.Resources>
                                     </TextBox>
                                     <Label Content="Сумма баллов" HorizontalAlignment="Left" Margin="730,0,0,0" VerticalAlignment="Top" FontSize="20"/>
-                                    <TextBox x:Name="tbAddEnrolleeSurname" Margin="10,37,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="30" FontSize="20" BorderBrush="Black" HorizontalAlignment="Left" Width="160">
-                                        <TextBox.Resources>
-                                            <Style TargetType="{x:Type Border}">
-                                                <Setter Property="CornerRadius" Value="5"/>
-                                            </Style>
-                                        </TextBox.Resources>
-                                    </TextBox>
                                     <TextBox x:Name="tbAddEnrolleePassportSeries" Margin="10,109,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="30" FontSize="20" BorderBrush="Black" HorizontalAlignment="Left" Width="160">
                                         <TextBox.Resources>
                                             <Style TargetType="{x:Type Border}">
@@ -669,6 +669,41 @@
                                             </Style>
                                         </Button.Resources>
                                     </Button>
+                                </Grid>
+                            </TabItem>
+                            <TabItem Header="Препод.-Дисц.">
+                                <Grid x:Name="gAddTeacherDisc" Background="#FFE5E5E5">
+                                    <TextBox x:Name="tbAddTeacherDiscTeacherId_Copy" Margin="10,47,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="30" FontSize="20" BorderBrush="Black" HorizontalAlignment="Left" Width="188">
+                                        <TextBox.Resources>
+                                            <Style TargetType="{x:Type Border}">
+                                                <Setter Property="CornerRadius" Value="5"/>
+                                            </Style>
+                                        </TextBox.Resources>
+                                    </TextBox>
+                                    <Label Content="Наименование дисциплины" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" FontSize="20"/>
+                                    <TextBox x:Name="tbAddTeacherDiscTeacherId" Margin="294,47,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="30" FontSize="20" BorderBrush="Black" HorizontalAlignment="Left" Width="188">
+                                        <TextBox.Resources>
+                                            <Style TargetType="{x:Type Border}">
+                                                <Setter Property="CornerRadius" Value="5"/>
+                                            </Style>
+                                        </TextBox.Resources>
+                                    </TextBox>
+                                    <Label Content="Код преподавателя" HorizontalAlignment="Left" Margin="294,10,0,0" VerticalAlignment="Top" FontSize="20"/>
+                                    <Button x:Name="butAddTeacherDisc" Content="Добавить" Margin="0,0,10,10" FontSize="20" HorizontalAlignment="Right" Width="101" VerticalAlignment="Bottom" Click="butAddTeacherDisc_Click">
+                                        <Button.Resources>
+                                            <Style TargetType="{x:Type Border}">
+                                                <Setter Property="CornerRadius" Value="5"/>
+                                            </Style>
+                                        </Button.Resources>
+                                    </Button>
+                                    <Button x:Name="butClearAddTeacherDisc" Content="Очистить" Margin="0,0,130,10" FontSize="20" HorizontalAlignment="Right" Width="101" VerticalAlignment="Bottom" Click="butClearAddTeacherDisc_Click">
+                                        <Button.Resources>
+                                            <Style TargetType="{x:Type Border}">
+                                                <Setter Property="CornerRadius" Value="5"/>
+                                            </Style>
+                                        </Button.Resources>
+                                    </Button>
+
                                 </Grid>
                             </TabItem>
                         </TabControl>
@@ -2205,7 +2240,7 @@
             </TabControl>
             <Grid d:IsHidden="True"  x:Name="feedbackSubsystemGrid" Background="#FFE5E5E5" >
                 <Label Content="Сообщение" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" FontSize="20"/>
-                <Button x:Name="butFeedbackSend" Content="Отправить" Margin="0,0,10,10" FontSize="20" HorizontalAlignment="Right" Width="102" VerticalAlignment="Bottom">
+                <Button x:Name="butFeedbackSend" Content="Отправить" Margin="0,0,10,10" FontSize="20" HorizontalAlignment="Right" Width="102" VerticalAlignment="Bottom" Click="butFeedbackSend_Click">
                     <Button.Resources>
                         <Style TargetType="{x:Type Border}">
                             <Setter Property="CornerRadius" Value="5"/>

@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Net;
+using System.Net.Mail;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -366,6 +368,16 @@ namespace Institute
             ClearGrid(gAddEnrollee);
         }
 
+        private void butAddTeacherDisc_Click(object sender, RoutedEventArgs e)
+        {
+            Add("discipline_teacher", gAddTeacherDisc);
+        }
+
+        private void butClearAddTeacherDisc_Click(object sender, RoutedEventArgs e)
+        {
+            NotImplemented();
+        }
+
         private void Change(Grid grid, string table, string[] columns, string keyColumnName, string key, bool canDelete = true)
         {
             bool isOtherFieldsNotEmpty = IsFieldsNotEmpty(grid);
@@ -587,6 +599,46 @@ namespace Institute
             ClearGrid(gChangeEnrollee);
             ClearGrid(gChangeEnrolleeOther);
             ClearGrid(gChangeEnrolleePassport);
+        }
+
+        private void butFeedbackSend_Click(object sender, RoutedEventArgs e)
+        {
+            string message = tbFeedbackMessage.Text;
+            if (message == "")
+            {
+                MessageBox.Show("Вы не ввели сообщение!", "Внимание!");
+                return;
+            }
+
+            var from = new MailAddress("topwowerintheworld@gmail.com", "INSTITUTE");
+            var to = new MailAddress("denlas31@gmail.com", "Glava");
+            const string fromPassword = "qvbqbebiycujtedc";
+            const string subject = "Обратная связь";
+            string body = message;
+
+            try
+            {
+                var smtpClient = new SmtpClient
+                {
+                    Host = "smtp.google.com",
+                    Port = 25,
+                    EnableSsl = true,
+                    DeliveryMethod = SmtpDeliveryMethod.Network,
+                    UseDefaultCredentials = false,
+                    Credentials = new NetworkCredential(from.Address, fromPassword)
+                };
+
+                using (var mailMessage = new MailMessage(from, to) { Subject = subject, Body = body })
+                {
+                    smtpClient.Send(mailMessage);
+                }
+
+                MessageBox.Show("Сообщение успешно отправлено!", "Ура!");
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Что-то пошло не так...");
+            }
         }
     }
 }
