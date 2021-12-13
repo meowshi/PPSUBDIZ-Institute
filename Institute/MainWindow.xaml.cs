@@ -104,6 +104,14 @@ namespace Institute
                     }
                     return false;
                 }
+                else if (child is PasswordBox passwordBox && passwordBox.Password.ToString().Equals(""))
+                {
+                    if (showMB)
+                    {
+                        MessageBox.Show("Не все поля заполнены", "Внимаение");
+                    }
+                    return false;
+                }
             }
 
             return true;

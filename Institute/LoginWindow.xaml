@@ -1,0 +1,65 @@
+﻿<Window x:Class="Institute.LoginWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Institute"
+        mc:Ignorable="d"
+        Title="LoginWindow" Height="400" Width="400">
+    <Grid x:Name="gLogin">
+        <Label Content="Логин" HorizontalAlignment="Center" Margin="0,68,0,0" VerticalAlignment="Top" FontSize="20"/>
+        <TextBox x:Name="tbLogin" Margin="0,110,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="30" FontSize="20" BorderBrush="Black" HorizontalAlignment="Center" Width="260" VerticalScrollBarVisibility="Hidden">
+            <TextBox.Resources>
+                <Style TargetType="{x:Type Border}">
+                    <Setter Property="CornerRadius" Value="5"/>
+                </Style>
+            </TextBox.Resources>
+        </TextBox>
+        <PasswordBox  x:Name="pbPassword" Margin="0,204,0,0" VerticalAlignment="Top" Height="30" FontSize="20" BorderBrush="Black" HorizontalAlignment="Center" Width="260"/>
+        <Label Content="Пароль" HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="20" Margin="0,163,0,0"/>
+        <Button x:Name="butLogin" Content="Вход" Margin="0,259,0,0" VerticalAlignment="Top" Height="31" FontSize="20" MaxWidth="185" HorizontalAlignment="Center" Width="84" RenderTransformOrigin="0.5,0.5" Click="butLogin_Click">
+            <Button.Resources>
+                <Style TargetType="{x:Type Border}">
+                    <Setter Property="CornerRadius" Value="5"/>
+                </Style>
+            </Button.Resources>
+            <Button.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform/>
+                    <SkewTransform/>
+                    <RotateTransform Angle="0.066"/>
+                    <TranslateTransform/>
+                </TransformGroup>
+            </Button.RenderTransform>
+        </Button>
+        <Button Content="Обратная связь" HorizontalAlignment="Left" Margin="10,0,0,10" FontSize="20" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="Blue" Click="Button_Click" VerticalAlignment="Bottom"/>
+
+    </Grid>
+
+    <Window.Resources>
+        <Style x:Key="MyControlBorder" TargetType="Border">
+            <Setter Property="BorderBrush" Value="Black" />
+            <Setter Property="Background" Value="White" />
+            <Setter Property="BorderThickness" Value="1" />
+            <Setter Property="CornerRadius" Value="5" />
+        </Style>
+
+        <!-- TextBox and PasswordBox Style -->
+        <Style x:Key="MyControlInputBox" TargetType="Control">
+            <Setter Property="Height" Value="30" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Control}">
+                        <Border>
+                            <Border Name="Border" Style="{StaticResource MyControlBorder}">
+                                <ScrollViewer x:Name="PART_ContentHost" />
+                            </Border>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style TargetType="{x:Type PasswordBox}" BasedOn="{StaticResource MyControlInputBox}" />
+    </Window.Resources>
+</Window>
