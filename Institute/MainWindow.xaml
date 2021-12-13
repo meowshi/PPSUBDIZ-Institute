@@ -39,11 +39,11 @@
             </Button>
         </Grid>
         <Grid Margin="196,0,0,0">
-            <TabControl d:IsHidden="True"  x:Name="mainSubsystemTab">
+            <TabControl  x:Name="mainSubsystemTab">
                 <TabItem Header="Добавление">
                     <Grid>
-                        <TabControl>
-                            <TabItem Header="Отдел">
+                        <TabControl x:Name="tcAdd">
+                            <TabItem x:Name="tabAddDepartment" Header="Отдел">
                                 <Grid x:Name="gAddDepartment" Background="#FFE5E5E5">
                                     <TextBox x:Name="tbAddDepartmentName" HorizontalAlignment="Left" Margin="10,37,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="186" Height="30" FontSize="20" BorderBrush="Black">
                                         <TextBox.Resources>
@@ -77,7 +77,7 @@
                                     </Button>
                                 </Grid>
                             </TabItem>
-                            <TabItem Header="Факультет">
+                            <TabItem x:Name="tabAddFaculty" Header="Факультет">
                                 <Grid x:Name="gAddFaculty" Background="#FFE5E5E5">
                                     <TextBox x:Name="tbAddFacultyName" HorizontalAlignment="Left" Margin="10,37,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="186" Height="30" FontSize="20" BorderBrush="Black">
                                         <TextBox.Resources>
@@ -111,7 +111,7 @@
                                     </Button>
                                 </Grid>
                             </TabItem>
-                            <TabItem Header="Кафедра">
+                            <TabItem x:Name="tabAddChair" Header="Кафедра">
                                 <Grid x:Name="gAddChair" Background="#FFE5E5E5">
                                     <TextBox x:Name="tbAddChairName" HorizontalAlignment="Left" Margin="10,37,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="186" Height="30" FontSize="20" BorderBrush="Black">
                                         <TextBox.Resources>
@@ -145,7 +145,7 @@
                                     </Button>
                                 </Grid>
                             </TabItem>
-                            <TabItem Header="Направление">
+                            <TabItem x:Name="tabAddSpeciality" Header="Направление">
                                 <Grid x:Name="gAddSpeciality" Background="#FFE5E5E5">
                                     <TextBox x:Name="tbAddSpecialityName" HorizontalAlignment="Left" Margin="10,37,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="186" Height="30" FontSize="20" BorderBrush="Black">
                                         <TextBox.Resources>
@@ -179,7 +179,7 @@
                                     </Button>
                                 </Grid>
                             </TabItem>
-                            <TabItem Header="Дисциплина">
+                            <TabItem x:Name="tabAddDiscipline" Header="Дисциплина">
                                 <Grid x:Name="gAddDiscipline" Background="#FFE5E5E5">
                                     <TextBox x:Name="tbAddDisciplineName" HorizontalAlignment="Left" Margin="10,37,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="186" Height="30" FontSize="20" BorderBrush="Black">
                                         <TextBox.Resources>
@@ -213,7 +213,7 @@
                                     </Button>
                                 </Grid>
                             </TabItem>
-                            <TabItem Header="Сотрудник">
+                            <TabItem x:Name="tabAddEmployee" Header="Сотрудник">
                                 <Grid x:Name="gAddEmployee" Background="#FFE5E5E5">
                                     <TextBox x:Name="tbAddEmployeeSurname" Margin="10,37,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="30" FontSize="20" BorderBrush="Black" HorizontalAlignment="Left" Width="160">
                                         <TextBox.Resources>
@@ -343,7 +343,7 @@
                                     </Button>
                                 </Grid>
                             </TabItem>
-                            <TabItem x:Name="___Без_имени_" Header="Преподаватель">
+                            <TabItem x:Name="tabAddTeacher" Header="Преподаватель">
                                 <Grid x:Name="gAddTeacher" Background="#FFE5E5E5">
                                     <Label Content="Код сотрудника" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Top" FontSize="20"/>
                                     <TextBox x:Name="tbAddTeacherEmployeeId" Margin="10,37,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="30" FontSize="20" BorderBrush="Black" HorizontalAlignment="Left" Width="160">
@@ -385,7 +385,7 @@
                                     </Button>
                                 </Grid>
                             </TabItem>
-                            <TabItem Header="Группа">
+                            <TabItem x:Name="tabAddGroup" Header="Группа">
                                 <Grid x:Name="gAddGroup" Background="#FFE5E5E5">
                                     <Label Content="Наименование" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Top" FontSize="20"/>
                                     <TextBox x:Name="tbAddGroupName" Margin="10,37,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="30" FontSize="20" BorderBrush="Black" HorizontalAlignment="Left" Width="160">
@@ -419,7 +419,7 @@
                                     </Button>
                                 </Grid>
                             </TabItem>
-                            <TabItem Header="Студент">
+                            <TabItem x:Name="tabAddStudent" Header="Студент">
                                 <Grid x:Name="gAddStudent" Background="#FFE5E5E5">
                                     <TextBox x:Name="tbAddStudentSurname" Margin="10,37,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="30" FontSize="20" BorderBrush="Black" HorizontalAlignment="Left" Width="160">
                                         <TextBox.Resources>
@@ -573,7 +573,7 @@
                                     </Button>
                                 </Grid>
                             </TabItem>
-                            <TabItem Header="Абитуриент">
+                            <TabItem x:Name="tabAddEnrollee" Header="Абитуриент">
                                 <Grid x:Name="gAddEnrollee" Background="#FFE5E5E5">
                                     <TextBox x:Name="tbAddEnrolleeSurname" Margin="10,37,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="30" FontSize="20" BorderBrush="Black" HorizontalAlignment="Left" Width="160">
                                         <TextBox.Resources>
@@ -671,7 +671,7 @@
                                     </Button>
                                 </Grid>
                             </TabItem>
-                            <TabItem Header="Дисц.-Препод.">
+                            <TabItem x:Name="tabAddDiscTeacher" Header="Дисц.-Препод.">
                                 <Grid x:Name="gAddTeacherDisc" Background="#FFE5E5E5">
                                     <TextBox x:Name="tbAddTeacherDiscDiscName" Margin="10,47,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="30" FontSize="20" BorderBrush="Black" HorizontalAlignment="Left" Width="188">
                                         <TextBox.Resources>
@@ -705,7 +705,7 @@
                                     </Button>
                                 </Grid>
                             </TabItem>
-                            <TabItem Header="Абитур.-Направ.">
+                            <TabItem x:Name="tabAddEnrolleeSpec" Header="Абитур.-Направ.">
                                 <Grid x:Name="gAddEnrolleeSpec" Background="#FFE5E5E5">
                                     <TextBox x:Name="tbAddEnrolleeSpecEnrolleeId" Margin="10,47,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="30" FontSize="20" BorderBrush="Black" HorizontalAlignment="Left" Width="188">
                                         <TextBox.Resources>
@@ -748,8 +748,8 @@
                             <ColumnDefinition Width="120*"/>
                             <ColumnDefinition Width="419*"/>
                         </Grid.ColumnDefinitions>
-                        <TabControl Grid.ColumnSpan="2">
-                            <TabItem Header="Факультет">
+                        <TabControl x:Name="tcChange" Grid.ColumnSpan="2">
+                            <TabItem x:Name="tabChangeFaculty" Header="Факультет">
                                 <Grid x:Name="gChangeFaculty" Background="#FFE5E5E5">
                                     <TextBox x:Name="tbChangeFacultyName" HorizontalAlignment="Left" Margin="10,37,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="186" Height="30" FontSize="20" BorderBrush="Black">
                                         <TextBox.Resources>
@@ -785,7 +785,7 @@
                                     </Button>
                                 </Grid>
                             </TabItem>
-                            <TabItem Header="Кафедра">
+                            <TabItem x:Name="tabChangeChair" Header="Кафедра">
                                 <Grid x:Name="gChangeChair" Background="#FFE5E5E5">
                                     <TextBox x:Name="tbChangeChairName" HorizontalAlignment="Left" Margin="10,37,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="186" Height="30" FontSize="20" BorderBrush="Black">
                                         <TextBox.Resources>
@@ -821,7 +821,7 @@
                                     </Button>
                                 </Grid>
                             </TabItem>
-                            <TabItem Header="Направление">
+                            <TabItem x:Name="tabChangeSpeciality" Header="Направление">
                                 <Grid x:Name="gChangeSpeciality" Background="#FFE5E5E5">
                                     <TextBox x:Name="tbChangeSpecialityName" HorizontalAlignment="Left" Margin="10,37,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="186" Height="30" FontSize="20" BorderBrush="Black">
                                         <TextBox.Resources>
@@ -857,7 +857,7 @@
                                     </Button>
                                 </Grid>
                             </TabItem>
-                            <TabItem Header="Дисциплина">
+                            <TabItem x:Name="tabChangeDiscipline" Header="Дисциплина">
                                 <Grid x:Name="gChangeDiscipline" Background="#FFE5E5E5">
                                     <TextBox x:Name="tbChangeDisciplineName" HorizontalAlignment="Left" Margin="10,37,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="186" Height="30" FontSize="20" BorderBrush="Black">
                                         <TextBox.Resources>
@@ -893,7 +893,7 @@
                                     </Button>
                                 </Grid>
                             </TabItem>
-                            <TabItem x:Name="butClearChangeEmployee" Header="Сотрудник">
+                            <TabItem x:Name="tabChangeEmployee" Header="Сотрудник">
                                 <Grid x:Name="gChangeEmployee" Background="#FFE5E5E5">
                                     <TextBox x:Name="tbChangeEmployeeId" HorizontalAlignment="Left" Margin="10,37,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="140" Height="30" FontSize="20" BorderBrush="Black">
                                         <TextBox.Resources>
@@ -1026,7 +1026,7 @@
                                             </Style>
                                         </Button.Resources>
                                     </Button>
-                                    <Button x:Name="butClearChangeEmployee1" Content="Очистить" Margin="0,0,130,10" FontSize="20" HorizontalAlignment="Right" Width="101" VerticalAlignment="Bottom" Click="butClearChangeEmployee1_Click">
+                                    <Button x:Name="butClearChangeEmployee" Content="Очистить" Margin="0,0,130,10" FontSize="20" HorizontalAlignment="Right" Width="101" VerticalAlignment="Bottom" Click="butClearChangeEmployee1_Click">
                                         <Button.Resources>
                                             <Style TargetType="{x:Type Border}">
                                                 <Setter Property="CornerRadius" Value="5"/>
@@ -1035,7 +1035,7 @@
                                     </Button>
                                 </Grid>
                             </TabItem>
-                            <TabItem Header="Преподаватель">
+                            <TabItem x:Name="tabChangeTeacher" Header="Преподаватель">
                                 <Grid x:Name="gChangeTeacher" Background="#FFE5E5E5">
                                     <Label Content="Код сотрудника" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Top" FontSize="20"/>
                                     <TextBox x:Name="tbChangeTeacherEmployeeId" Margin="10,37,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="30" FontSize="20" BorderBrush="Black" HorizontalAlignment="Left" Width="160">
@@ -1079,7 +1079,7 @@
                                     </Button>
                                 </Grid>
                             </TabItem>
-                            <TabItem Header="Группа">
+                            <TabItem x:Name="tabChangeGroup" Header="Группа">
                                 <Grid x:Name="gChangeGroup" Background="#FFE5E5E5">
                                     <Label Content="Наименование" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Top" FontSize="20"/>
                                     <TextBox x:Name="tbChangeGroupName" Margin="10,37,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="30" FontSize="20" BorderBrush="Black" HorizontalAlignment="Left" Width="160">
@@ -1115,7 +1115,7 @@
                                     </Button>
                                 </Grid>
                             </TabItem>
-                            <TabItem Header="Студент">
+                            <TabItem x:Name="tabChangeStudent" Header="Студент">
                                 <Grid x:Name="gChangeStudent" Background="#FFE5E5E5">
                                     <TextBox x:Name="tbChangeStudentId" HorizontalAlignment="Left" Margin="10,37,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="140" Height="30" FontSize="20" BorderBrush="Black">
                                         <TextBox.Resources>
@@ -1281,7 +1281,7 @@
                                     </Button>
                                 </Grid>
                             </TabItem>
-                            <TabItem Header="Абитуриент">
+                            <TabItem x:Name="tabChangeEnrollee" Header="Абитуриент">
                                 <Grid x:Name="gChangeEnrollee" Background="#FFE5E5E5">
                                     <TextBox x:Name="tbChangeEnrolleeId" HorizontalAlignment="Left" Margin="10,37,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="140" Height="30" FontSize="20" BorderBrush="Black">
                                         <TextBox.Resources>
@@ -1391,7 +1391,7 @@
                                     </Button>
                                 </Grid>
                             </TabItem>
-                            <TabItem Header="Дисц.-Препод.">
+                            <TabItem x:Name="tabChangeDiscTeacher" Header="Дисц.-Препод.">
                                 <Grid x:Name="gChangeDiscTeacher" Background="#FFE5E5E5">
                                     <TextBox x:Name="tbCangeTeacherDiscDiscName" Margin="10,47,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="30" FontSize="20" BorderBrush="Black" HorizontalAlignment="Left" Width="188">
                                         <TextBox.Resources>
@@ -1425,7 +1425,7 @@
                                     </Button>
                                 </Grid>
                             </TabItem>
-                            <TabItem Header="Абитур.-Напр.">
+                            <TabItem x:Name="tabChangeEnrolleeSpec" Header="Абитур.-Напр.">
                                 <Grid x:Name="gChangeEnrolleeSpec" Background="#FFE5E5E5">
                                     <TextBox x:Name="tbChangeEnrolleeSpecEnrolleeId" Margin="10,47,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="30" FontSize="20" BorderBrush="Black" HorizontalAlignment="Left" Width="188">
                                         <TextBox.Resources>
@@ -1464,7 +1464,7 @@
                     </Grid>
                 </TabItem>
             </TabControl>
-            <TabControl d:IsHidden="True" x:Name="repotSubsystemTab">
+            <TabControl d:IsHidden="True"  x:Name="repotSubsystemTab">
                 <TabItem Header="Отдел">
                     <Grid Background="#FFE5E5E5">
                         <TextBox x:Name="tbSearchDepartmentName" HorizontalAlignment="Left" Margin="10,37,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="186" Height="30" FontSize="20" BorderBrush="Black">
@@ -1640,7 +1640,7 @@
                         <Label Content="Наименование кафедры" HorizontalAlignment="Left" Margin="210,0,0,0" VerticalAlignment="Top" FontSize="20"/>
                     </Grid>
                 </TabItem>
-                <TabItem Header="Сотрудник">
+                <TabItem x:Name="tabSearchEmployee" Header="Сотрудник">
                     <Grid Background="#FFE5E5E5">
                         <TextBox Margin="10,37,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="30" FontSize="20" BorderBrush="Black" HorizontalAlignment="Left" Width="160">
                             <TextBox.Resources>
@@ -1779,7 +1779,7 @@
                         <DataGrid x:Name="dgSearchEmployee" Margin="0,282,0,0"/>
                     </Grid>
                 </TabItem>
-                <TabItem x:Name="dgSearchTeacher" Header="Преподаватель">
+                <TabItem x:Name="tabSearchTeacher" Header="Преподаватель">
                     <Grid Background="#FFE5E5E5">
                         <TextBox x:Name="tbSearchTeacherEmployeeId" HorizontalAlignment="Left" Margin="10,37,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="186" Height="30" FontSize="20" BorderBrush="Black">
                             <TextBox.Resources>
@@ -1857,7 +1857,7 @@
                         <Label Content="Наименование факультета" HorizontalAlignment="Left" Margin="210,0,0,0" VerticalAlignment="Top" FontSize="20"/>
                     </Grid>
                 </TabItem>
-                <TabItem x:Name="dgSearchStudent" Header="Студент">
+                <TabItem x:Name="tabSearchStudent" Header="Студент">
                     <Grid Background="#FFE5E5E5">
                         <Label Content="Фамилия" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Top" FontSize="20"/>
                         <TextBox x:Name="tbSearchStudentName" Margin="190,37,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="30" FontSize="20" BorderBrush="Black" HorizontalAlignment="Left" Width="160">
@@ -2012,7 +2012,7 @@
                         <DataGrid Margin="0,300,0,0"/>
                     </Grid>
                 </TabItem>
-                <TabItem x:Name="dgSearchEnrollee" Header="Абитуриент">
+                <TabItem x:Name="tabSearchEnrollee" Header="Абитуриент">
                     <Grid Background="#FFE5E5E5">
                         <Label Content="Фамилия" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Top" FontSize="20"/>
                         <TextBox x:Name="tbSearchErolleeName" Margin="190,37,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="30" FontSize="20" BorderBrush="Black" HorizontalAlignment="Left" Width="160">
@@ -2113,7 +2113,7 @@
                     </Grid>
                 </TabItem>
             </TabControl>
-            <TabControl   x:Name="controlSubsystemTab">
+            <TabControl d:IsHidden="True"  x:Name="controlSubsystemTab">
                 <TabItem Header="Журнал">
                     <Grid Background="#FFE5E5E5">
                         <TextBlock x:Name="tbConrolLog" HorizontalAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Top" Height="615" Width="1103" Foreground="Black" Background="White" Margin="0,9,0,0"/>

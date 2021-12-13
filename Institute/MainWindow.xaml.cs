@@ -37,6 +37,15 @@ namespace Institute
         private readonly string[] PassportColumns = PassportColumnsStr.Split(',');
         private readonly string[] UserFields = { "surname", "name", "patronymic", "phone_number", "email", "access_level", "password" };
 
+        private readonly UIElement[] ElementsToDisableZero;
+        private readonly UIElement[] ElementsToDisableMinimal;
+        private readonly UIElement[] ElementsToDisableTeacher;
+        private readonly UIElement[] ElementsToDisableChairHead;
+        private readonly UIElement[] ElementsToDisableFacultyHead;
+        private readonly UIElement[] ElementsToDisableRector;
+        private readonly UIElement[] ElementsToDisableHR;
+        private readonly UIElement[] ElementsToDisableAdmissionCommittee;
+
         public MainWindow()
         {
             InitializeComponent();
@@ -45,6 +54,74 @@ namespace Institute
             DBConnection.Connect();
 
             DisableTabs();
+
+            ElementsToDisableZero = new UIElement[] { mainSubsystemButton, reportSubsystemButton, controlSubsystemButton };
+            ElementsToDisableMinimal = new UIElement[] { mainSubsystemButton, controlSubsystemButton, tabSearchEmployee, tabSearchTeacher, tabSearchStudent, tabSearchEnrollee };
+            ElementsToDisableTeacher = new UIElement[] { mainSubsystemButton, controlSubsystemButton, tabSearchEmployee, tabSearchEnrollee };
+            
+            ElementsToDisableChairHead = new UIElement[] { controlSubsystemButton, tabSearchEmployee, tabSearchEnrollee, tabAddDepartment, tabAddFaculty, tabAddChair, tabAddSpeciality,
+            tabAddEmployee, tabAddTeacher, tabAddGroup, tabAddStudent, tabAddEnrollee, tabAddEnrolleeSpec, tabChangeFaculty, tabChangeChair, tabChangeSpeciality,
+            tabChangeEmployee, tabChangeTeacher, tabChangeGroup,tabChangeStudent,tabChangeEnrollee, tabChangeEnrolleeSpec };
+            
+            ElementsToDisableFacultyHead = new UIElement[] { controlSubsystemButton, tabSearchEmployee, tabSearchEnrollee, tabAddDepartment, tabAddFaculty,
+            tabAddDiscipline, tabAddEmployee, tabAddTeacher, tabAddGroup, tabAddEnrollee, tabAddDiscTeacher, tabAddEnrolleeSpec, tabChangeFaculty,
+            tabChangeDiscipline, tabChangeEmployee, tabChangeTeacher, tabChangeGroup, tabChangeEnrollee, tabChangeDiscTeacher, tabChangeEnrolleeSpec };
+
+            ElementsToDisableRector = new UIElement[] { tabAddChair, tabAddSpeciality, tabAddDiscipline, tabAddEmployee, tabAddTeacher, tabAddGroup, tabAddStudent, tabAddEnrollee, 
+            tabAddDiscTeacher, tabAddEnrolleeSpec, tabChangeChair, tabChangeSpeciality, tabChangeChair, tabChangeDiscipline, tabChangeEmployee, tabChangeTeacher, tabChangeStudent, tabChangeGroup, 
+            tabChangeEnrollee, tabChangeDiscTeacher, tabChangeEnrolleeSpec };
+
+            ElementsToDisableHR = new UIElement[] { controlSubsystemButton, tabSearchTeacher, tabSearchEnrollee, tabAddDepartment, tabAddFaculty,
+            tabAddChair, tabAddSpeciality, tabAddDiscipline, tabAddGroup, tabAddEnrollee, tabAddDiscTeacher, tabAddEnrolleeSpec, tabChangeFaculty,
+            tabChangeChair, tabChangeSpeciality, tabChangeDiscipline, tabChangeGroup, tabChangeEnrollee, tabChangeDiscTeacher, tabChangeEnrolleeSpec };
+
+            ElementsToDisableAdmissionCommittee = new UIElement[] { controlSubsystemButton, tabSearchEmployee, tabSearchTeacher,  tabAddDepartment, tabAddFaculty,
+            tabAddChair, tabAddSpeciality, tabAddEmployee, tabAddEnrollee, tabAddDiscipline, tabAddTeacher, tabAddDiscTeacher, tabChangeFaculty,
+            tabChangeChair, tabChangeSpeciality, tabChangeDiscipline, tabChangeEmployee, tabChangeTeacher, tabChangeDiscTeacher };
+
+            switch (User.AccessLevel)
+            {
+                case "Zero":
+                    DisableElements(ElementsToDisableZero);
+                    break;
+                case "Minimal":
+                    DisableElements(ElementsToDisableMinimal);
+                    break;
+                case "Teacher":
+                    DisableElements(ElementsToDisableTeacher);
+                    break;
+                case "ChairHead":
+                    DisableElements(ElementsToDisableChairHead);
+                    tcAdd.SelectedItem = tabAddDiscipline;
+                    tcChange.SelectedItem = tabChangeDiscipline;
+                    break;
+                case "FacultyHead":
+                    DisableElements(ElementsToDisableFacultyHead);
+                    tcAdd.SelectedItem = tabAddChair;
+                    tcChange.SelectedItem = tabChangeChair;
+                    break;
+                case "Rector":
+                    DisableElements(ElementsToDisableRector);
+                    break;
+                case "HR":
+                    DisableElements(ElementsToDisableHR);
+                    tcAdd.SelectedItem = tabAddEmployee;
+                    tcChange.SelectedItem = tabChangeEmployee;
+                    break;
+                case "AdmissionCommittee":
+                    DisableElements(ElementsToDisableAdmissionCommittee);
+                    tcAdd.SelectedItem = tabAddStudent;
+                    tcChange.SelectedItem = tabChangeStudent;
+                    break;
+            }
+        }
+
+        private void DisableElements(UIElement[] elements)
+        {
+            foreach (UIElement element in elements)
+            {
+                element.IsEnabled = false;
+            }
         }
 
         public void NotImplemented()
