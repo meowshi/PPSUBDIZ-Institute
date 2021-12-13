@@ -1305,7 +1305,7 @@
                     </Grid>
                 </TabItem>
             </TabControl>
-            <TabControl x:Name="repotSubsystemTab">
+            <TabControl  x:Name="repotSubsystemTab">
                 <TabItem Header="Отдел">
                     <Grid x:Name="departmentGrid" Background="#FFE5E5E5">
                         <Grid.ColumnDefinitions>
