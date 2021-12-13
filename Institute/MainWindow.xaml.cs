@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Net;
+using System.Net.Mail;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -22,11 +24,19 @@ namespace Institute
     /// </summary>
     public partial class MainWindow : Window
     {   
-        const string PassportColumns = "series,number,issue_date,expiry_date,issuing_authority";
+        const string PassportColumnsStr = "series,number,issue_date,expiry_date,issuing_authority";
 
-        private readonly string[] FacultyFields = new string[] { "department_name" };
-        
-
+        private readonly string[] FacultyFields = { "department_name" };
+        private readonly string[] ChairFields = { "faculty_name" };
+        private readonly string[] SpecialityFields = { "faculty_name" };
+        private readonly string[] DisciplineFields = { "chair_name" };
+        private readonly string[] EmployeeFields = { "surname", "name", "patronymic", "inn", "phone_number", "email", "post", "salary", "department_name", "passport_data_id" };
+        private readonly string[] TeacherFields = { "chair_name", "academic_rank" };
+        private readonly string[] GroupFields = { "faculty_name" };
+        private readonly string[] StudentFields = { "surname", "name", "patronymic", "inn", "phone_number", "email", "speciality_name", "chair_name", "group_name", "start_date", "end_date", "education_cost", "passport_data_id" };
+        private readonly string[] EnrolleeFields = { "surname", "name", "patronymic", "document_type", "total_score", "passport_data_id" };
+        private readonly string[] PassportColumns = PassportColumnsStr.Split(',');
+        private readonly string[] UserFields = { "surname", "name", "patronymic", "phone_number", "email", "access_level", "password" };
 
         public MainWindow()
         {
@@ -53,18 +63,17 @@ namespace Institute
             
             foreach (var child in childs)
             {
-                var textBox = child as TextBox;
-                if (textBox != null)
+                if (child is TextBox textBox)
                 {
                     textBox.Clear();
                 }
-                else
+                else if (child is DatePicker datePicker)
                 {
-                    var datePicker = child as DatePicker;
-                    if (datePicker != null)
-                    {
-                        datePicker.Text = String.Empty;
-                    }
+                    datePicker.Text = "";
+                }
+                else if (child is PasswordBox passwordBox)
+                {
+                    passwordBox.Clear();
                 }
             }
         }
@@ -115,6 +124,10 @@ namespace Institute
                 {
                     return true;
                 }
+                else if (child is PasswordBox passwordBox && !passwordBox.Password.ToString().Equals(String.Empty))
+                {
+                    return true;
+                }
             }
             return false;
         }
@@ -138,17 +151,21 @@ namespace Institute
                 if (child is TextBox textBox)
                 {
                     querySB.Append($"'{textBox.Text}',");
-                    Trace.WriteLine(textBox.Text);
                 }
                 else if (child is DatePicker datePicker)
                 {
                     querySB.Append($"'{datePicker.Text}',");
-                    Trace.WriteLine(datePicker.Text);
+                }
+                else if (child is PasswordBox passwordBox)
+                {
+                    querySB.Append($"'{passwordBox.Password}',");
                 }
             }
 
             querySB.Remove(querySB.Length - 1, 1);
             querySB.Append(')');
+
+            Trace.WriteLine(querySB.ToString());
 
             return querySB.ToString();
         }
@@ -270,7 +287,7 @@ namespace Institute
 
             // Сначала добавляем паспорт так как надо получить код паспортных данных.
             string passportValues = $"'{tbAddEmployeePassportSeries.Text}','{tbAddEmployeePassportNumber.Text}','{dpAddEmployeePassportIssueDate.Text}','{dpAddEmployeePassportExpiryDate.Text}','{tbAddEmployeePassportIssuingAuthority.Text}'";
-            string passportQuery = $"insert into passport_data ({PassportColumns}) values ({passportValues})";
+            string passportQuery = $"insert into passport_data ({PassportColumnsStr}) values ({passportValues})";
             DBConnection.AddData(passportQuery);
             
             var table = DBConnection.SelectData($"select id from passport_data where number = '{tbAddEmployeePassportNumber.Text}'");
@@ -317,7 +334,7 @@ namespace Institute
 
             // Сначала добавляем паспорт так как надо получить код паспортных данных.
             string passportValues = $"'{tbAddStudentPassportSeries.Text}','{tbAddStudentPassportNumber.Text}','{dpAddStudentPassportIssueDate.Text}','{dpAddStudentPassportExpiryDate.Text}','{tbAddStudentPassportIssuingAuthority.Text}'";
-            string passportQuery = $"insert into passport_data ({PassportColumns}) values ({passportValues})";
+            string passportQuery = $"insert into passport_data ({PassportColumnsStr}) values ({passportValues})";
             DBConnection.AddData(passportQuery);
 
             var table = DBConnection.SelectData($"select id from passport_data where number = '{tbAddStudentPassportNumber.Text}'");
@@ -342,7 +359,7 @@ namespace Institute
 
             // Сначала добавляем паспорт так как надо получить код паспортных данных.
             string passportValues = $"'{tbAddEnrolleePassportSeries.Text}','{tbAddEnrolleePassportNumber.Text}','{dpAddEnrolleePassportIssueDate.Text}','{dpAddEnrolleePassportExpiryDate.Text}','{tbAddEnrolleePassportIssuingAuthority.Text}'";
-            string passportQuery = $"insert into passport_data ({PassportColumns}) values ({passportValues})";
+            string passportQuery = $"insert into passport_data ({PassportColumnsStr}) values ({passportValues})";
             DBConnection.AddData(passportQuery);
 
             var table = DBConnection.SelectData($"select id from passport_data where number = '{tbAddEnrolleePassportNumber.Text}'");
@@ -360,15 +377,38 @@ namespace Institute
             ClearGrid(gAddEnrollee);
         }
 
-        private void Change(Grid grid, string table, string[] columns, string keyColumnName, string key)
+        private void butAddTeacherDisc_Click(object sender, RoutedEventArgs e)
+        {
+            Add("discipline_teacher", gAddTeacherDisc);
+        }
+
+        private void butClearAddTeacherDisc_Click(object sender, RoutedEventArgs e)
+        {
+            ClearGrid(gAddTeacherDisc);
+        }
+
+        private void butAddEnrolleeSpec_Click(object sender, RoutedEventArgs e)
+        {
+            Add("enrollee_speciality", gAddEnrolleeSpec);
+        }
+
+        private void butClearAddEnrolleeSpec_Click(object sender, RoutedEventArgs e)
+        {
+            ClearGrid(gAddEnrolleeSpec);
+        }
+
+        private void Change(Grid grid, string table, string[] columns, string keyColumnName, string key, bool canDelete = true)
         {
             bool isOtherFieldsNotEmpty = IsFieldsNotEmpty(grid);
             if (!isOtherFieldsNotEmpty)
             {
-                string query = $"delete from {table} where {keyColumnName} = '{key}'";
-                if (DBConnection.ChangeData(query))
+                if (canDelete)
                 {
-                    MessageBox.Show("Удаление прошло успешно", "Ура!");
+                    string query = $"delete from {table} where {keyColumnName} = '{key}'";
+                    if (DBConnection.ChangeData(query))
+                    {
+                        MessageBox.Show("Удаление прошло успешно", "Ура!");
+                    }
                 }
 
                 return;
@@ -382,11 +422,30 @@ namespace Institute
                 int i = 0;
                 foreach (var child in childs)
                 {
-                    if (child is TextBox textBox && !textBox.Text.Equals(""))
+                    if (child is TextBox textBox)
                     {
-                        querySB.Append(columns[i] + $" = '{textBox.Text}',");
+                        if (!textBox.Text.Equals(""))
+                        {
+                            querySB.Append(columns[i] + $" = '{textBox.Text}',");
+                        }
+                        i++;
                     }
-                    i++;
+                    else if (child is DatePicker datePicker)
+                    {
+                        if (!datePicker.Text.Equals(""))
+                        {
+                            querySB.Append(columns[i] + $" = '{datePicker.Text}',");
+                        }
+                        i++;
+                    }
+                    else if (child is PasswordBox passwordBox)
+                    {
+                        if (!passwordBox.Password.ToString().Equals(""))
+                        {
+                            querySB.Append(columns[i] + $" = '{passwordBox.Password}',");
+                        }
+                        i++;
+                    }
                 }
                 querySB.Remove(querySB.Length - 1, 1);
                 querySB.Append($" where {keyColumnName} = '{key}'");
@@ -397,13 +456,12 @@ namespace Institute
                 }
             }
         }
+
         private void butChangeFaculty_Click(object sender, RoutedEventArgs e)
         {
-            bool isKeyEmpty = tbChangeFacultyName.Text == "";
-
-            if (isKeyEmpty)
+            if (tbChangeFacultyName.Text == "")
             {
-                MessageBox.Show("Вы не заполнили поля!", "Внимание!");
+                MessageBox.Show("Вы не заполнили ключевое поле!", "Внимание!");
                 return;
             }
 
@@ -412,7 +470,275 @@ namespace Institute
 
         private void butClearChangeFaculty_Click(object sender, RoutedEventArgs e)
         {
+            ClearGrid(gChangeFaculty);
+            ClearGrid(gChangeFacultyOther);
+        }
 
+        private void butChangeChair_Click(object sender, RoutedEventArgs e)
+        {
+            if (tbChangeChairName.Text == "")
+            {
+                MessageBox.Show("Вы не заполнили ключевое поле!", "Внимание!");
+                return;
+            }
+
+            Change(gChangeChairOther, "chair", ChairFields, "name", tbChangeChairName.Text);
+        }
+
+        private void butClearChangeChair_Click(object sender, RoutedEventArgs e)
+        {
+            ClearGrid(gChangeChair);
+            ClearGrid(gChangeChairOther);
+        }
+
+        private void butChangeSpeciality_Click(object sender, RoutedEventArgs e)
+        {
+            if (tbChangeSpecialityName.Text == "")
+            {
+                MessageBox.Show("Вы не заполнили ключевое поле!", "Внимание!");
+                return;
+            }
+
+            Change(gChangeSpecialityOther, "speciality", SpecialityFields, "name", tbChangeSpecialityName.Text);
+        }
+
+        private void butClearChangeSpeciality_Click(object sender, RoutedEventArgs e)
+        {
+            ClearGrid(gChangeSpeciality);
+            ClearGrid(gChangeSpecialityOther);
+        }
+
+        private void butChangeDiscipline_Click(object sender, RoutedEventArgs e)
+        {
+            if (tbChangeDisciplineName.Text == "")
+            {
+                MessageBox.Show("Вы не заполнили ключевое поле!", "Внимание!");
+                return;
+            }
+
+            Change(gChangeDisciplineOther, "discipline", DisciplineFields, "name", tbChangeDisciplineName.Text);
+        }
+
+        private void butClearChangeDiscipline_Click(object sender, RoutedEventArgs e)
+        {
+            ClearGrid(gChangeDiscipline);
+            ClearGrid(gChangeDisciplineOther);
+        }
+
+        private void butChangeEmployee_Click(object sender, RoutedEventArgs e)
+        {
+            if (tbChangeEmployeeId.Text == "")
+            {
+                MessageBox.Show("Вы не заполнили ключевое поле!", "Внимание!");
+                return;
+            }
+
+            string query = $"select passport_data_id from employee where id = '{tbChangeEmployeeId.Text}'";
+            var employeeTable = DBConnection.SelectData(query);
+            string passportDataId = employeeTable.Rows[0][0].ToString();
+
+            bool canDelete = !(IsFieldsNotEmpty(gChangeEmployeePassport) || IsFieldsNotEmpty(gChangeEmployeeOther));
+
+            Change(gChangeEmployeeOther, "employee", EmployeeFields, "id", tbChangeEmployeeId.Text, canDelete);
+            Change(gChangeEmployeePassport, "passport_data", PassportColumns, "id", passportDataId, canDelete);
+        }
+
+        private void butClearChangeEmployee1_Click(object sender, RoutedEventArgs e)
+        {
+            ClearGrid(gChangeEmployee);
+            ClearGrid(gChangeEmployeeOther);
+            ClearGrid(gChangeEmployeePassport);
+        }
+
+        private void butChangeTeacher_Click(object sender, RoutedEventArgs e)
+        {
+            if (tbChangeTeacherEmployeeId.Text == "")
+            {
+                MessageBox.Show("Вы не заполнили ключевое поле!", "Внимание!");
+                return;
+            }
+
+            Change(gChangeTeacherOther, "teacher", TeacherFields, "employee_id", tbChangeTeacherEmployeeId.Text);
+        }
+
+        private void butClearChangeTeacher_Click(object sender, RoutedEventArgs e)
+        {
+            ClearGrid(gChangeTeacher);
+            ClearGrid(gChangeTeacherOther);
+        }
+
+        private void butChangeGroup_Click(object sender, RoutedEventArgs e)
+        {
+            if (tbChangeGroupName.Text == "")
+            {
+                MessageBox.Show("Вы не заполнили ключевое поле!", "Внимание!");
+                return;
+            }
+
+            Change(gChangeGroupOther, "`group`", GroupFields, "name", tbChangeGroupName.Text);
+        }
+
+        private void butClearChangeGroup_Click(object sender, RoutedEventArgs e)
+        {
+            ClearGrid(gChangeGroup);
+            ClearGrid(gChangeGroupOther);
+        }
+
+        private void butChangeStudent_Click(object sender, RoutedEventArgs e)
+        {
+            if (tbChangeStudentId.Text == "")
+            {
+                MessageBox.Show("Вы не заполнили ключевое поле!", "Внимание!");
+                return;
+            }
+
+            string query = $"select passport_data_id from student where id = '{tbChangeStudentId.Text}'";
+            var studentTable = DBConnection.SelectData(query);
+            string passportDataId = studentTable.Rows[0][0].ToString();
+
+            bool canDelete = !(IsFieldsNotEmpty(gChangeStudentPassport) || IsFieldsNotEmpty(gChangeStudentOther));
+
+            Change(gChangeStudentOther, "student", StudentFields, "id", tbChangeStudentId.Text, canDelete);
+            Change(gChangeStudentPassport, "passport_data", PassportColumns, "id", passportDataId, canDelete);
+        }
+
+        private void butClearChangeStudent_Click(object sender, RoutedEventArgs e)
+        {
+            ClearGrid(gChangeStudent);
+            ClearGrid(gChangeStudentOther);
+            ClearGrid(gChangeStudentPassport);
+        }
+
+        private void butChangeEnrollee_Click(object sender, RoutedEventArgs e)
+        {
+            if (tbChangeEnrolleeId.Text == "")
+            {
+                MessageBox.Show("Вы не заполнили ключевое поле!", "Внимание!");
+                return;
+            }
+
+            string query = $"select passport_data_id from enrollee where id = '{tbChangeEnrolleeId.Text}'";
+            var enrolleeTable = DBConnection.SelectData(query);
+            string passportDataId = enrolleeTable.Rows[0][0].ToString();
+
+            bool canDelete = !(IsFieldsNotEmpty(gChangeEnrolleePassport) || IsFieldsNotEmpty(gChangeEnrolleeOther));
+
+            Change(gChangeEnrolleeOther, "enrollee", EnrolleeFields, "id", tbChangeEnrolleeId.Text, canDelete);
+            Change(gChangeEnrolleePassport, "passport_data", PassportColumns, "id", passportDataId, canDelete);
+        }
+
+        private void butClearChangeEnrollee_Click(object sender, RoutedEventArgs e)
+        {
+            ClearGrid(gChangeEnrollee);
+            ClearGrid(gChangeEnrolleeOther);
+            ClearGrid(gChangeEnrolleePassport);
+        }
+
+        private void butFeedbackSend_Click(object sender, RoutedEventArgs e)
+        {
+            string message = tbFeedbackMessage.Text;
+            if (message == "")
+            {
+                MessageBox.Show("Вы не ввели сообщение!", "Внимание!");
+                return;
+            }
+
+            var from = new MailAddress("topwowerintheworld@gmail.com", "INSTITUTE");
+            var to = new MailAddress("denlas31@gmail.com", "Glava");
+            const string fromPassword = "qvbqbebiycujtedc";
+            const string subject = "Обратная связь";
+            string body = message;
+
+            try
+            {
+                var smtpClient = new SmtpClient
+                {
+                    Host = "smtp.google.com",
+                    Port = 25,
+                    EnableSsl = true,
+                    DeliveryMethod = SmtpDeliveryMethod.Network,
+                    UseDefaultCredentials = false,
+                    Credentials = new NetworkCredential(from.Address, fromPassword)
+                };
+
+                using (var mailMessage = new MailMessage(from, to) { Subject = subject, Body = body })
+                {
+                    smtpClient.Send(mailMessage);
+                }
+
+                MessageBox.Show("Сообщение успешно отправлено!", "Ура!");
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Что-то пошло не так...");
+            }
+        }
+
+        private void butChangeDiscTeacher_Click(object sender, RoutedEventArgs e)
+        {
+            if (!IsFieldsFilled(gChangeDiscTeacher))
+            {
+                MessageBox.Show("Вы не заполнили поля!", "Внимание!");
+                return;
+            }
+
+            string query = $"delete from discipline_teacher where discipline_name = '{tbCangeTeacherDiscDiscName.Text}' and employee_id = '{tbChangeTeacherDiscTeacherId.Text}'";
+            if (DBConnection.ChangeData(query))
+            {
+                MessageBox.Show("Данные успешно удалены!", "Ура!");
+            }
+        }
+
+        private void butClearChangeDiscTeacher_Click(object sender, RoutedEventArgs e)
+        {
+            ClearGrid(gChangeDiscTeacher);
+        }
+
+        private void butChangeEnrolleeSpec_Click(object sender, RoutedEventArgs e)
+        {
+            if (!IsFieldsFilled(gChangeEnrolleeSpec))
+            {
+                MessageBox.Show("Вы не заполнили поля!", "Внимание!");
+                return;
+            }
+
+            string query = $"delete from enrollee_speciality where enrollee_id = '{tbChangeEnrolleeSpecEnrolleeId.Text}' and speciality_name = '{tbChangeEnrolleeSpecSpecName.Text}'";
+            if (DBConnection.ChangeData(query))
+            {
+                MessageBox.Show("Данные успешно удалены!", "Ура!");
+            }
+        }
+
+        private void butClearChangeEnrolleeSpec_Click(object sender, RoutedEventArgs e)
+        {
+            ClearGrid(gChangeEnrolleeSpec);
+        }
+
+        private void butControlAdd_Click(object sender, RoutedEventArgs e)
+        {
+            Add("user", gControlAdd);
+        }
+
+        private void butClearControlAdd_Click(object sender, RoutedEventArgs e)
+        {
+            ClearGrid(gControlAdd);
+        }
+
+        private void butControlChange_Click(object sender, RoutedEventArgs e)
+        {
+            if (tbControlChangeLogin.Text == "")
+            {
+                MessageBox.Show("Вы не заполнили ключевое поле!", "Внимание!");
+                return;
+            }
+
+            Change(gControlChangeOther, "user", UserFields, "login", tbControlChangeLogin.Text);
+        }
+
+        private void butClearControlChange_Click(object sender, RoutedEventArgs e)
+        {
+            ClearGrid(gControlChange);
+            ClearGrid(gControlChangeOther);
         }
 
         private void mainSubsystemTab_SelectionChanged(object sender, SelectionChangedEventArgs e)
