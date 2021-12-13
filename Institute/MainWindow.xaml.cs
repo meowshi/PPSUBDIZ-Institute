@@ -598,9 +598,9 @@ namespace Institute
         {
             if (tbSearchEmployeeSurname.Text == "" && tbSearchEmployeeName.Text == "" &&
                 tbSearchEmployeePatronymic.Text == "" && tbSearchEmployeeINN.Text == "" &&
-                tbSearchEmployeePost.Text == "" && tbSearchEmployeeSalary.Text == "" &&
-                tbSearchEmployeeDepartmentName.Text == "" && tbSearchEmployeeEmail.Text == "" &&
-                tbSearchEmployeePhoneNumber.Text == "")
+                tbSearchEmployeePost.Text == "" && tbSearchEmployeePhoneNumber.Text == "" &&
+                tbSearchEmployeeDepartmentName.Text == "" && tbSearchEmployeeEmail.Text == ""
+                )
             {
                 MessageBox.Show("Заполните любое поле", "Внимание!");
                 return;
@@ -622,8 +622,6 @@ namespace Institute
                 where.Add($"employee.email = '{tbSearchEmployeeEmail.Text}'");
             if (tbSearchEmployeePost.Text != "")
                 where.Add($"employee.post = '{tbSearchEmployeePost.Text}'");
-            if (tbSearchEmployeeSalary.Text != "")
-                where.Add($"employee.salary = '{tbSearchEmployeeSalary.Text}'");
             if (tbSearchEmployeeDepartmentName.Text != "")
                 where.Add($"employee.department_name = '{tbSearchEmployeeDepartmentName.Text}'");
 
