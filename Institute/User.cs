@@ -27,11 +27,6 @@ namespace Institute
         public static string Patronymic { get; set; }
         public static string PhoneNumber { get; set; }
         public static string Email { get; set; }
-        public static AccessLevel AccessLevel { get; set; }
-
-        public static void SetAccessLevel()
-        {
-            ;
-        }
+        public static string AccessLevel { get; set; }
     }
 }

@@ -29,7 +29,7 @@ namespace Institute
             }
         }
 
-        public static void AddData(string query)
+        public static bool AddData(string query)
         {
             try
             {
@@ -37,17 +37,18 @@ namespace Institute
 
                 MySqlCommand command = new MySqlCommand(query, _mySqlConnection);
                 command.ExecuteNonQuery();
-
-                MessageBox.Show("Поздравляем!", "Запись успешно добавлена!");
+                return true;
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message, "Не удалось добавить данные в базу.");
+                return false;
             }
             finally
             {
                 _mySqlConnection.Close();
             }
+
         }
 
         public static DataTable SelectData(string query)
