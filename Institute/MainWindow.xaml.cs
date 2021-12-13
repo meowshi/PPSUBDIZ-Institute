@@ -1344,5 +1344,70 @@ namespace Institute
                 MessageBox.Show("Ничего не найдено");
             }
         }
+
+        private void butClearControlSearchClick(object sender, RoutedEventArgs e)
+        {
+            ClearGrid(gControlSearch);
+        }
+
+        private void butControlSearchClick(object sender, RoutedEventArgs e)
+        {
+            if (tbControlSearchSurname.Text == "" && tbControlSearchName.Text == "" &&
+                tbControlSearchPatronymic.Text == "" && tbControlSearchPhoneNumber.Text == "" &&
+                tbControlSearchEmail.Text == "" && tbControlSearchAccessLevel.Text == "" &&
+                tbControlSearchLogin.Text == "")
+            {
+                MessageBox.Show("Заполните любое поле", "Внимание!");
+                return;
+            }
+            List<UserTable> userTable = new List<UserTable>();
+
+            List<string> where = new List<string>();
+            if (tbControlSearchLogin.Text != "")
+                where.Add($"user.login = '{tbControlSearchLogin.Text}'");
+            if (tbControlSearchSurname.Text != "")
+                where.Add($"user.surname = '{tbControlSearchSurname.Text}'");
+            if (tbControlSearchName.Text != "")
+                where.Add($"user.name = '{tbControlSearchName.Text}'");
+            if (tbControlSearchPatronymic.Text != "")
+                where.Add($"user.patronymic = '{tbControlSearchPatronymic.Text}'");
+            if (tbControlSearchPhoneNumber.Text != "")
+                where.Add($"user.phone_number = '{tbControlSearchPhoneNumber.Text}'");
+            if (tbControlSearchEmail.Text != "")
+                where.Add($"user.email = '{tbControlSearchEmail.Text}'");
+            if (tbControlSearchAccessLevel.Text != "")
+                where.Add($"user.access_level = '{tbControlSearchAccessLevel.Text}'");
+
+            var table = DBConnection.SelectData($"SELECT user.login, user.surname, user.name, user.patronymic, user.phone_number, user.email, user.access_level FROM user WHERE { String.Join(" AND ", where.ToArray())};");
+            if (table.Rows.Count != 0)
+            {
+                for (int i = 0; i < table.Rows.Count; i++)
+                {
+                    userTable.Add(new UserTable()
+                    {
+                        Login = table.Rows[i][0].ToString(),
+                        Surname = table.Rows[i][1].ToString(),
+                        Name = table.Rows[i][2].ToString(),
+                        Patronymic = table.Rows[i][3].ToString(),
+                        PhoneNumber = table.Rows[i][4].ToString(),
+                        Email = table.Rows[i][5].ToString(),
+                        AccessLevel = table.Rows[i][6].ToString(),
+                    });
+                }
+
+                dgControlSearch.ItemsSource = userTable;
+                dgControlSearch.Columns[0].Header = "Логин";
+                dgControlSearch.Columns[1].Header = "Фамилия";
+                dgControlSearch.Columns[2].Header = "Имя";
+                dgControlSearch.Columns[3].Header = "Отчество";
+                dgControlSearch.Columns[4].Header = "Телефон";
+                dgControlSearch.Columns[5].Header = "Email";
+                dgControlSearch.Columns[6].Header = "Уровень доступа";
+            }
+            else
+            {
+                MessageBox.Show("Ничего не найдено");
+            }
+        }
     }
 }

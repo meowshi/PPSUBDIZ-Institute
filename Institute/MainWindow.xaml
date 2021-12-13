@@ -1464,7 +1464,7 @@
                     </Grid>
                 </TabItem>
             </TabControl>
-            <TabControl  x:Name="repotSubsystemTab">
+            <TabControl d:IsHidden="True" x:Name="repotSubsystemTab">
                 <TabItem Header="Отдел">
                     <Grid x:Name="departmentGrid" Background="#FFE5E5E5">
                         <Grid.ColumnDefinitions>
@@ -2061,7 +2061,7 @@
                     </Grid>
                 </TabItem>
             </TabControl>
-            <TabControl d:IsHidden="True"  x:Name="controlSubsystemTab">
+            <TabControl x:Name="controlSubsystemTab">
                 <TabItem Header="Журнал">
                     <Grid Background="#FFE5E5E5">
                         <TextBlock x:Name="tbConrolLog" HorizontalAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Top" Height="615" Width="1103" Foreground="Black" Background="White" Margin="0,9,0,0"/>
@@ -2233,14 +2233,14 @@
                             </TabItem>
                             <TabItem Header="Отчет">
                                 <Grid x:Name="gControlSearch" Background="#FFE5E5E5">
-                                    <Button x:Name="butrControlSearch" Content="Поиск" Margin="0,110,10,0" FontSize="20" HorizontalAlignment="Right" Width="102" VerticalAlignment="Top">
+                                    <Button x:Name="butControlSearch" Content="Поиск" Margin="0,110,10,0" FontSize="20" HorizontalAlignment="Right" Width="102" VerticalAlignment="Top" Click="butControlSearchClick">
                                         <Button.Resources>
                                             <Style TargetType="{x:Type Border}">
                                                 <Setter Property="CornerRadius" Value="5"/>
                                             </Style>
                                         </Button.Resources>
                                     </Button>
-                                    <Button x:Name="butClearControlSearch" Content="Очистить" Margin="0,110,130,0" FontSize="20" HorizontalAlignment="Right" Width="102" VerticalAlignment="Top">
+                                    <Button x:Name="butClearControlSearch" Content="Очистить" Margin="0,110,130,0" FontSize="20" HorizontalAlignment="Right" Width="102" VerticalAlignment="Top" Click="butClearControlSearchClick">
                                         <Button.Resources>
                                             <Style TargetType="{x:Type Border}">
                                                 <Setter Property="CornerRadius" Value="5"/>
@@ -2295,7 +2295,7 @@
                                             </Style>
                                         </TextBox.Resources>
                                     </TextBox>
-                                    <DataGrid x:Name="dgControlSearch" Margin="0,163,0,0"/>
+                                    <DataGrid x:Name="dgControlSearch" ColumnWidth="*" Margin="0,163,0,0"/>
                                     <Label Content="Логин" HorizontalAlignment="Left" Margin="10,72,0,0" VerticalAlignment="Top" FontSize="20"/>
                                     <TextBox x:Name="tbControlSearchLogin" Margin="10,109,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="30" FontSize="20" BorderBrush="Black" HorizontalAlignment="Left" Width="160">
                                         <TextBox.Resources>
