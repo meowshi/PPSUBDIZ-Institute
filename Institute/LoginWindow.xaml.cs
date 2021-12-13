@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -44,6 +45,10 @@ namespace Institute
                 User.PhoneNumber = table.Rows[0]["phone_number"].ToString();
                 User.Email = table.Rows[0]["email"].ToString();
                 User.AccessLevel = table.Rows[0]["access_level"].ToString();
+
+                string[] dateTime = DateTime.Now.ToString().Split(' ');
+                string log_query = $"insert into log (date, time, user_login, action, table_key)  values ('{dateTime[0]}', '{dateTime[1]}', '{User.Login}', 'Вход в систему', 'none')";
+                DBConnection.AddData(log_query);
 
                 OpenMainWindow();
             }

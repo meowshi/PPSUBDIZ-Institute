@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Diagnostics;
 using System.Linq;
 using System.Net;
@@ -260,12 +261,12 @@ namespace Institute
         /// <param name="table">Название таблицы для записи.</param>
         /// <param name="grid">Грид, из которого беруться данные.</param>
         /// <param name="columns">Опцинально. Если запись не во все поля таблицы (когда, например, айдишник сам пишется), то нужно указать порядок столбцов.</param>
-        private void Add(string table, Grid grid, string columns = "")
+        private bool Add(string table, Grid grid, string columns = "")
         {
-            if (!IsFieldsFilled(grid)) return;
+            if (!IsFieldsFilled(grid)) return false;
 
             string query = MakeAddQuery(table, grid, columns);
-            DBConnection.AddData(query);
+            return DBConnection.AddData(query);
         }
 
         /// <summary>
@@ -304,6 +305,23 @@ namespace Institute
             mainSubsystemTab.Visibility = Visibility.Collapsed;
             repotSubsystemTab.Visibility = Visibility.Collapsed;
             feedbackSubsystemGrid.Visibility = Visibility.Collapsed;
+
+            LoadLog();
+        }
+
+        private void LoadLog()
+        {
+            tbConrolLog.Text = "";
+
+            string query = "select date, time, action, table_key, surname, name, patronymic from log join user on user_login = login";
+            var table = DBConnection.SelectData(query);
+            foreach(DataRow row in table.Rows)
+            {
+                string log = $" [{row["date"]} {row["time"]}] {row["surname"]} {row["name"]} {row["patronymic"]}. {row["action"]} (Ключ: {row["table_key"]}).\n";
+                tbConrolLog.Text += log;
+            }
+
+            svControlLog.ScrollToBottom();
         }
 
         private void feedbackSubsystemButton_Click(object sender, RoutedEventArgs e)
@@ -315,9 +333,33 @@ namespace Institute
             controlSubsystemTab.Visibility = Visibility.Collapsed;
         }
 
+        private void AddLog(string action, string table_key)
+        {
+            string[] dateTime = DateTime.Now.ToString().Split(' ');
+
+            string query = $"insert into log (date, time, user_login, action, table_key) values ('{dateTime[0]}','{dateTime[1]}','{User.Login}','{action}','{table_key}')";
+            DBConnection.AddData(query);
+        }
+
+        private void AddErrorMessage()
+        {
+            MessageBox.Show("Ошибка добавления записи!", "Внимание!");
+        }
+
+        private void AddSuccessMessage(string key)
+        {
+            MessageBox.Show($"Запись успешно добавлена!\n(Ключ: {key})");
+        }
+
         private void butAddDepartment_Click(object sender, RoutedEventArgs e)
         {
-            Add("department", gAddDepartment);
+            if (!Add("department", gAddDepartment))
+            {
+                AddErrorMessage();
+                return;
+            }
+            AddLog("Добавление отдела", tbAddDepartmentName.Text);
+            AddSuccessMessage(tbAddDepartmentName.Text);
         }
 
         private void butClearAddDepartment_Click(object sender, RoutedEventArgs e)
@@ -327,7 +369,13 @@ namespace Institute
 
         private void butAddFaculty_Click(object sender, RoutedEventArgs e)
         {
-            Add("faculty", gAddFaculty);
+            if (!Add("faculty", gAddFaculty))
+            {
+                AddErrorMessage();
+                return;
+            }
+            AddLog("Добавление факультета", tbAddFacultyName.Text);
+            AddSuccessMessage(tbAddFacultyName.Text);
         }
 
         private void butClearAddFaculty_Click(object sender, RoutedEventArgs e)
@@ -337,7 +385,13 @@ namespace Institute
 
         private void butAddChair_Click(object sender, RoutedEventArgs e)
         {
-            Add("chair", gAddChair);
+            if (!Add("chair", gAddChair))
+            {
+                AddErrorMessage();
+                return;
+            }
+            AddLog("Добавление кафедры", tbAddChairName.Text);
+            AddSuccessMessage(tbAddChairName.Text);
         }
 
         private void butClearAddChair_Click(object sender, RoutedEventArgs e)
@@ -347,7 +401,13 @@ namespace Institute
 
         private void butAddSpeciality_Click(object sender, RoutedEventArgs e)
         {
-            Add("speciality", gAddSpeciality);
+            if (!Add("speciality", gAddSpeciality))
+            {
+                AddErrorMessage();
+                return;
+            }
+            AddLog("Добавление направления подготовки", tbAddSpecialityName.Text);
+            AddSuccessMessage(tbAddSpecialityName.Text);
         }
 
         private void butClearAddSpeciality_Click(object sender, RoutedEventArgs e)
@@ -357,7 +417,13 @@ namespace Institute
 
         private void butAddDiscipline_Click(object sender, RoutedEventArgs e)
         {
-            Add("discipline", gAddDiscipline);
+            if (!Add("discipline", gAddDiscipline))
+            {
+                AddErrorMessage();
+                return;
+            }
+            AddLog("Добавление дисциплины", tbAddDisciplineName.Text);
+            AddSuccessMessage(tbAddDisciplineName.Text);
         }
 
         private void butClearAddDiscipline_Click(object sender, RoutedEventArgs e)
@@ -372,7 +438,11 @@ namespace Institute
             // Сначала добавляем паспорт так как надо получить код паспортных данных.
             string passportValues = $"'{tbAddEmployeePassportSeries.Text}','{tbAddEmployeePassportNumber.Text}','{dpAddEmployeePassportIssueDate.Text}','{dpAddEmployeePassportExpiryDate.Text}','{tbAddEmployeePassportIssuingAuthority.Text}'";
             string passportQuery = $"insert into passport_data ({PassportColumnsStr}) values ({passportValues})";
-            DBConnection.AddData(passportQuery);
+            if (!DBConnection.AddData(passportQuery))
+            {
+                AddErrorMessage();
+                return;
+            }
             
             var table = DBConnection.SelectData($"select id from passport_data where number = '{tbAddEmployeePassportNumber.Text}'");
             string passportId = table.Rows[0][0].ToString();
@@ -381,7 +451,20 @@ namespace Institute
             string employeeValues = $"'{tbAddEmployeeSurname.Text}', '{tbAddEmployeeName.Text}', '{tbAddEmployeePatronymic.Text}' , '{tbAddEmployeeINN.Text}', '{tbAddEmployeePhoneNumber.Text}'," +
                                      $"'{tbAddEmployeeEmail.Text}', '{tbAddEmployeePost.Text}', '{tbAddEmployeeSalary.Text}', '{tbAddEmployeeDepartmentName.Text}', '{passportId}'";
             string employeeQuery = $"insert into employee ({employeeColumns}) values ({employeeValues})";
-            DBConnection.AddData(employeeQuery);
+            if (!DBConnection.AddData(employeeQuery))
+            {
+                DBConnection.ChangeData($"delete from passport_data where id = '{passportId}'");
+                AddErrorMessage();
+                return;
+            }
+            string query = $"select id from employee where passport_data_id = '{passportId}'";
+            DataTable employeeIdTable = DBConnection.SelectData(query);
+            string employeeId = employeeIdTable.Rows[0][0].ToString();
+
+            AddLog("Добавление паспортных данных", passportId);
+            AddLog("Добавление сотрудника", employeeId);
+
+            AddSuccessMessage(employeeId);
         }
 
         private void butClearAddEmployee_Click(object sender, RoutedEventArgs e)
@@ -391,7 +474,13 @@ namespace Institute
 
         private void butAddTeacher_Click(object sender, RoutedEventArgs e)
         {
-            Add("teacher", gAddTeacher);
+            if (!Add("teacher", gAddTeacher))
+            {
+                AddErrorMessage();
+                return;
+            }
+            AddLog("Добавление преподавателя", tbAddTeacherEmployeeId.Text);
+            AddSuccessMessage(tbAddTeacherEmployeeId.Text);
         }
 
         private void butClearAddTeacher_Click(object sender, RoutedEventArgs e)
@@ -404,7 +493,14 @@ namespace Institute
             if (!IsFieldsFilled(gAddGroup)) return;
 
             string query = $"insert into `group` values ('{tbAddGroupName.Text}', '{tbAddGroupFacultyName.Text}')";
-            DBConnection.AddData(query);
+            if (!DBConnection.AddData(query))
+            {
+                AddErrorMessage();
+                return;
+            }
+
+            AddLog("Добавление группы", tbAddGroupName.Text);
+            AddSuccessMessage(tbAddGroupName.Text);
         }
 
         private void butClearAddGroup_Click(object sender, RoutedEventArgs e)
@@ -419,7 +515,11 @@ namespace Institute
             // Сначала добавляем паспорт так как надо получить код паспортных данных.
             string passportValues = $"'{tbAddStudentPassportSeries.Text}','{tbAddStudentPassportNumber.Text}','{dpAddStudentPassportIssueDate.Text}','{dpAddStudentPassportExpiryDate.Text}','{tbAddStudentPassportIssuingAuthority.Text}'";
             string passportQuery = $"insert into passport_data ({PassportColumnsStr}) values ({passportValues})";
-            DBConnection.AddData(passportQuery);
+            if (!DBConnection.AddData(passportQuery))
+            {
+                AddErrorMessage();
+                return;
+            }
 
             var table = DBConnection.SelectData($"select id from passport_data where number = '{tbAddStudentPassportNumber.Text}'");
             string passportId = table.Rows[0][0].ToString();
@@ -429,7 +529,21 @@ namespace Institute
                 $"'{tbAddStudentEmail.Text}', '{tbAddStudentSpecialityName.Text}', '{tbAddStudentChairName.Text}', '{tbAddStudentGroupName.Text}', '{dpAddStudentStartDate.Text}'," +
                 $"'{dpAddStudentEndDate.Text}', '{tbAddStudentEduCost.Text}', '{passportId}'";
             string studentQuery = $"insert into student ({studentColumns}) values ({studentValues})";
-            DBConnection.AddData(studentQuery);
+            if (!DBConnection.AddData(studentQuery))
+            {
+                DBConnection.ChangeData($"delete from passport_data where id = '{passportId}'");
+                AddErrorMessage();
+                return;
+            }
+
+            string query = $"select id from student where passport_data_id = '{passportId}'";
+            DataTable studentIdTable = DBConnection.SelectData(query);
+            string studentId = studentIdTable.Rows[0][0].ToString();
+
+            AddLog("Добавление паспортных данных", passportId);
+            AddLog("Добавление студента", studentId);
+
+            AddSuccessMessage(studentId);
         }
 
         private void butClearAddStudent_Click(object sender, RoutedEventArgs e)
@@ -444,7 +558,11 @@ namespace Institute
             // Сначала добавляем паспорт так как надо получить код паспортных данных.
             string passportValues = $"'{tbAddEnrolleePassportSeries.Text}','{tbAddEnrolleePassportNumber.Text}','{dpAddEnrolleePassportIssueDate.Text}','{dpAddEnrolleePassportExpiryDate.Text}','{tbAddEnrolleePassportIssuingAuthority.Text}'";
             string passportQuery = $"insert into passport_data ({PassportColumnsStr}) values ({passportValues})";
-            DBConnection.AddData(passportQuery);
+            if (!DBConnection.AddData(passportQuery))
+            {
+                AddErrorMessage();
+                return;
+            }
 
             var table = DBConnection.SelectData($"select id from passport_data where number = '{tbAddEnrolleePassportNumber.Text}'");
             string passportId = table.Rows[0][0].ToString();
@@ -453,7 +571,22 @@ namespace Institute
             string enrolleeValues = $"'{tbAddEnrolleeSurname.Text}','{tbAddEnrolleeName.Text}','{tbAddEnrolleePatronymic.Text}'," +
                 $"'{tbAddEnrolleeDocumentType.Text}','{tbAddEnrolleeTotalScore.Text}', '{passportId}'";
             string enrolleeQuery = $"insert into enrollee ({enrolleeColumns}) values ({enrolleeValues})";
-            DBConnection.AddData(enrolleeQuery);
+            if (!DBConnection.AddData(enrolleeQuery))
+            {
+                DBConnection.ChangeData($"delete from passport_data where id = '{passportId}'");
+                AddErrorMessage();
+                return;
+            }
+
+            string query = $"select id from enrollee where passport_data_id = '{passportId}'";
+            DBConnection.SelectData(query);
+            var enrolleeIdTable = DBConnection.SelectData(query);
+            string enrolleeId = enrolleeIdTable.Rows[0][0].ToString();
+
+            AddLog("Добавление паспортных данных", passportId);
+            AddLog("Добавление студента", enrolleeId);
+
+            AddSuccessMessage(enrolleeId);
         }
 
         private void butClearAddEnrollee_Click(object sender, RoutedEventArgs e)
@@ -463,7 +596,15 @@ namespace Institute
 
         private void butAddTeacherDisc_Click(object sender, RoutedEventArgs e)
         {
-            Add("discipline_teacher", gAddTeacherDisc);
+            if (!Add("discipline_teacher", gAddTeacherDisc))
+            {
+                AddErrorMessage();
+                return;
+            }
+            string key = $"{tbAddTeacherDiscTeacherId.Text}, {tbAddTeacherDiscDiscName.Text}";
+            
+            AddLog("Добавление преподавателя и дисциплины", key);
+            AddSuccessMessage(key);
         }
 
         private void butClearAddTeacherDisc_Click(object sender, RoutedEventArgs e)
@@ -473,7 +614,15 @@ namespace Institute
 
         private void butAddEnrolleeSpec_Click(object sender, RoutedEventArgs e)
         {
-            Add("enrollee_speciality", gAddEnrolleeSpec);
+            if (!Add("enrollee_speciality", gAddEnrolleeSpec))
+            {
+                AddErrorMessage();
+                return;
+            }
+            string key = $"{tbAddEnrolleeSpecEnrolleeId.Text}, {tbAddEnrolleeSpecSpecName.Text}";
+
+            AddLog("Добавление абитуриента и преподавателя", key);
+            AddSuccessMessage(key);
         }
 
         private void butClearAddEnrolleeSpec_Click(object sender, RoutedEventArgs e)
@@ -481,7 +630,17 @@ namespace Institute
             ClearGrid(gAddEnrolleeSpec);
         }
 
-        private void Change(Grid grid, string table, string[] columns, string keyColumnName, string key, bool canDelete = true)
+        /// <summary>
+        /// Меняет или удаляет данные.
+        /// </summary>
+        /// <param name="grid"></param>
+        /// <param name="table"></param>
+        /// <param name="columns"></param>
+        /// <param name="keyColumnName"></param>
+        /// <param name="key"></param>
+        /// <param name="canDelete"></param>
+        /// <returns>0 - ничего не произошло, 1 - удаление, 2 - изменение</returns>
+        private int Change(Grid grid, string table, string[] columns, string keyColumnName, string key, bool canDelete = true)
         {
             bool isOtherFieldsNotEmpty = IsFieldsNotEmpty(grid);
             if (!isOtherFieldsNotEmpty)
@@ -491,11 +650,11 @@ namespace Institute
                     string query = $"delete from {table} where {keyColumnName} = '{key}'";
                     if (DBConnection.ChangeData(query))
                     {
-                        MessageBox.Show("Удаление прошло успешно", "Ура!");
+                        return 1;
                     }
                 }
 
-                return;
+                return 0;
             }
             else
             {
@@ -536,8 +695,42 @@ namespace Institute
                 Trace.WriteLine(querySB.ToString());
                 if (DBConnection.ChangeData(querySB.ToString()))
                 {
-                    MessageBox.Show("Изменение прошло успешно!", "Ура!");
+                    return 2;
                 }
+                return 0;
+            }
+        }
+
+        private void ChangeSuccessMessage()
+        {
+            MessageBox.Show("Изменение прошло успешно!", "Ура!");
+        }
+
+        private void DeleteSuccessMessage()
+        {
+            MessageBox.Show("Удаление прошло успешно!", "Ура!");
+        }
+
+        private void ChangeErrorMessage()
+        {
+            MessageBox.Show("При изменении произошла ошибка!", "Внимание!");
+        }
+
+        private void ChangeNotify(int result, string target, string key)
+        {
+            switch (result)
+            {
+                case 0:
+                    ChangeErrorMessage();
+                    break;
+                case 1:
+                    DeleteSuccessMessage();
+                    AddLog($"Удаление {target}", key);
+                    break;
+                case 2:
+                    ChangeSuccessMessage();
+                    AddLog($"Изменение {target}", key);
+                    break;
             }
         }
 
@@ -549,7 +742,8 @@ namespace Institute
                 return;
             }
 
-            Change(gChangeFacultyOther, "faculty", FacultyFields, "name", tbChangeFacultyName.Text);
+            int result = Change(gChangeFacultyOther, "faculty", FacultyFields, "name", tbChangeFacultyName.Text);
+            ChangeNotify(result, "факультета", tbChangeFacultyName.Text);
         }
 
         private void butClearChangeFaculty_Click(object sender, RoutedEventArgs e)
@@ -566,7 +760,8 @@ namespace Institute
                 return;
             }
 
-            Change(gChangeChairOther, "chair", ChairFields, "name", tbChangeChairName.Text);
+            int result = Change(gChangeChairOther, "chair", ChairFields, "name", tbChangeChairName.Text);
+            ChangeNotify(result, "кафедры", tbChangeChairName.Text);
         }
 
         private void butClearChangeChair_Click(object sender, RoutedEventArgs e)
@@ -583,7 +778,8 @@ namespace Institute
                 return;
             }
 
-            Change(gChangeSpecialityOther, "speciality", SpecialityFields, "name", tbChangeSpecialityName.Text);
+            int result = Change(gChangeSpecialityOther, "speciality", SpecialityFields, "name", tbChangeSpecialityName.Text);
+            ChangeNotify(result, "направления подготовки", tbChangeSpecialityName.Text);
         }
 
         private void butClearChangeSpeciality_Click(object sender, RoutedEventArgs e)
@@ -600,7 +796,8 @@ namespace Institute
                 return;
             }
 
-            Change(gChangeDisciplineOther, "discipline", DisciplineFields, "name", tbChangeDisciplineName.Text);
+            int result = Change(gChangeDisciplineOther, "discipline", DisciplineFields, "name", tbChangeDisciplineName.Text);
+            ChangeNotify(result, "дисциплины", tbChangeDisciplineName.Text);
         }
 
         private void butClearChangeDiscipline_Click(object sender, RoutedEventArgs e)
@@ -619,12 +816,21 @@ namespace Institute
 
             string query = $"select passport_data_id from employee where id = '{tbChangeEmployeeId.Text}'";
             var employeeTable = DBConnection.SelectData(query);
+            if (employeeTable.Rows.Count == 0)
+            {
+                MessageBox.Show("Неверный код!", "Внимание!");
+                return;
+            }
+
             string passportDataId = employeeTable.Rows[0][0].ToString();
 
             bool canDelete = !(IsFieldsNotEmpty(gChangeEmployeePassport) || IsFieldsNotEmpty(gChangeEmployeeOther));
 
-            Change(gChangeEmployeeOther, "employee", EmployeeFields, "id", tbChangeEmployeeId.Text, canDelete);
-            Change(gChangeEmployeePassport, "passport_data", PassportColumns, "id", passportDataId, canDelete);
+            int result = Change(gChangeEmployeeOther, "employee", EmployeeFields, "id", tbChangeEmployeeId.Text, canDelete);
+            ChangeNotify(result, "сотрудника", tbChangeEmployeeId.Text);
+            
+            result = Change(gChangeEmployeePassport, "passport_data", PassportColumns, "id", passportDataId, canDelete);
+            ChangeNotify(result, "паспортных данных", passportDataId);
         }
 
         private void butClearChangeEmployee1_Click(object sender, RoutedEventArgs e)
@@ -642,7 +848,8 @@ namespace Institute
                 return;
             }
 
-            Change(gChangeTeacherOther, "teacher", TeacherFields, "employee_id", tbChangeTeacherEmployeeId.Text);
+            int result = Change(gChangeTeacherOther, "teacher", TeacherFields, "employee_id", tbChangeTeacherEmployeeId.Text);
+            ChangeNotify(result, "преподавателя", tbChangeTeacherEmployeeId.Text);
         }
 
         private void butClearChangeTeacher_Click(object sender, RoutedEventArgs e)
@@ -659,7 +866,8 @@ namespace Institute
                 return;
             }
 
-            Change(gChangeGroupOther, "`group`", GroupFields, "name", tbChangeGroupName.Text);
+            int result = Change(gChangeGroupOther, "`group`", GroupFields, "name", tbChangeGroupName.Text);
+            ChangeNotify(result, "группы", tbChangeGroupName.Text);
         }
 
         private void butClearChangeGroup_Click(object sender, RoutedEventArgs e)
@@ -678,12 +886,21 @@ namespace Institute
 
             string query = $"select passport_data_id from student where id = '{tbChangeStudentId.Text}'";
             var studentTable = DBConnection.SelectData(query);
+            if (studentTable.Rows.Count == 0)
+            {
+                MessageBox.Show("Неверный код!", "Внимание!");
+                return;
+            }
+
             string passportDataId = studentTable.Rows[0][0].ToString();
 
             bool canDelete = !(IsFieldsNotEmpty(gChangeStudentPassport) || IsFieldsNotEmpty(gChangeStudentOther));
 
-            Change(gChangeStudentOther, "student", StudentFields, "id", tbChangeStudentId.Text, canDelete);
-            Change(gChangeStudentPassport, "passport_data", PassportColumns, "id", passportDataId, canDelete);
+            int result = Change(gChangeStudentOther, "student", StudentFields, "id", tbChangeStudentId.Text, canDelete);
+            ChangeNotify(result, "студента", tbChangeStudentId.Text);
+
+            result = Change(gChangeStudentPassport, "passport_data", PassportColumns, "id", passportDataId, canDelete);
+            ChangeNotify(result, "паспортных данных", passportDataId);
         }
 
         private void butClearChangeStudent_Click(object sender, RoutedEventArgs e)
@@ -703,12 +920,20 @@ namespace Institute
 
             string query = $"select passport_data_id from enrollee where id = '{tbChangeEnrolleeId.Text}'";
             var enrolleeTable = DBConnection.SelectData(query);
+            if (enrolleeTable.Rows.Count == 0)
+            {
+                MessageBox.Show("Неверный код!", "Внимание!");
+                return;
+            }
             string passportDataId = enrolleeTable.Rows[0][0].ToString();
 
             bool canDelete = !(IsFieldsNotEmpty(gChangeEnrolleePassport) || IsFieldsNotEmpty(gChangeEnrolleeOther));
 
-            Change(gChangeEnrolleeOther, "enrollee", EnrolleeFields, "id", tbChangeEnrolleeId.Text, canDelete);
-            Change(gChangeEnrolleePassport, "passport_data", PassportColumns, "id", passportDataId, canDelete);
+            int result = Change(gChangeEnrolleeOther, "enrollee", EnrolleeFields, "id", tbChangeEnrolleeId.Text, canDelete);
+            ChangeNotify(result, "абитуриента", tbChangeEnrolleeId.Text);
+
+            result = Change(gChangeEnrolleePassport, "passport_data", PassportColumns, "id", passportDataId, canDelete);
+            ChangeNotify(result, "паспортных данных", passportDataId);
         }
 
         private void butClearChangeEnrollee_Click(object sender, RoutedEventArgs e)
@@ -760,17 +985,50 @@ namespace Institute
 
         private void butChangeDiscTeacher_Click(object sender, RoutedEventArgs e)
         {
-            if (!IsFieldsFilled(gChangeDiscTeacher))
+            if (!IsFieldsNotEmpty(gChangeDiscTeacher))
             {
                 MessageBox.Show("Вы не заполнили поля!", "Внимание!");
                 return;
             }
 
-            string query = $"delete from discipline_teacher where discipline_name = '{tbCangeTeacherDiscDiscName.Text}' and employee_id = '{tbChangeTeacherDiscTeacherId.Text}'";
-            if (DBConnection.ChangeData(query))
+            string disciplineName = tbCangeTeacherDiscDiscName.Text;
+            string teacherId = tbChangeTeacherDiscTeacherId.Text;
+
+            if (disciplineName != "" && teacherId != "")
             {
-                MessageBox.Show("Данные успешно удалены!", "Ура!");
+                string query = $"delete from discipline_teacher where discipline_name = '{disciplineName}' and employee_id = '{teacherId}'";
+                if (DBConnection.ChangeData(query))
+                {
+                    MessageBox.Show("Данные успешно удалены!", "Ура!");
+                    AddLog("Удаление дисциплины и преподавателя", $"{disciplineName}, {teacherId}");
+                    return;
+                }
             }
+
+            else if (disciplineName != "")
+            {
+                string query = $"delete from discipline_teacher where discipline_name = '{disciplineName}'";
+                if (DBConnection.ChangeData(query))
+                {
+                    MessageBox.Show("Данные успешно удалены!", "Ура!");
+                    AddLog("Удаление преподавателей дисциплины", disciplineName);
+                    return;
+                }
+            }
+
+            else
+            {
+                string query = $"delete from discipline_teacher where employee_id = '{teacherId}'";
+                if (DBConnection.ChangeData(query))
+                {
+                    MessageBox.Show("Данные успешно удалены!", "Ура!");
+                    AddLog("Удаление дисциплин преподавателя", teacherId);
+                    return;
+                }
+            } 
+            
+
+            MessageBox.Show("При удалении данных произошла ошбика!", "Внимание!");
         }
 
         private void butClearChangeDiscTeacher_Click(object sender, RoutedEventArgs e)
@@ -780,17 +1038,49 @@ namespace Institute
 
         private void butChangeEnrolleeSpec_Click(object sender, RoutedEventArgs e)
         {
-            if (!IsFieldsFilled(gChangeEnrolleeSpec))
+            if (!IsFieldsNotEmpty(gChangeEnrolleeSpec))
             {
                 MessageBox.Show("Вы не заполнили поля!", "Внимание!");
                 return;
             }
 
-            string query = $"delete from enrollee_speciality where enrollee_id = '{tbChangeEnrolleeSpecEnrolleeId.Text}' and speciality_name = '{tbChangeEnrolleeSpecSpecName.Text}'";
-            if (DBConnection.ChangeData(query))
+            string enrolleeId = tbChangeEnrolleeSpecEnrolleeId.Text;
+            string specName = tbChangeEnrolleeSpecSpecName.Text;
+
+            if (enrolleeId != "" && specName != "")
             {
-                MessageBox.Show("Данные успешно удалены!", "Ура!");
+                string query = $"delete from enrollee_speciality where enrollee_id = '{enrolleeId}' and speciality_name = '{specName}'";
+                if (DBConnection.ChangeData(query))
+                {
+                    MessageBox.Show("Данные успешно удалены!", "Ура!");
+                    AddLog("Удаление абитуриента и направление подготовки", $"{enrolleeId}, {specName}");
+                    return;
+                }
             }
+
+            else if (enrolleeId != "")
+            {
+                string query = $"delete from enrollee_speciality where enrollee_id = '{enrolleeId}'";
+                if (DBConnection.ChangeData(query))
+                {
+                    MessageBox.Show("Данные успешно удалены!", "Ура!");
+                    AddLog("Удаление направлений подготовки абитуриента!", enrolleeId);
+                    return;
+                }
+            }
+
+            else
+            {
+                string query = $"delete from enrollee_speciality where speciality_name = '{specName}'";
+                if (DBConnection.ChangeData(query))
+                {
+                    MessageBox.Show("Данные успешно удалены!", "Ура!");
+                    AddLog("Удаление абитуриентов направления", specName);
+                    return;
+                }
+            }
+
+            MessageBox.Show("При удалении данных произошла ошбика!", "Внимание!");
         }
 
         private void butClearChangeEnrolleeSpec_Click(object sender, RoutedEventArgs e)
@@ -800,7 +1090,12 @@ namespace Institute
 
         private void butControlAdd_Click(object sender, RoutedEventArgs e)
         {
-            Add("user", gControlAdd);
+            if (!Add("user", gControlAdd))
+            {
+                AddErrorMessage();
+                return;
+            }
+            AddLog("Добавление пользователя", tbControlAddLogin.Text);
         }
 
         private void butClearControlAdd_Click(object sender, RoutedEventArgs e)
@@ -816,13 +1111,28 @@ namespace Institute
                 return;
             }
 
-            Change(gControlChangeOther, "user", UserFields, "login", tbControlChangeLogin.Text);
+            string login = tbControlChangeLogin.Text;
+
+            int result = Change(gControlChangeOther, "user", UserFields, "login", login);
+            ChangeNotify(result, "пользователя", login);
         }
 
         private void butClearControlChange_Click(object sender, RoutedEventArgs e)
         {
             ClearGrid(gControlChange);
             ClearGrid(gControlChangeOther);
+        }
+
+        private void butControlLog_Click(object sender, RoutedEventArgs e)
+        {
+            if (!DBConnection.ChangeData("delete from log"))
+            {
+                MessageBox.Show("При удалении произошла ошибка!", "Внимание!");
+                return;
+            }
+
+            AddLog("Очистка журнала", "none");
+            LoadLog();
         }
     }
 }
