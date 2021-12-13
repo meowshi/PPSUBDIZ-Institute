@@ -1286,7 +1286,7 @@ namespace Institute
                 dgSearchDisciplineTeacherTable.Columns[0].Header = "Фамилия";
                 dgSearchDisciplineTeacherTable.Columns[1].Header = "Имя";
                 dgSearchDisciplineTeacherTable.Columns[2].Header = "Отчетсво";
-                dgSearchDisciplineTeacherTable.Columns[3].Header = "Тип документа";
+                dgSearchDisciplineTeacherTable.Columns[3].Header = "Название дисциплины";
             }
             else
             {
