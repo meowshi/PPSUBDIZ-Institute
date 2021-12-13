@@ -625,45 +625,47 @@ namespace Institute
             if (tbSearchEmployeeDepartmentName.Text != "")
                 where.Add($"employee.department_name = '{tbSearchEmployeeDepartmentName.Text}'");
 
-            var table = DBConnection.SelectData($"SELECT employee.surname, employee.name, employee.patronymic, employee.inn, employee.phone_number, employee.email, employee.post, employee.salary, employee.department_name, passport_data.series, passport_data.number, passport_data.issue_date, passport_data.expiry_date, passport_data.issuing_authority FROM employee INNER JOIN passport_data ON passport_data.id = employee.passport_data_id WHERE { String.Join(" AND ", where.ToArray())};");
+            var table = DBConnection.SelectData($"SELECT employee.id, employee.surname, employee.name, employee.patronymic, employee.inn, employee.phone_number, employee.email, employee.post, employee.salary, employee.department_name, passport_data.series, passport_data.number, passport_data.issue_date, passport_data.expiry_date, passport_data.issuing_authority FROM employee INNER JOIN passport_data ON passport_data.id = employee.passport_data_id WHERE { String.Join(" AND ", where.ToArray())};");
             if (table.Rows.Count != 0)
             {
                 for (int i = 0; i < table.Rows.Count; i++)
                 {
                     employee.Add(new Employee()
                     {
-                        Surname = table.Rows[i][0].ToString(),
-                        Name = table.Rows[i][1].ToString(),
-                        Patronymic = table.Rows[i][2].ToString(),
-                        Inn = table.Rows[i][3].ToString(),
-                        Phone_number = table.Rows[i][4].ToString(),
-                        Email = table.Rows[i][5].ToString(),
-                        Post = table.Rows[i][6].ToString(),
-                        Salary = table.Rows[i][7].ToString(),
-                        Department_name = table.Rows[i][8].ToString(),
-                        Series = table.Rows[i][9].ToString(),
-                        Number = table.Rows[i][10].ToString(),
-                        Issue_date = table.Rows[i][11].ToString(),
-                        Expiry_date = table.Rows[i][12].ToString(),
-                        Issuing_authority = table.Rows[i][13].ToString()
+                        Id = table.Rows[i][0].ToString(),
+                        Surname = table.Rows[i][1].ToString(),
+                        Name = table.Rows[i][2].ToString(),
+                        Patronymic = table.Rows[i][3].ToString(),
+                        Inn = table.Rows[i][4].ToString(),
+                        Phone_number = table.Rows[i][5].ToString(),
+                        Email = table.Rows[i][6].ToString(),
+                        Post = table.Rows[i][7].ToString(),
+                        Salary = table.Rows[i][8].ToString(),
+                        Department_name = table.Rows[i][9].ToString(),
+                        Series = table.Rows[i][10].ToString(),
+                        Number = table.Rows[i][11].ToString(),
+                        Issue_date = table.Rows[i][12].ToString(),
+                        Expiry_date = table.Rows[i][13].ToString(),
+                        Issuing_authority = table.Rows[i][14].ToString()
                     });
                 }
 
                 dgSearchEmployee.ItemsSource = employee;
-                dgSearchEmployee.Columns[0].Header = "Фамилия";
-                dgSearchEmployee.Columns[1].Header = "Имя";
-                dgSearchEmployee.Columns[2].Header = "Отчетсво";
-                dgSearchEmployee.Columns[3].Header = "ИНН";
-                dgSearchEmployee.Columns[4].Header = "Номер телефона";
-                dgSearchEmployee.Columns[5].Header = "Email";
-                dgSearchEmployee.Columns[6].Header = "Должность";
-                dgSearchEmployee.Columns[7].Header = "Зарплата";
-                dgSearchEmployee.Columns[8].Header = "Отдел";
-                dgSearchEmployee.Columns[9].Header = "Серия паспорта";
-                dgSearchEmployee.Columns[10].Header = "Номер паспорта";
-                dgSearchEmployee.Columns[11].Header = "Дата выдачи";
-                dgSearchEmployee.Columns[12].Header = "Срок действия";
-                dgSearchEmployee.Columns[13].Header = "Орган, выдавший паспорт";
+                dgSearchEmployee.Columns[0].Header = "Код";
+                dgSearchEmployee.Columns[1].Header = "Фамилия";
+                dgSearchEmployee.Columns[2].Header = "Имя";
+                dgSearchEmployee.Columns[3].Header = "Отчетсво";
+                dgSearchEmployee.Columns[4].Header = "ИНН";
+                dgSearchEmployee.Columns[5].Header = "Номер телефона";
+                dgSearchEmployee.Columns[6].Header = "Email";
+                dgSearchEmployee.Columns[7].Header = "Должность";
+                dgSearchEmployee.Columns[8].Header = "Зарплата";
+                dgSearchEmployee.Columns[9].Header = "Отдел";
+                dgSearchEmployee.Columns[10].Header = "Серия паспорта";
+                dgSearchEmployee.Columns[11].Header = "Номер паспорта";
+                dgSearchEmployee.Columns[12].Header = "Дата выдачи";
+                dgSearchEmployee.Columns[13].Header = "Срок действия";
+                dgSearchEmployee.Columns[14].Header = "Орган, выдавший паспорт";
             }
             else
             {
@@ -803,51 +805,53 @@ namespace Institute
             if (tbSearchStudentGroupName.Text != "")
                 where.Add($"student.group_name = '{tbSearchStudentGroupName.Text}'");
 
-            var table = DBConnection.SelectData($"SELECT student.surname, student.name, student.patronymic, student.speciality_name, student.chair_name, student.group_name, student.start_date, student.end_date, student.education_cost, student.inn, student.phone_number, student.email, passport_data.series, passport_data.number, passport_data.issue_date, passport_data.expiry_date, passport_data.issuing_authority FROM student INNER JOIN passport_data ON passport_data.id = student.passport_data_id WHERE { String.Join(" AND ", where.ToArray())};");
+            var table = DBConnection.SelectData($"SELECT student.id, student.surname, student.name, student.patronymic, student.speciality_name, student.chair_name, student.group_name, student.start_date, student.end_date, student.education_cost, student.inn, student.phone_number, student.email, passport_data.series, passport_data.number, passport_data.issue_date, passport_data.expiry_date, passport_data.issuing_authority FROM student INNER JOIN passport_data ON passport_data.id = student.passport_data_id WHERE { String.Join(" AND ", where.ToArray())};");
             if (table.Rows.Count != 0)
             {
                 for (int i = 0; i < table.Rows.Count; i++)
                 {
                     student.Add(new Student()
                     {
-                        Surname = table.Rows[i][0].ToString(),
-                        Name = table.Rows[i][1].ToString(),
-                        Patronymic = table.Rows[i][2].ToString(),
-                        Speciality_name = table.Rows[i][3].ToString(),
-                        Chair_name = table.Rows[i][4].ToString(),
-                        Group_name = table.Rows[i][5].ToString(),
-                        Start_date = table.Rows[i][6].ToString(),
-                        End_date = table.Rows[i][7].ToString(),
-                        Education_cost = table.Rows[i][8].ToString(),
-                        Inn = table.Rows[i][9].ToString(),
-                        Phone_number = table.Rows[i][10].ToString(),
-                        Email = table.Rows[i][11].ToString(),
-                        Series = table.Rows[i][12].ToString(),
-                        Number = table.Rows[i][13].ToString(),
-                        Issue_date = table.Rows[i][14].ToString(),
-                        Expiry_date = table.Rows[i][15].ToString(),
-                        Issuing_authority = table.Rows[i][16].ToString()
+                        Id = table.Rows[i][0].ToString(),
+                        Surname = table.Rows[i][1].ToString(),
+                        Name = table.Rows[i][2].ToString(),
+                        Patronymic = table.Rows[i][3].ToString(),
+                        Speciality_name = table.Rows[i][4].ToString(),
+                        Chair_name = table.Rows[i][5].ToString(),
+                        Group_name = table.Rows[i][6].ToString(),
+                        Start_date = table.Rows[i][7].ToString(),
+                        End_date = table.Rows[i][8].ToString(),
+                        Education_cost = table.Rows[i][9].ToString(),
+                        Inn = table.Rows[i][10].ToString(),
+                        Phone_number = table.Rows[i][11].ToString(),
+                        Email = table.Rows[i][12].ToString(),
+                        Series = table.Rows[i][13].ToString(),
+                        Number = table.Rows[i][14].ToString(),
+                        Issue_date = table.Rows[i][15].ToString(),
+                        Expiry_date = table.Rows[i][16].ToString(),
+                        Issuing_authority = table.Rows[i][17].ToString()
                     });
                 }
 
                 dgSearchStudentTable.ItemsSource = student;
-                dgSearchStudentTable.Columns[0].Header = "Фамилия";
-                dgSearchStudentTable.Columns[1].Header = "Имя";
-                dgSearchStudentTable.Columns[2].Header = "Отчетсво";
-                dgSearchStudentTable.Columns[3].Header = "Специальность";
-                dgSearchStudentTable.Columns[4].Header = "Кафедра";
-                dgSearchStudentTable.Columns[5].Header = "Группа";
-                dgSearchStudentTable.Columns[6].Header = "Начало обучения";
-                dgSearchStudentTable.Columns[7].Header = "Конец обучения";
-                dgSearchStudentTable.Columns[8].Header = "Стоимость обучения";
-                dgSearchStudentTable.Columns[9].Header = "Инн";
-                dgSearchStudentTable.Columns[10].Header = "Телефон";
-                dgSearchStudentTable.Columns[11].Header = "Email";
-                dgSearchStudentTable.Columns[12].Header = "Серия паспорта";
-                dgSearchStudentTable.Columns[13].Header = "Номер паспорта";
-                dgSearchStudentTable.Columns[14].Header = "Дата выдачи";
-                dgSearchStudentTable.Columns[15].Header = "Срок действия";
-                dgSearchStudentTable.Columns[16].Header = "Орган, выдавший паспорт";
+                dgSearchStudentTable.Columns[0].Header = "Код";
+                dgSearchStudentTable.Columns[1].Header = "Фамилия";
+                dgSearchStudentTable.Columns[2].Header = "Имя";
+                dgSearchStudentTable.Columns[3].Header = "Отчетсво";
+                dgSearchStudentTable.Columns[4].Header = "Специальность";
+                dgSearchStudentTable.Columns[5].Header = "Кафедра";
+                dgSearchStudentTable.Columns[6].Header = "Группа";
+                dgSearchStudentTable.Columns[7].Header = "Начало обучения";
+                dgSearchStudentTable.Columns[8].Header = "Конец обучения";
+                dgSearchStudentTable.Columns[9].Header = "Стоимость обучения";
+                dgSearchStudentTable.Columns[10].Header = "Инн";
+                dgSearchStudentTable.Columns[11].Header = "Телефон";
+                dgSearchStudentTable.Columns[12].Header = "Email";
+                dgSearchStudentTable.Columns[13].Header = "Серия паспорта";
+                dgSearchStudentTable.Columns[14].Header = "Номер паспорта";
+                dgSearchStudentTable.Columns[15].Header = "Дата выдачи";
+                dgSearchStudentTable.Columns[16].Header = "Срок действия";
+                dgSearchStudentTable.Columns[17].Header = "Орган, выдавший паспорт";
             }
             else
             {
@@ -879,41 +883,43 @@ namespace Institute
             if (tbSearchErolleePatronymic.Text != "")
                 where.Add($"enrollee.patronymic = '{tbSearchErolleePatronymic.Text}'");
             if (tbSearchErolleeDocumentType.Text != "")
-                where.Add($"enrollee.docunebt_type = '{tbSearchErolleeDocumentType.Text}'");
+                where.Add($"enrollee.document_type = '{tbSearchErolleeDocumentType.Text}'");
             if (tbSearchErolleeTotalScore.Text != "")
                 where.Add($"enrollee.total_scope = '{tbSearchErolleeTotalScore.Text}'");
 
-            var table = DBConnection.SelectData($"SELECT enrollee.surname, enrollee.name, enrollee.patronymic, enrollee.document_type, enrollee.total_score, passport_data.series, passport_data.number, passport_data.issue_date, passport_data.expiry_date, passport_data.issuing_authority FROM enrollee INNER JOIN passport_data ON passport_data.id = enrollee.passport_data_id WHERE { String.Join(" AND ", where.ToArray())};");
+            var table = DBConnection.SelectData($"SELECT enrollee.id, enrollee.surname, enrollee.name, enrollee.patronymic, enrollee.document_type, enrollee.total_score, passport_data.series, passport_data.number, passport_data.issue_date, passport_data.expiry_date, passport_data.issuing_authority FROM enrollee INNER JOIN passport_data ON passport_data.id = enrollee.passport_data_id WHERE { String.Join(" AND ", where.ToArray())};");
             if (table.Rows.Count != 0)
             {
                 for (int i = 0; i < table.Rows.Count; i++)
                 {
                     enrollee.Add(new Enrollee()
                     {
-                        Surname = table.Rows[i][0].ToString(),
-                        Name = table.Rows[i][1].ToString(),
-                        Patronymic = table.Rows[i][2].ToString(),
-                        Document_type = table.Rows[i][3].ToString(),
-                        Total_scope = table.Rows[i][4].ToString(),
-                        Series = table.Rows[i][5].ToString(),
-                        Number = table.Rows[i][6].ToString(),
-                        Issue_date = table.Rows[i][7].ToString(),
-                        Expiry_date = table.Rows[i][8].ToString(),
-                        Issuing_authority = table.Rows[i][9].ToString()
+                        Id = table.Rows[i][0].ToString(),
+                        Surname = table.Rows[i][1].ToString(),
+                        Name = table.Rows[i][2].ToString(),
+                        Patronymic = table.Rows[i][3].ToString(),
+                        Document_type = table.Rows[i][4].ToString(),
+                        Total_scope = table.Rows[i][5].ToString(),
+                        Series = table.Rows[i][6].ToString(),
+                        Number = table.Rows[i][7].ToString(),
+                        Issue_date = table.Rows[i][8].ToString(),
+                        Expiry_date = table.Rows[i][9].ToString(),
+                        Issuing_authority = table.Rows[i][10].ToString()
                     });
                 }
 
                 dgSearchEnrolleeTable.ItemsSource = enrollee;
-                dgSearchEnrolleeTable.Columns[0].Header = "Фамилия";
-                dgSearchEnrolleeTable.Columns[1].Header = "Имя";
-                dgSearchEnrolleeTable.Columns[2].Header = "Отчетсво";
-                dgSearchEnrolleeTable.Columns[3].Header = "Тип документа";
-                dgSearchEnrolleeTable.Columns[4].Header = "Набрано баллов";
-                dgSearchEnrolleeTable.Columns[5].Header = "Серия паспорта";
-                dgSearchEnrolleeTable.Columns[6].Header = "Номер паспорта";
-                dgSearchEnrolleeTable.Columns[7].Header = "Дата выдачи";
-                dgSearchEnrolleeTable.Columns[8].Header = "Срок действия";
-                dgSearchEnrolleeTable.Columns[9].Header = "Орган, выдавший паспорт";
+                dgSearchEnrolleeTable.Columns[0].Header = "Код";
+                dgSearchEnrolleeTable.Columns[1].Header = "Фамилия";
+                dgSearchEnrolleeTable.Columns[2].Header = "Имя";
+                dgSearchEnrolleeTable.Columns[3].Header = "Отчетсво";
+                dgSearchEnrolleeTable.Columns[4].Header = "Тип документа";
+                dgSearchEnrolleeTable.Columns[5].Header = "Набрано баллов";
+                dgSearchEnrolleeTable.Columns[6].Header = "Серия паспорта";
+                dgSearchEnrolleeTable.Columns[7].Header = "Номер паспорта";
+                dgSearchEnrolleeTable.Columns[8].Header = "Дата выдачи";
+                dgSearchEnrolleeTable.Columns[9].Header = "Срок действия";
+                dgSearchEnrolleeTable.Columns[10].Header = "Орган, выдавший паспорт";
             }
             else
             {
