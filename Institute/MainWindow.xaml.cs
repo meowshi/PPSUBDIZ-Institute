@@ -1252,5 +1252,97 @@ namespace Institute
                 MessageBox.Show("Ничего не найдено");
             }
         }
+
+        private void butSearchDisciplineTeacherClick(object sender, RoutedEventArgs e)
+        {
+            if (tbSearchDisciplineTeacherEmployeeId.Text == "" && tbSearchDisciplineTeacherDisciplineName.Text == "")
+            {
+                MessageBox.Show("Заполните любое поле", "Внимание!");
+                return;
+            }
+            List<DisciplineTeacher> disciplineTeacher = new List<DisciplineTeacher>();
+
+            List<string> where = new List<string>();
+            if (tbSearchDisciplineTeacherEmployeeId.Text != "")
+                where.Add($"discipline_teacher.employee_id = '{tbSearchDisciplineTeacherEmployeeId.Text}'");
+            if (tbSearchDisciplineTeacherDisciplineName.Text != "")
+                where.Add($"discipline_teacher.discipline_name = '{tbSearchDisciplineTeacherDisciplineName.Text}'");
+
+            var table = DBConnection.SelectData($"SELECT employee.surname, employee.name, employee.patronymic, discipline_teacher.discipline_name FROM discipline_teacher INNER JOIN employee ON employee.id = discipline_teacher.employee_id WHERE { String.Join(" AND ", where.ToArray())};");
+            if (table.Rows.Count != 0)
+            {
+                for (int i = 0; i < table.Rows.Count; i++)
+                {
+                    disciplineTeacher.Add(new DisciplineTeacher()
+                    {
+                        Surname = table.Rows[i][0].ToString(),
+                        Name = table.Rows[i][1].ToString(),
+                        Patronymic = table.Rows[i][2].ToString(),
+                        Discipline = table.Rows[i][3].ToString(),
+                    });
+                }
+
+                dgSearchDisciplineTeacherTable.ItemsSource = disciplineTeacher;
+                dgSearchDisciplineTeacherTable.Columns[0].Header = "Фамилия";
+                dgSearchDisciplineTeacherTable.Columns[1].Header = "Имя";
+                dgSearchDisciplineTeacherTable.Columns[2].Header = "Отчетсво";
+                dgSearchDisciplineTeacherTable.Columns[3].Header = "Тип документа";
+            }
+            else
+            {
+                MessageBox.Show("Ничего не найдено");
+            }
+        }
+
+        private void butClearSearchDisciplineTeacherClick(object sender, RoutedEventArgs e)
+        {
+            ClearGrid(DisciplineTeacherGrid);
+        }
+
+        private void butClearSearchDisciplineEnrolleeClick(object sender, RoutedEventArgs e)
+        {
+            ClearGrid(DisciplineEnrolleeGrid);
+        }
+
+        private void butSearchDisciplineEnrolleeClick(object sender, RoutedEventArgs e)
+        {
+            if (tbSearchDisciplineEnrolleeEnrolleeId.Text == "" && tbSearchDisciplineEnrolleeSpecialityName.Text == "")
+            {
+                MessageBox.Show("Заполните любое поле", "Внимание!");
+                return;
+            }
+            List<EnrolleeSpeciality> enrolleeSpeciality = new List<EnrolleeSpeciality>();
+
+            List<string> where = new List<string>();
+            if (tbSearchDisciplineEnrolleeEnrolleeId.Text != "")
+                where.Add($"enrollee_speciality.enrollee_id = '{tbSearchDisciplineEnrolleeEnrolleeId.Text}'");
+            if (tbSearchDisciplineEnrolleeSpecialityName.Text != "")
+                where.Add($"enrollee_speciality.speciality_name = '{tbSearchDisciplineEnrolleeSpecialityName.Text}'");
+
+            var table = DBConnection.SelectData($"SELECT enrollee.surname, enrollee.name, enrollee.patronymic, enrollee_speciality.speciality_name FROM enrollee_speciality INNER JOIN enrollee ON enrollee.id = enrollee_speciality.enrollee_id WHERE { String.Join(" AND ", where.ToArray())};");
+            if (table.Rows.Count != 0)
+            {
+                for (int i = 0; i < table.Rows.Count; i++)
+                {
+                    enrolleeSpeciality.Add(new EnrolleeSpeciality()
+                    {
+                        Surname = table.Rows[i][0].ToString(),
+                        Name = table.Rows[i][1].ToString(),
+                        Patronymic = table.Rows[i][2].ToString(),
+                        Speciality = table.Rows[i][3].ToString(),
+                    });
+                }
+
+                dgSearchDisciplineEnrolleeTable.ItemsSource = enrolleeSpeciality;
+                dgSearchDisciplineEnrolleeTable.Columns[0].Header = "Фамилия";
+                dgSearchDisciplineEnrolleeTable.Columns[1].Header = "Имя";
+                dgSearchDisciplineEnrolleeTable.Columns[2].Header = "Отчетсво";
+                dgSearchDisciplineEnrolleeTable.Columns[3].Header = "Специальность";
+            }
+            else
+            {
+                MessageBox.Show("Ничего не найдено");
+            }
+        }
     }
 }
