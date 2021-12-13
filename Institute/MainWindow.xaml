@@ -39,7 +39,7 @@
             </Button>
         </Grid>
         <Grid Margin="196,0,0,0">
-            <TabControl d:IsHidden="True"  x:Name="mainSubsystemTab">
+            <TabControl d:IsHidden="True" x:Name="mainSubsystemTab" SelectionChanged="mainSubsystemTab_SelectionChanged">
                 <TabItem Header="Добавление">
                     <Grid>
                         <TabControl>
@@ -1464,9 +1464,17 @@
                     </Grid>
                 </TabItem>
             </TabControl>
-            <TabControl d:IsHidden="True" x:Name="repotSubsystemTab">
+            <TabControl x:Name="repotSubsystemTab">
                 <TabItem Header="Отдел">
-                    <Grid Background="#FFE5E5E5">
+                    <Grid x:Name="departmentGrid" Background="#FFE5E5E5">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="291*"/>
+                            <ColumnDefinition Width="20*"/>
+                            <ColumnDefinition Width="67*"/>
+                            <ColumnDefinition Width="381*"/>
+                            <ColumnDefinition Width="145*"/>
+                            <ColumnDefinition Width="219*"/>
+                        </Grid.ColumnDefinitions>
                         <TextBox x:Name="tbSearchDepartmentName" HorizontalAlignment="Left" Margin="10,37,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="186" Height="30" FontSize="20" BorderBrush="Black">
                             <TextBox.Resources>
                                 <Style TargetType="{x:Type Border}">
@@ -1475,41 +1483,39 @@
                             </TextBox.Resources>
                         </TextBox>
                         <Label Content="Наименование" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Top" FontSize="20"/>
-                        <TextBox x:Name="tbSearchDepartmentStaff" HorizontalAlignment="Left" Margin="210,37,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="186" Height="30" FontSize="20" BorderBrush="Black">
-                            <TextBox.Resources>
-                                <Style TargetType="{x:Type Border}">
-                                    <Setter Property="CornerRadius" Value="5"/>
-                                </Style>
-                            </TextBox.Resources>
-                        </TextBox>
-                        <Label Content="Штат" HorizontalAlignment="Left" Margin="210,0,0,0" VerticalAlignment="Top" FontSize="20"/>
-                        <Button x:Name="butSearchDepartment" Content="Поиск" Margin="0,91,10,0" FontSize="20" HorizontalAlignment="Right" Width="101" VerticalAlignment="Top">
+                        <Button x:Name="butSearchDepartment" Content="Поиск" Margin="0,91,10,0" FontSize="20" HorizontalAlignment="Right" Width="101" VerticalAlignment="Top" Click="butSearchDepartmentClick" Grid.Column="5">
                             <Button.Resources>
                                 <Style TargetType="Border">
                                     <Setter Property="CornerRadius" Value="5"/>
                                 </Style>
                             </Button.Resources>
                         </Button>
-                        <Button x:Name="butClearSearchDepartment" Content="Очистить" Margin="0,91,130,0" FontSize="20" HorizontalAlignment="Right" Width="101" VerticalAlignment="Top">
+                        <Button x:Name="butClearSearchDepartment" Content="Очистить" Margin="0,91,130,0" FontSize="20" HorizontalAlignment="Right" Width="101" VerticalAlignment="Top" Click="butClearSearchDepartmentClick" Grid.Column="4" Grid.ColumnSpan="2">
                             <Button.Resources>
                                 <Style TargetType="{x:Type Border}">
                                     <Setter Property="CornerRadius" Value="5"/>
                                 </Style>
                             </Button.Resources>
                         </Button>
-                        <DataGrid x:Name="dgSearchDepartment" Margin="0,143,0,0"/>
+                        <DataGrid x:Name="dgSearchDepartment" Margin="0,143,0,0" Grid.ColumnSpan="6"/>
+                        <Grid Visibility="Hidden" x:Name="departmentSearchResalt" Grid.ColumnSpan="4" >
+                            <Label Content="Наименование:" HorizontalAlignment="Left" Margin="10,169,0,0" VerticalAlignment="Top" FontSize="20"/>
+                            <Label Content="Штат:" HorizontalAlignment="Left" Margin="10,211,0,0" VerticalAlignment="Top" FontSize="20"/>
+                            <Label x:Name="departmentSearchResaltName" Content="Учебный отдел" HorizontalAlignment="Left" Margin="175,169,0,0" VerticalAlignment="Top" FontSize="20"/>
+                            <Label x:Name="departmentSearchResaltStuff" Content="12" HorizontalAlignment="Left" Margin="175,211,0,0" VerticalAlignment="Top" FontSize="20"/>
+                        </Grid>
                     </Grid>
                 </TabItem>
                 <TabItem Header="Факультет">
-                    <Grid Background="#FFE5E5E5">
-                        <Button x:Name="butSearchFaculty" Content="Поиск" Margin="0,91,10,0" FontSize="20" HorizontalAlignment="Right" Width="101" VerticalAlignment="Top">
+                    <Grid x:Name="facultyGrid" Background="#FFE5E5E5">
+                        <Button x:Name="butSearchFaculty" Content="Поиск" Margin="0,91,10,0" FontSize="20" HorizontalAlignment="Right" Width="101" VerticalAlignment="Top" Click="butSearchFacultyClick">
                             <Button.Resources>
                                 <Style TargetType="{x:Type Border}">
                                     <Setter Property="CornerRadius" Value="5"/>
                                 </Style>
                             </Button.Resources>
                         </Button>
-                        <Button x:Name="butClearSearchFaculty" Content="Очистить" Margin="0,91,130,0" FontSize="20" HorizontalAlignment="Right" Width="101" VerticalAlignment="Top">
+                        <Button x:Name="butClearSearchFaculty" Content="Очистить" Margin="0,91,130,0" FontSize="20" HorizontalAlignment="Right" Width="101" VerticalAlignment="Top" Click="butClearSearchFacultyClick">
                             <Button.Resources>
                                 <Style TargetType="{x:Type Border}">
                                     <Setter Property="CornerRadius" Value="5"/>
@@ -1532,26 +1538,28 @@
                             </TextBox.Resources>
                         </TextBox>
                         <Label Content="Наименование отдела" HorizontalAlignment="Left" Margin="210,0,0,0" VerticalAlignment="Top" FontSize="20"/>
-                        <DataGrid x:Name="dgSearchFaculty" Margin="0,143,0,0"/>
+                        <DataGrid x:Name="dgSearchFaculty" ColumnWidth="*" Margin="0,143,0,0">
+
+                        </DataGrid>
                     </Grid>
                 </TabItem>
                 <TabItem Header="Кафедра">
-                    <Grid Background="#FFE5E5E5">
-                        <Button x:Name="butSearchChair" Content="Поиск" Margin="0,91,10,0" FontSize="20" HorizontalAlignment="Right" Width="101" VerticalAlignment="Top">
+                    <Grid x:Name="chairGrid" Background="#FFE5E5E5">
+                        <Button x:Name="butSearchChair" Content="Поиск" Margin="0,91,10,0" FontSize="20" HorizontalAlignment="Right" Width="101" VerticalAlignment="Top" Click="butSearchChairlick">
                             <Button.Resources>
                                 <Style TargetType="{x:Type Border}">
                                     <Setter Property="CornerRadius" Value="5"/>
                                 </Style>
                             </Button.Resources>
                         </Button>
-                        <Button x:Name="butClearSearchChair" Content="Очистить" Margin="0,91,130,0" FontSize="20" HorizontalAlignment="Right" Width="101" VerticalAlignment="Top">
+                        <Button x:Name="butClearSearchChair" Content="Очистить" Margin="0,91,130,0" FontSize="20" HorizontalAlignment="Right" Width="101" VerticalAlignment="Top" Click="butClearSearchChairClick">
                             <Button.Resources>
                                 <Style TargetType="{x:Type Border}">
                                     <Setter Property="CornerRadius" Value="5"/>
                                 </Style>
                             </Button.Resources>
                         </Button>
-                        <DataGrid x:Name="dgSearchChair" Margin="0,143,0,0"/>
+
                         <TextBox x:Name="tbSearchChairName" HorizontalAlignment="Left" Margin="10,37,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="186" Height="30" FontSize="20" BorderBrush="Black">
                             <TextBox.Resources>
                                 <Style TargetType="{x:Type Border}">
@@ -1568,25 +1576,29 @@
                             </TextBox.Resources>
                         </TextBox>
                         <Label Content="Наименование факультета" HorizontalAlignment="Left" Margin="210,0,0,0" VerticalAlignment="Top" FontSize="20"/>
+                        <DataGrid x:Name="dgSearchChair" ColumnWidth="*" Margin="0,143,0,0">
+
+                        </DataGrid>
                     </Grid>
                 </TabItem>
                 <TabItem x:Name="dgSearchSpeciality" Header="Направление">
-                    <Grid Background="#FFE5E5E5">
-                        <Button x:Name="butSearchSpeciality" Content="Поиск" Margin="0,91,10,0" FontSize="20" HorizontalAlignment="Right" Width="101" VerticalAlignment="Top">
+                    <Grid x:Name="specialityGrid" Background="#FFE5E5E5">
+                        <Button x:Name="butSearchSpeciality" Content="Поиск" Margin="0,91,10,0" FontSize="20" HorizontalAlignment="Right" Width="101" VerticalAlignment="Top" Click="butSearchSpecialityClick">
                             <Button.Resources>
                                 <Style TargetType="{x:Type Border}">
                                     <Setter Property="CornerRadius" Value="5"/>
                                 </Style>
                             </Button.Resources>
                         </Button>
-                        <Button x:Name="butClearSearchSpeciality" Content="Очистить" Margin="0,91,130,0" FontSize="20" HorizontalAlignment="Right" Width="101" VerticalAlignment="Top">
+                        <Button x:Name="butClearSearchSpeciality" Content="Очистить" Margin="0,91,130,0" FontSize="20" HorizontalAlignment="Right" Width="101" VerticalAlignment="Top" Click="butClearSearchSpecialityClick">
                             <Button.Resources>
                                 <Style TargetType="{x:Type Border}">
                                     <Setter Property="CornerRadius" Value="5"/>
                                 </Style>
                             </Button.Resources>
                         </Button>
-                        <DataGrid Margin="0,143,0,0"/>
+                        <DataGrid x:Name="dgSearchSpecialityGrid" ColumnWidth="*" Margin="0,143,0,0">
+                        </DataGrid>
                         <TextBox x:Name="tbSearchSpecialityName" HorizontalAlignment="Left" Margin="10,37,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="186" Height="30" FontSize="20" BorderBrush="Black">
                             <TextBox.Resources>
                                 <Style TargetType="{x:Type Border}">
@@ -1606,22 +1618,22 @@
                     </Grid>
                 </TabItem>
                 <TabItem x:Name="dgSearchDiscipline" Header="Дисциплина">
-                    <Grid Background="#FFE5E5E5">
-                        <Button x:Name="butSearchDiscipline" Content="Поиск" Margin="0,91,10,0" FontSize="20" HorizontalAlignment="Right" Width="101" VerticalAlignment="Top">
+                    <Grid x:Name="disciplineGrid" Background="#FFE5E5E5">
+                        <Button x:Name="butSearchDiscipline" Content="Поиск" Margin="0,91,10,0" FontSize="20" HorizontalAlignment="Right" Width="101" VerticalAlignment="Top" Click="butSearchDisciplineClick">
                             <Button.Resources>
                                 <Style TargetType="{x:Type Border}">
                                     <Setter Property="CornerRadius" Value="5"/>
                                 </Style>
                             </Button.Resources>
                         </Button>
-                        <Button x:Name="butClearSearchDiscipline" Content="Очистить" Margin="0,91,130,0" FontSize="20" HorizontalAlignment="Right" Width="101" VerticalAlignment="Top">
+                        <Button x:Name="butClearSearchDiscipline" Content="Очистить" Margin="0,91,130,0" FontSize="20" HorizontalAlignment="Right" Width="101" VerticalAlignment="Top" Click="butClearSearchDisciplineClick">
                             <Button.Resources>
                                 <Style TargetType="{x:Type Border}">
                                     <Setter Property="CornerRadius" Value="5"/>
                                 </Style>
                             </Button.Resources>
                         </Button>
-                        <DataGrid Margin="0,143,0,0"/>
+                        <DataGrid x:Name="dbSearchDiscipline" ColumnWidth="*" Margin="0,143,0,0"/>
                         <TextBox x:Name="tbSearchDisciplineName" HorizontalAlignment="Left" Margin="10,37,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="186" Height="30" FontSize="20" BorderBrush="Black">
                             <TextBox.Resources>
                                 <Style TargetType="{x:Type Border}">
@@ -1641,7 +1653,11 @@
                     </Grid>
                 </TabItem>
                 <TabItem Header="Сотрудник">
-                    <Grid Background="#FFE5E5E5">
+                    <Grid x:Name="employeeGrid" Background="#FFE5E5E5">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="481*"/>
+                            <ColumnDefinition Width="642*"/>
+                        </Grid.ColumnDefinitions>
                         <TextBox Margin="10,37,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="30" FontSize="20" BorderBrush="Black" HorizontalAlignment="Left" Width="160">
                             <TextBox.Resources>
                                 <Style TargetType="{x:Type Border}">
@@ -1658,7 +1674,7 @@
                             </TextBox.Resources>
                         </TextBox>
                         <Label Content="Имя" HorizontalAlignment="Left" Margin="190,0,0,0" VerticalAlignment="Top" FontSize="20"/>
-                        <TextBox x:Name="tbSearchEmployeePatronymic" Margin="370,37,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="30" FontSize="20" BorderBrush="Black" HorizontalAlignment="Left" Width="160">
+                        <TextBox x:Name="tbSearchEmployeePatronymic" Margin="370,37,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="30" FontSize="20" BorderBrush="Black" HorizontalAlignment="Left" Width="160" Grid.ColumnSpan="2">
                             <TextBox.Resources>
                                 <Style TargetType="{x:Type Border}">
                                     <Setter Property="CornerRadius" Value="5"/>
@@ -1666,30 +1682,30 @@
                             </TextBox.Resources>
                         </TextBox>
                         <Label Content="Отчество" HorizontalAlignment="Left" Margin="370,0,0,0" VerticalAlignment="Top" FontSize="20"/>
-                        <TextBox x:Name="tbSearchEmployeeINN" Margin="550,37,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="30" FontSize="20" BorderBrush="Black" HorizontalAlignment="Left" Width="160">
+                        <TextBox x:Name="tbSearchEmployeeINN" Margin="69,37,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="30" FontSize="20" BorderBrush="Black" HorizontalAlignment="Left" Width="160" Grid.Column="1">
                             <TextBox.Resources>
                                 <Style TargetType="{x:Type Border}">
                                     <Setter Property="CornerRadius" Value="5"/>
                                 </Style>
                             </TextBox.Resources>
                         </TextBox>
-                        <Label Content="ИНН" HorizontalAlignment="Left" Margin="550,0,0,0" VerticalAlignment="Top" FontSize="20"/>
-                        <TextBox x:Name="tbSearchEmployeePhoneNumber" Margin="730,37,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="30" FontSize="20" BorderBrush="Black" HorizontalAlignment="Left" Width="170">
+                        <Label Content="ИНН" HorizontalAlignment="Left" Margin="69,0,0,0" VerticalAlignment="Top" FontSize="20" Grid.Column="1"/>
+                        <TextBox x:Name="tbSearchEmployeePhoneNumber" Margin="249,37,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="30" FontSize="20" BorderBrush="Black" HorizontalAlignment="Left" Width="170" Grid.Column="1">
                             <TextBox.Resources>
                                 <Style TargetType="{x:Type Border}">
                                     <Setter Property="CornerRadius" Value="5"/>
                                 </Style>
                             </TextBox.Resources>
                         </TextBox>
-                        <Label Content="Номер телефона" HorizontalAlignment="Left" Margin="730,0,0,0" VerticalAlignment="Top" FontSize="20"/>
-                        <TextBox x:Name="tbSearchEmployeeEmail" Margin="920,37,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="30" FontSize="20" BorderBrush="Black" HorizontalAlignment="Left" Width="167">
+                        <Label Content="Номер телефона" HorizontalAlignment="Left" Margin="249,0,0,0" VerticalAlignment="Top" FontSize="20" Grid.Column="1"/>
+                        <TextBox x:Name="tbSearchEmployeeEmail" Margin="439,37,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="30" FontSize="20" BorderBrush="Black" HorizontalAlignment="Left" Width="167" Grid.Column="1">
                             <TextBox.Resources>
                                 <Style TargetType="{x:Type Border}">
                                     <Setter Property="CornerRadius" Value="5"/>
                                 </Style>
                             </TextBox.Resources>
                         </TextBox>
-                        <Label Content="Email" HorizontalAlignment="Left" Margin="920,0,0,0" VerticalAlignment="Top" FontSize="20"/>
+                        <Label Content="Email" HorizontalAlignment="Left" Margin="439,0,0,0" VerticalAlignment="Top" FontSize="20" Grid.Column="1"/>
                         <TextBox x:Name="tbSearchEmployeeSurname" Margin="10,37,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="30" FontSize="20" BorderBrush="Black" HorizontalAlignment="Left" Width="160">
                             <TextBox.Resources>
                                 <Style TargetType="{x:Type Border}">
@@ -1714,14 +1730,14 @@
                             </TextBox.Resources>
                         </TextBox>
                         <Label Content="Заработная плата" HorizontalAlignment="Left" Margin="190,72,0,0" VerticalAlignment="Top" FontSize="20"/>
-                        <TextBox x:Name="tbSearchEmployeeDepartmentName" Margin="370,109,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="30" FontSize="20" BorderBrush="Black" HorizontalAlignment="Left" Width="160">
+                        <TextBox x:Name="tbSearchEmployeeDepartmentName" Margin="370,109,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="30" FontSize="20" BorderBrush="Black" HorizontalAlignment="Left" Width="160" Grid.ColumnSpan="2">
                             <TextBox.Resources>
                                 <Style TargetType="{x:Type Border}">
                                     <Setter Property="CornerRadius" Value="5"/>
                                 </Style>
                             </TextBox.Resources>
                         </TextBox>
-                        <Label Content="Наименование отдела" HorizontalAlignment="Left" Margin="370,72,0,0" VerticalAlignment="Top" FontSize="20"/>
+                        <Label Content="Наименование отдела" HorizontalAlignment="Left" Margin="370,72,0,0" VerticalAlignment="Top" FontSize="20" Grid.ColumnSpan="2"/>
                         <TextBox x:Name="tbSearchEmployeePassportSeries" Margin="10,181,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="30" FontSize="20" BorderBrush="Black" HorizontalAlignment="Left" Width="160">
                             <TextBox.Resources>
                                 <Style TargetType="{x:Type Border}">
@@ -1738,107 +1754,116 @@
                             </TextBox.Resources>
                         </TextBox>
                         <Label Content="Номер паспорта" HorizontalAlignment="Left" Margin="190,144,0,0" VerticalAlignment="Top" FontSize="20"/>
-                        <DatePicker x:Name="dpSearchEmployeePassportIssueDate" HorizontalAlignment="Left" Margin="370,181,0,0" VerticalAlignment="Top" Height="30" Width="160" FontSize="17" BorderBrush="Black">
+                        <DatePicker x:Name="dpSearchEmployeePassportIssueDate" HorizontalAlignment="Left" Margin="370,181,0,0" VerticalAlignment="Top" Height="30" Width="160" FontSize="17" BorderBrush="Black" Grid.ColumnSpan="2">
                             <DatePicker.Resources>
                                 <Style TargetType="{x:Type Border}">
                                     <Setter Property="CornerRadius" Value="5"/>
                                 </Style>
                             </DatePicker.Resources>
                         </DatePicker>
-                        <Label Content="Дата выдачи" HorizontalAlignment="Left" Margin="370,144,0,0" VerticalAlignment="Top" FontSize="20"/>
-                        <DatePicker x:Name="dpSearchEmployeePassportExpiryDate" HorizontalAlignment="Left" Margin="550,181,0,0" VerticalAlignment="Top" Height="30" Width="160" FontSize="17" BorderBrush="Black">
+                        <Label Content="Дата выдачи" HorizontalAlignment="Left" Margin="370,144,0,0" VerticalAlignment="Top" FontSize="20" Grid.ColumnSpan="2"/>
+                        <DatePicker x:Name="dpSearchEmployeePassportExpiryDate" HorizontalAlignment="Left" Margin="69,181,0,0" VerticalAlignment="Top" Height="30" Width="160" FontSize="17" BorderBrush="Black" Grid.Column="1">
                             <DatePicker.Resources>
                                 <Style TargetType="{x:Type Border}">
                                     <Setter Property="CornerRadius" Value="5"/>
                                 </Style>
                             </DatePicker.Resources>
                         </DatePicker>
-                        <Label Content="Срок действия" HorizontalAlignment="Left" Margin="550,144,0,0" VerticalAlignment="Top" FontSize="20"/>
-                        <TextBox x:Name="tbSearchEmployeePassportIssuingAuthority" Margin="730,181,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="30" FontSize="20" BorderBrush="Black" HorizontalAlignment="Left" Width="357">
+                        <Label Content="Срок действия" HorizontalAlignment="Left" Margin="69,144,0,0" VerticalAlignment="Top" FontSize="20" Grid.Column="1"/>
+                        <TextBox x:Name="tbSearchEmployeePassportIssuingAuthority" Margin="249,181,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="30" FontSize="20" BorderBrush="Black" HorizontalAlignment="Left" Width="357" Grid.Column="1">
                             <TextBox.Resources>
                                 <Style TargetType="{x:Type Border}">
                                     <Setter Property="CornerRadius" Value="5"/>
                                 </Style>
                             </TextBox.Resources>
                         </TextBox>
-                        <Label Content="Орган, выдавший паспорт" HorizontalAlignment="Left" Margin="730,144,0,0" VerticalAlignment="Top" FontSize="20"/>
-                        <Button x:Name="butSearchEmployee" Content="Поиск" Margin="0,231,10,0" FontSize="20" HorizontalAlignment="Right" Width="101" VerticalAlignment="Top">
+                        <Label Content="Орган, выдавший паспорт" HorizontalAlignment="Left" Margin="249,144,0,0" VerticalAlignment="Top" FontSize="20" Grid.Column="1"/>
+                        <Button x:Name="butSearchEmployee" Content="Поиск" Margin="0,231,10,0" FontSize="20" HorizontalAlignment="Right" Width="101" VerticalAlignment="Top" Click="butSearchEmployeeClick" Grid.Column="1">
                             <Button.Resources>
                                 <Style TargetType="{x:Type Border}">
                                     <Setter Property="CornerRadius" Value="5"/>
                                 </Style>
                             </Button.Resources>
                         </Button>
-                        <Button x:Name="butClearSearchEmployee" Content="Очистить" Margin="0,231,130,0" FontSize="20" HorizontalAlignment="Right" Width="102" VerticalAlignment="Top">
+                        <Button x:Name="butClearSearchEmployee" Content="Очистить" Margin="0,231,130,0" FontSize="20" HorizontalAlignment="Right" Width="102" VerticalAlignment="Top" Click="butClearSearchEmployeeClick" Grid.Column="1">
                             <Button.Resources>
                                 <Style TargetType="{x:Type Border}">
                                     <Setter Property="CornerRadius" Value="5"/>
                                 </Style>
                             </Button.Resources>
                         </Button>
-                        <DataGrid x:Name="dgSearchEmployee" Margin="0,282,0,0"/>
+                        <DataGrid x:Name="dgSearchEmployee" ColumnWidth="*" Margin="0,282,0,0" Grid.ColumnSpan="2"></DataGrid>
                     </Grid>
                 </TabItem>
                 <TabItem x:Name="dgSearchTeacher" Header="Преподаватель">
-                    <Grid Background="#FFE5E5E5">
-                        <TextBox x:Name="tbSearchTeacherEmployeeId" HorizontalAlignment="Left" Margin="10,37,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="186" Height="30" FontSize="20" BorderBrush="Black">
+                    <Grid x:Name="teacherGrid" Background="#FFE5E5E5">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="77*"/>
+                            <ColumnDefinition Width="1046*"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBox x:Name="tbSearchTeacherEmployeeId" HorizontalAlignment="Left" Margin="10,37,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="186" Height="30" FontSize="20" BorderBrush="Black" Grid.ColumnSpan="2">
                             <TextBox.Resources>
                                 <Style TargetType="{x:Type Border}">
                                     <Setter Property="CornerRadius" Value="5"/>
                                 </Style>
                             </TextBox.Resources>
                         </TextBox>
-                        <Label Content="Код сотрудника" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Top" FontSize="20"/>
-                        <TextBox x:Name="tbSearchTeacherChairName" HorizontalAlignment="Left" Margin="210,37,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="186" Height="30" FontSize="20" BorderBrush="Black">
+                        <Label Content="Код сотрудника" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Top" FontSize="20" Grid.ColumnSpan="2"/>
+                        <TextBox x:Name="tbSearchTeacherChairName" HorizontalAlignment="Left" Margin="133,37,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="186" Height="30" FontSize="20" BorderBrush="Black" Grid.Column="1">
                             <TextBox.Resources>
                                 <Style TargetType="{x:Type Border}">
                                     <Setter Property="CornerRadius" Value="5"/>
                                 </Style>
                             </TextBox.Resources>
                         </TextBox>
-                        <Label Content="Наименование кафедры" HorizontalAlignment="Left" Margin="210,0,0,0" VerticalAlignment="Top" FontSize="20"/>
-                        <TextBox x:Name="tbSearchTeacherAcademicRank" HorizontalAlignment="Left" Margin="460,37,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="186" Height="30" FontSize="20" BorderBrush="Black">
+                        <Label Content="Наименование кафедры" HorizontalAlignment="Left" Margin="133,0,0,0" VerticalAlignment="Top" FontSize="20" Grid.Column="1"/>
+                        <TextBox x:Name="tbSearchTeacherAcademicRank" HorizontalAlignment="Left" Margin="383,37,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="186" Height="30" FontSize="20" BorderBrush="Black" Grid.Column="1">
                             <TextBox.Resources>
                                 <Style TargetType="{x:Type Border}">
                                     <Setter Property="CornerRadius" Value="5"/>
                                 </Style>
                             </TextBox.Resources>
                         </TextBox>
-                        <Label Content="Ученое звание" HorizontalAlignment="Left" Margin="460,0,0,0" VerticalAlignment="Top" FontSize="20"/>
-                        <Button x:Name="butSearchTeacher" Content="Поиск" Margin="0,91,10,0" FontSize="20" HorizontalAlignment="Right" Width="101" VerticalAlignment="Top">
+                        <Label Content="Ученое звание" HorizontalAlignment="Left" Margin="383,0,0,0" VerticalAlignment="Top" FontSize="20" Grid.Column="1"/>
+                        <Button x:Name="butSearchTeacher" Content="Поиск" Margin="0,91,10,0" FontSize="20" HorizontalAlignment="Right" Width="101" VerticalAlignment="Top" Click="butSearchTeacherClick" Grid.Column="1">
                             <Button.Resources>
                                 <Style TargetType="{x:Type Border}">
                                     <Setter Property="CornerRadius" Value="5"/>
                                 </Style>
                             </Button.Resources>
                         </Button>
-                        <Button x:Name="butClearSearchTeacher" Content="Очистить" Margin="0,91,130,0" FontSize="20" HorizontalAlignment="Right" Width="101" VerticalAlignment="Top">
+                        <Button x:Name="butClearSearchTeacher" Content="Очистить" Margin="0,91,130,0" FontSize="20" HorizontalAlignment="Right" Width="101" VerticalAlignment="Top" Click="butClearSearchTeacherClick" Grid.Column="1">
                             <Button.Resources>
                                 <Style TargetType="{x:Type Border}">
                                     <Setter Property="CornerRadius" Value="5"/>
                                 </Style>
                             </Button.Resources>
                         </Button>
-                        <DataGrid Margin="0,143,0,0"/>
+                        <DataGrid x:Name="dgSearchTeacherTable" ColumnWidth="*" Margin="0,143,0,0" Grid.ColumnSpan="2"></DataGrid>
                     </Grid>
                 </TabItem>
                 <TabItem Header="Группа">
-                    <Grid Background="#FFE5E5E5">
-                        <Button x:Name="butSearchGroup" Content="Поиск" Margin="0,91,10,0" FontSize="20" HorizontalAlignment="Right" Width="101" VerticalAlignment="Top">
+                    <Grid x:Name="groupGrid" Background="#FFE5E5E5">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="459*"/>
+                            <ColumnDefinition Width="23*"/>
+                            <ColumnDefinition Width="641*"/>
+                        </Grid.ColumnDefinitions>
+                        <Button x:Name="butSearchGroup" Content="Поиск" Margin="0,91,10,0" FontSize="20" HorizontalAlignment="Right" Width="101" VerticalAlignment="Top" Click="butSearchGroupClick" Grid.Column="2">
                             <Button.Resources>
                                 <Style TargetType="{x:Type Border}">
                                     <Setter Property="CornerRadius" Value="5"/>
                                 </Style>
                             </Button.Resources>
                         </Button>
-                        <Button x:Name="butClearSearchGroup" Content="Очистить" Margin="0,91,130,0" FontSize="20" HorizontalAlignment="Right" Width="101" VerticalAlignment="Top">
+                        <Button x:Name="butClearSearchGroup" Content="Очистить" Margin="0,91,130,0" FontSize="20" HorizontalAlignment="Right" Width="101" VerticalAlignment="Top" Click="butClearSearchGroupClick" Grid.Column="2">
                             <Button.Resources>
                                 <Style TargetType="{x:Type Border}">
                                     <Setter Property="CornerRadius" Value="5"/>
                                 </Style>
                             </Button.Resources>
                         </Button>
-                        <DataGrid x:Name="dgSearchGroup" Margin="0,143,0,0"/>
+
                         <TextBox x:Name="tbSearchGroupName" HorizontalAlignment="Left" Margin="10,37,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="186" Height="30" FontSize="20" BorderBrush="Black">
                             <TextBox.Resources>
                                 <Style TargetType="{x:Type Border}">
@@ -1854,11 +1879,12 @@
                                 </Style>
                             </TextBox.Resources>
                         </TextBox>
-                        <Label Content="Наименование факультета" HorizontalAlignment="Left" Margin="210,0,0,0" VerticalAlignment="Top" FontSize="20"/>
+                        <Label Content="Наименование факультета" HorizontalAlignment="Left" Margin="210,0,0,0" VerticalAlignment="Top" FontSize="20" Grid.ColumnSpan="2"/>
+                        <DataGrid x:Name="dgSearchGroup" ColumnWidth="*" Margin="0,143,0,0" Grid.ColumnSpan="3"/>
                     </Grid>
                 </TabItem>
                 <TabItem x:Name="dgSearchStudent" Header="Студент">
-                    <Grid Background="#FFE5E5E5">
+                    <Grid x:Name="studentGrid" Background="#FFE5E5E5">
                         <Label Content="Фамилия" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Top" FontSize="20"/>
                         <TextBox x:Name="tbSearchStudentName" Margin="190,37,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="30" FontSize="20" BorderBrush="Black" HorizontalAlignment="Left" Width="160">
                             <TextBox.Resources>
@@ -1995,25 +2021,25 @@
                             </TextBox.Resources>
                         </TextBox>
                         <Label Content="Орган, выдавший паспорт" HorizontalAlignment="Left" Margin="730,171,0,0" VerticalAlignment="Top" FontSize="20"/>
-                        <Button x:Name="butSearchStudent" Content="Поиск" Margin="0,255,10,0" FontSize="20" HorizontalAlignment="Right" Width="101" VerticalAlignment="Top">
+                        <Button x:Name="butSearchStudent" Content="Поиск" Margin="0,255,10,0" FontSize="20" HorizontalAlignment="Right" Width="101" VerticalAlignment="Top" Click="butSearchStudentClick">
                             <Button.Resources>
                                 <Style TargetType="{x:Type Border}">
                                     <Setter Property="CornerRadius" Value="5"/>
                                 </Style>
                             </Button.Resources>
                         </Button>
-                        <Button x:Name="butClearSearchStudent" Content="Очистить" Margin="0,255,130,0" FontSize="20" HorizontalAlignment="Right" Width="101" VerticalAlignment="Top">
+                        <Button x:Name="butClearSearchStudent" Content="Очистить" Margin="0,255,130,0" FontSize="20" HorizontalAlignment="Right" Width="101" VerticalAlignment="Top" Click="butClearSearchStudentClick">
                             <Button.Resources>
                                 <Style TargetType="{x:Type Border}">
                                     <Setter Property="CornerRadius" Value="5"/>
                                 </Style>
                             </Button.Resources>
                         </Button>
-                        <DataGrid Margin="0,300,0,0"/>
+                        <DataGrid x:Name="dgSearchStudentTable" Margin="0,300,0,0"/>
                     </Grid>
                 </TabItem>
                 <TabItem x:Name="dgSearchEnrollee" Header="Абитуриент">
-                    <Grid Background="#FFE5E5E5">
+                    <Grid x:Name="erolleeGrid" Background="#FFE5E5E5">
                         <Label Content="Фамилия" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Top" FontSize="20"/>
                         <TextBox x:Name="tbSearchErolleeName" Margin="190,37,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="30" FontSize="20" BorderBrush="Black" HorizontalAlignment="Left" Width="160">
                             <TextBox.Resources>
@@ -2095,21 +2121,21 @@
                             </TextBox.Resources>
                         </TextBox>
                         <Label Content="Орган, выдавший паспорт" HorizontalAlignment="Left" Margin="730,72,0,0" VerticalAlignment="Top" FontSize="20"/>
-                        <Button x:Name="butSearchEnrollee" Content="Поиск" Margin="0,155,10,0" FontSize="20" HorizontalAlignment="Right" Width="101" VerticalAlignment="Top">
+                        <Button x:Name="butSearchEnrollee" Content="Поиск" Margin="0,155,10,0" FontSize="20" HorizontalAlignment="Right" Width="101" VerticalAlignment="Top" Click="butSearchEnrolleeClick">
                             <Button.Resources>
                                 <Style TargetType="{x:Type Border}">
                                     <Setter Property="CornerRadius" Value="5"/>
                                 </Style>
                             </Button.Resources>
                         </Button>
-                        <Button x:Name="butClearSearchEnrollee" Content="Очистить" Margin="0,155,130,0" FontSize="20" HorizontalAlignment="Right" Width="101" VerticalAlignment="Top">
+                        <Button x:Name="butClearSearchEnrollee" Content="Очистить" Margin="0,155,130,0" FontSize="20" HorizontalAlignment="Right" Width="101" VerticalAlignment="Top" Click="butClearSearchEnrolleeClick">
                             <Button.Resources>
                                 <Style TargetType="{x:Type Border}">
                                     <Setter Property="CornerRadius" Value="5"/>
                                 </Style>
                             </Button.Resources>
                         </Button>
-                        <DataGrid Margin="0,204,0,0"/>
+                        <DataGrid x:Name="dgSearchEnrolleeTable" ColumnWidth="*" Margin="0,204,0,0"/>
                     </Grid>
                 </TabItem>
             </TabControl>
