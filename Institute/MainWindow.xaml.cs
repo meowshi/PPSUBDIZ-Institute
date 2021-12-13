@@ -747,19 +747,34 @@ namespace Institute
         }
         private void butSearchDepartmentClick(object sender, RoutedEventArgs e)
         {
-            bool isKeyEmpty = tbSearchDepartmentName.Text == "";
+            List<Department> department = new List<Department>();
 
-            if (isKeyEmpty)
+            List<string> where = new List<string>();
+            if (tbSearchDepartmentName.Text != "")
+                where.Add($"department.name = '{tbSearchDepartmentName.Text}'");
+
+            if (where.Count() > 0)
             {
-                MessageBox.Show("Введите наименование", "Внимание!");
-                return;
+                where.Insert(0, "WHERE " + where[0]);
             }
-            var table = DBConnection.SelectData("SELECT department.name, count(employee.department_name) FROM department INNER JOIN employee ON employee.department_name = department.name WHERE department.name = 'Учебный отдел' GROUP BY employee.department_name; ");
 
-            departmentSearchResaltName.Content = table.Rows[0][0];
-            departmentSearchResaltStuff.Content = table.Rows[0][1];
+            var table = DBConnection.SelectData($"SELECT department.name, count(employee.department_name) FROM department LEFT JOIN employee ON employee.department_name = department.name {String.Join(" AND ", where.ToArray())} GROUP BY department.name; ");
 
-            departmentSearchResalt.Visibility = Visibility.Visible;
+            if (table.Rows.Count != 0)
+            {
+                for (int i = 0; i < table.Rows.Count; i++)
+                {
+                    department.Add(new Department() { Name = table.Rows[i][0].ToString(), Staff = table.Rows[i][1].ToString() });
+                }
+
+                dgSearchDepartment.ItemsSource = department;
+                dgSearchDepartment.Columns[0].Header = "Название";
+                dgSearchDepartment.Columns[1].Header = "Штат";
+            }
+            else
+            {
+                MessageBox.Show("Ничего не найдено");
+            }
         }
 
         private void butClearSearchDepartmentClick(object sender, RoutedEventArgs e)
@@ -773,11 +788,6 @@ namespace Institute
 
         private void butSearchFacultyClick(object sender, RoutedEventArgs e)
         {
-            if (tbSearchFacultyName.Text == "" && tbSearchFacultyDepartmentName.Text == "")
-            {
-                MessageBox.Show("Введите наименование или отдел", "Внимание!");
-                return;
-            }
             List<Faculty> facultys = new List<Faculty>();
 
             List<string> where = new List<string>();
@@ -786,7 +796,12 @@ namespace Institute
             if (tbSearchFacultyDepartmentName.Text != "")
                 where.Add($"faculty.department_name = '{tbSearchFacultyDepartmentName.Text}'");
 
-            var table = DBConnection.SelectData($"SELECT faculty.name, faculty.department_name FROM faculty WHERE {String.Join(" AND ", where.ToArray())};");
+            if (where.Count() > 0)
+            {
+                where.Insert(0, "WHERE " + where[0]);
+            }
+
+            var table = DBConnection.SelectData($"SELECT faculty.name, faculty.department_name FROM faculty {String.Join(" AND ", where.ToArray())};");
             if (table.Rows.Count != 0)
             {
                 for(int i =0; i<table.Rows.Count; i++)
@@ -811,20 +826,22 @@ namespace Institute
 
         private void butSearchChairlick(object sender, RoutedEventArgs e)
         {
-            if (tbSearchChairName.Text == "" && tbSearchChairFacultyName.Text == "")
-            {
-                MessageBox.Show("Введите наименование кафедры или факультета", "Внимание!");
-                return;
-            }
             List<Chair> chair = new List<Chair>();
 
             List<string> where = new List<string>();
+
+
             if (tbSearchChairName.Text != "")
                 where.Add($"chair.name = '{tbSearchChairName.Text}'");
             if (tbSearchChairFacultyName.Text != "")
                 where.Add($"chair.faculty_name = '{tbSearchChairFacultyName.Text}'");
 
-            var table = DBConnection.SelectData($"SELECT chair.name, chair.faculty_name FROM chair WHERE { String.Join(" AND ", where.ToArray())};");
+            if (where.Count() > 0)
+            {
+                where.Insert(0, "WHERE " + where[0]);
+            }
+
+            var table = DBConnection.SelectData($"SELECT chair.name, chair.faculty_name FROM chair { String.Join(" AND ", where.ToArray())};");
             if (table.Rows.Count != 0)
             {
                 for (int i = 0; i < table.Rows.Count; i++)
@@ -848,20 +865,21 @@ namespace Institute
         }
         private void butSearchSpecialityClick(object sender, RoutedEventArgs e)
         {
-            if (tbSearchSpecialityName.Text == "" && tbSearchSpecialityFacultyName.Text == "")
-            {
-                MessageBox.Show("Введите наименование кафедры или факультета", "Внимание!");
-                return;
-            }
             List<Speciality> speciality = new List<Speciality>();
 
             List<string> where = new List<string>();
+
             if (tbSearchSpecialityName.Text != "")
                 where.Add($"speciality.name = '{tbSearchSpecialityName.Text}'");
             if (tbSearchSpecialityFacultyName.Text != "")
                 where.Add($"speciality.faculty_name = '{tbSearchSpecialityFacultyName.Text}'");
 
-            var table = DBConnection.SelectData($"SELECT speciality.name, speciality.faculty_name FROM speciality WHERE { String.Join(" AND ", where.ToArray())};");
+            if (where.Count() > 0)
+            {
+                where.Insert(0, "WHERE " + where[0]);
+            }
+
+            var table = DBConnection.SelectData($"SELECT speciality.name, speciality.faculty_name FROM speciality { String.Join(" AND ", where.ToArray())};");
             if (table.Rows.Count != 0)
             {
                 for (int i = 0; i < table.Rows.Count; i++)
@@ -884,20 +902,21 @@ namespace Institute
         }
         private void butSearchDisciplineClick(object sender, RoutedEventArgs e)
         {
-            if (tbSearchDisciplineName.Text == "" && tbSearchDisciplineChairName.Text == "")
-            {
-                MessageBox.Show("Введите наименование кафедры или дисциплины", "Внимание!");
-                return;
-            }
             List<Discipline> discipline = new List<Discipline>();
 
             List<string> where = new List<string>();
+
             if (tbSearchDisciplineName.Text != "")
                 where.Add($"discipline.name = '{tbSearchDisciplineName.Text}'");
             if (tbSearchDisciplineChairName.Text != "")
                 where.Add($"discipline.chair_name = '{tbSearchDisciplineChairName.Text}'");
 
-            var table = DBConnection.SelectData($"SELECT discipline.name, discipline.chair_name FROM discipline WHERE { String.Join(" AND ", where.ToArray())};");
+            if (where.Count() > 0)
+            {
+                where.Insert(0, "WHERE " + where[0]);
+            }
+
+            var table = DBConnection.SelectData($"SELECT discipline.name, discipline.chair_name FROM discipline { String.Join(" AND ", where.ToArray())};");
             if (table.Rows.Count != 0)
             {
                 for (int i = 0; i < table.Rows.Count; i++)
@@ -922,15 +941,6 @@ namespace Institute
 
         private void butSearchEmployeeClick(object sender, RoutedEventArgs e)
         {
-            if (tbSearchEmployeeSurname.Text == "" && tbSearchEmployeeName.Text == "" &&
-                tbSearchEmployeePatronymic.Text == "" && tbSearchEmployeeINN.Text == "" &&
-                tbSearchEmployeePost.Text == "" && tbSearchEmployeePhoneNumber.Text == "" &&
-                tbSearchEmployeeDepartmentName.Text == "" && tbSearchEmployeeEmail.Text == ""
-                )
-            {
-                MessageBox.Show("Заполните любое поле", "Внимание!");
-                return;
-            }
             List<Employee> employee = new List<Employee>();
 
             List<string> where = new List<string>();
@@ -951,7 +961,12 @@ namespace Institute
             if (tbSearchEmployeeDepartmentName.Text != "")
                 where.Add($"employee.department_name = '{tbSearchEmployeeDepartmentName.Text}'");
 
-            var table = DBConnection.SelectData($"SELECT employee.id, employee.surname, employee.name, employee.patronymic, employee.inn, employee.phone_number, employee.email, employee.post, employee.salary, employee.department_name, passport_data.series, passport_data.number, passport_data.issue_date, passport_data.expiry_date, passport_data.issuing_authority FROM employee INNER JOIN passport_data ON passport_data.id = employee.passport_data_id WHERE { String.Join(" AND ", where.ToArray())};");
+            if (where.Count() > 0)
+            {
+                where.Insert(0, "WHERE " + where[0]);
+            }
+
+            var table = DBConnection.SelectData($"SELECT employee.id, employee.surname, employee.name, employee.patronymic, employee.inn, employee.phone_number, employee.email, employee.post, employee.salary, employee.department_name, passport_data.series, passport_data.number, passport_data.issue_date, passport_data.expiry_date, passport_data.issuing_authority FROM employee INNER JOIN passport_data ON passport_data.id = employee.passport_data_id { String.Join(" AND ", where.ToArray())};");
             if (table.Rows.Count != 0)
             {
                 for (int i = 0; i < table.Rows.Count; i++)
@@ -1006,12 +1021,6 @@ namespace Institute
 
         private void butSearchTeacherClick(object sender, RoutedEventArgs e)
         {
-            if (tbSearchTeacherEmployeeId.Text == "" && tbSearchTeacherChairName.Text == "" &&
-                tbSearchTeacherAcademicRank.Text == "")
-            {
-                MessageBox.Show("Заполните любое поле", "Внимание!");
-                return;
-            }
             List<Teacher> teacher = new List<Teacher>();
 
             List<string> where = new List<string>();
@@ -1023,7 +1032,12 @@ namespace Institute
             if (tbSearchTeacherAcademicRank.Text != "")
                 where.Add($"teacher.academic_rank = '{tbSearchTeacherAcademicRank.Text}'");
 
-            var table = DBConnection.SelectData($"SELECT employee.surname, employee.name, employee.patronymic, teacher.chair_name, teacher.academic_rank FROM teacher INNER JOIN employee ON employee.id = teacher.employee_id WHERE { String.Join(" AND ", where.ToArray())};");
+            if (where.Count() > 0)
+            {
+                where.Insert(0, "WHERE " + where[0]);
+            }
+
+            var table = DBConnection.SelectData($"SELECT employee.surname, employee.name, employee.patronymic, teacher.chair_name, teacher.academic_rank FROM teacher INNER JOIN employee ON employee.id = teacher.employee_id { String.Join(" AND ", where.ToArray())};");
             if (table.Rows.Count != 0)
             {
                 for (int i = 0; i < table.Rows.Count; i++)
@@ -1057,11 +1071,6 @@ namespace Institute
 
         private void butSearchGroupClick(object sender, RoutedEventArgs e)
         {
-            if (tbSearchGroupName.Text == "" && tbSearchGroupFacultyName.Text == "")
-            {
-                MessageBox.Show("Заполните любое поле", "Внимание!");
-                return;
-            }
             List<Group> group = new List<Group>();
 
             List<string> where = new List<string>();
@@ -1071,7 +1080,12 @@ namespace Institute
             if (tbSearchGroupFacultyName.Text != "")
                 where.Add($"group.faculty_name = '{tbSearchGroupFacultyName.Text}'");
 
-            var table = DBConnection.SelectData($"SELECT group.name, group.faculty_name FROM `group` WHERE { String.Join(" AND ", where.ToArray())};");
+            if (where.Count() > 0)
+            {
+                where.Insert(0, "WHERE " + where[0]);
+            }
+
+            var table = DBConnection.SelectData($"SELECT group.name, group.faculty_name FROM `group` { String.Join(" AND ", where.ToArray())};");
             if (table.Rows.Count != 0)
             {
                 for (int i = 0; i < table.Rows.Count; i++)
@@ -1100,15 +1114,6 @@ namespace Institute
 
         private void butSearchStudentClick(object sender, RoutedEventArgs e)
         {
-            if (tbSearchStudentSurname.Text == "" && tbSearchStudentName.Text == "" &&
-                tbSearchStudentPatronymic.Text == "" && tbSearchStudentINN.Text == "" &&
-                tbSearchStudentPhoneNumber.Text == "" && tbSearchStudentEmail.Text == "" &&
-                tbSearchStudentSpecialityName.Text == "" && tbSearchStudentChairName.Text == "" &&
-                tbSearchStudentGroupName.Text == "")
-            {
-                MessageBox.Show("Заполните любое поле", "Внимание!");
-                return;
-            }
             List<Student> student = new List<Student>();
 
             List<string> where = new List<string>();
@@ -1131,7 +1136,12 @@ namespace Institute
             if (tbSearchStudentGroupName.Text != "")
                 where.Add($"student.group_name = '{tbSearchStudentGroupName.Text}'");
 
-            var table = DBConnection.SelectData($"SELECT student.id, student.surname, student.name, student.patronymic, student.speciality_name, student.chair_name, student.group_name, student.start_date, student.end_date, student.education_cost, student.inn, student.phone_number, student.email, passport_data.series, passport_data.number, passport_data.issue_date, passport_data.expiry_date, passport_data.issuing_authority FROM student INNER JOIN passport_data ON passport_data.id = student.passport_data_id WHERE { String.Join(" AND ", where.ToArray())};");
+            if (where.Count() > 0)
+            {
+                where.Insert(0, "WHERE " + where[0]);
+            }
+
+            var table = DBConnection.SelectData($"SELECT student.id, student.surname, student.name, student.patronymic, student.speciality_name, student.chair_name, student.group_name, student.start_date, student.end_date, student.education_cost, student.inn, student.phone_number, student.email, passport_data.series, passport_data.number, passport_data.issue_date, passport_data.expiry_date, passport_data.issuing_authority FROM student INNER JOIN passport_data ON passport_data.id = student.passport_data_id { String.Join(" AND ", where.ToArray())};");
             if (table.Rows.Count != 0)
             {
                 for (int i = 0; i < table.Rows.Count; i++)
@@ -1192,13 +1202,6 @@ namespace Institute
 
         private void butSearchEnrolleeClick(object sender, RoutedEventArgs e)
         {
-            if (tbSearchErolleeSurname.Text == "" && tbSearchErolleeName.Text == "" &&
-                tbSearchErolleePatronymic.Text == "" && tbSearchErolleeDocumentType.Text == "" &&
-                tbSearchErolleeTotalScore.Text == "")
-            {
-                MessageBox.Show("Заполните любое поле", "Внимание!");
-                return;
-            }
             List<Enrollee> enrollee = new List<Enrollee>();
 
             List<string> where = new List<string>();
@@ -1213,7 +1216,12 @@ namespace Institute
             if (tbSearchErolleeTotalScore.Text != "")
                 where.Add($"enrollee.total_scope = '{tbSearchErolleeTotalScore.Text}'");
 
-            var table = DBConnection.SelectData($"SELECT enrollee.id, enrollee.surname, enrollee.name, enrollee.patronymic, enrollee.document_type, enrollee.total_score, passport_data.series, passport_data.number, passport_data.issue_date, passport_data.expiry_date, passport_data.issuing_authority FROM enrollee INNER JOIN passport_data ON passport_data.id = enrollee.passport_data_id WHERE { String.Join(" AND ", where.ToArray())};");
+            if (where.Count() > 0)
+            {
+                where.Insert(0, "WHERE " + where[0]);
+            }
+
+            var table = DBConnection.SelectData($"SELECT enrollee.id, enrollee.surname, enrollee.name, enrollee.patronymic, enrollee.document_type, enrollee.total_score, passport_data.series, passport_data.number, passport_data.issue_date, passport_data.expiry_date, passport_data.issuing_authority FROM enrollee INNER JOIN passport_data ON passport_data.id = enrollee.passport_data_id { String.Join(" AND ", where.ToArray())};");
             if (table.Rows.Count != 0)
             {
                 for (int i = 0; i < table.Rows.Count; i++)
@@ -1255,11 +1263,6 @@ namespace Institute
 
         private void butSearchDisciplineTeacherClick(object sender, RoutedEventArgs e)
         {
-            if (tbSearchDisciplineTeacherEmployeeId.Text == "" && tbSearchDisciplineTeacherDisciplineName.Text == "")
-            {
-                MessageBox.Show("Заполните любое поле", "Внимание!");
-                return;
-            }
             List<DisciplineTeacher> disciplineTeacher = new List<DisciplineTeacher>();
 
             List<string> where = new List<string>();
@@ -1268,7 +1271,12 @@ namespace Institute
             if (tbSearchDisciplineTeacherDisciplineName.Text != "")
                 where.Add($"discipline_teacher.discipline_name = '{tbSearchDisciplineTeacherDisciplineName.Text}'");
 
-            var table = DBConnection.SelectData($"SELECT employee.surname, employee.name, employee.patronymic, discipline_teacher.discipline_name FROM discipline_teacher INNER JOIN employee ON employee.id = discipline_teacher.employee_id WHERE { String.Join(" AND ", where.ToArray())};");
+            if (where.Count() > 0)
+            {
+                where.Insert(0, "WHERE " + where[0]);
+            }
+
+            var table = DBConnection.SelectData($"SELECT employee.surname, employee.name, employee.patronymic, discipline_teacher.discipline_name FROM discipline_teacher INNER JOIN employee ON employee.id = discipline_teacher.employee_id { String.Join(" AND ", where.ToArray())};");
             if (table.Rows.Count != 0)
             {
                 for (int i = 0; i < table.Rows.Count; i++)
@@ -1306,11 +1314,6 @@ namespace Institute
 
         private void butSearchDisciplineEnrolleeClick(object sender, RoutedEventArgs e)
         {
-            if (tbSearchDisciplineEnrolleeEnrolleeId.Text == "" && tbSearchDisciplineEnrolleeSpecialityName.Text == "")
-            {
-                MessageBox.Show("Заполните любое поле", "Внимание!");
-                return;
-            }
             List<EnrolleeSpeciality> enrolleeSpeciality = new List<EnrolleeSpeciality>();
 
             List<string> where = new List<string>();
@@ -1319,7 +1322,12 @@ namespace Institute
             if (tbSearchDisciplineEnrolleeSpecialityName.Text != "")
                 where.Add($"enrollee_speciality.speciality_name = '{tbSearchDisciplineEnrolleeSpecialityName.Text}'");
 
-            var table = DBConnection.SelectData($"SELECT enrollee.surname, enrollee.name, enrollee.patronymic, enrollee_speciality.speciality_name FROM enrollee_speciality INNER JOIN enrollee ON enrollee.id = enrollee_speciality.enrollee_id WHERE { String.Join(" AND ", where.ToArray())};");
+            if (where.Count() > 0)
+            {
+                where.Insert(0, "WHERE " + where[0]);
+            }
+
+            var table = DBConnection.SelectData($"SELECT enrollee.surname, enrollee.name, enrollee.patronymic, enrollee_speciality.speciality_name FROM enrollee_speciality INNER JOIN enrollee ON enrollee.id = enrollee_speciality.enrollee_id { String.Join(" AND ", where.ToArray())};");
             if (table.Rows.Count != 0)
             {
                 for (int i = 0; i < table.Rows.Count; i++)
@@ -1352,14 +1360,6 @@ namespace Institute
 
         private void butControlSearchClick(object sender, RoutedEventArgs e)
         {
-            if (tbControlSearchSurname.Text == "" && tbControlSearchName.Text == "" &&
-                tbControlSearchPatronymic.Text == "" && tbControlSearchPhoneNumber.Text == "" &&
-                tbControlSearchEmail.Text == "" && tbControlSearchAccessLevel.Text == "---" &&
-                tbControlSearchLogin.Text == "")
-            {
-                MessageBox.Show("Заполните любое поле", "Внимание!");
-                return;
-            }
             List<UserTable> userTable = new List<UserTable>();
 
             List<string> where = new List<string>();
@@ -1375,10 +1375,15 @@ namespace Institute
                 where.Add($"user.phone_number = '{tbControlSearchPhoneNumber.Text}'");
             if (tbControlSearchEmail.Text != "")
                 where.Add($"user.email = '{tbControlSearchEmail.Text}'");
-            if (tbControlSearchAccessLevel.Text != "")
+            if (tbControlSearchAccessLevel.Text != "---")
                 where.Add($"user.access_level = '{tbControlSearchAccessLevel.Text}'");
 
-            var table = DBConnection.SelectData($"SELECT user.login, user.surname, user.name, user.patronymic, user.phone_number, user.email, user.access_level FROM user WHERE { String.Join(" AND ", where.ToArray())};");
+            if (where.Count() > 0)
+            {
+                where.Insert(0, "WHERE " + where[0]);
+            }
+
+            var table = DBConnection.SelectData($"SELECT user.login, user.surname, user.name, user.patronymic, user.phone_number, user.email, user.access_level FROM user { String.Join(" AND ", where.ToArray())};");
             if (table.Rows.Count != 0)
             {
                 for (int i = 0; i < table.Rows.Count; i++)
