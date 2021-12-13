@@ -1354,7 +1354,7 @@ namespace Institute
         {
             if (tbControlSearchSurname.Text == "" && tbControlSearchName.Text == "" &&
                 tbControlSearchPatronymic.Text == "" && tbControlSearchPhoneNumber.Text == "" &&
-                tbControlSearchEmail.Text == "" && tbControlSearchAccessLevel.Text == "" &&
+                tbControlSearchEmail.Text == "" && tbControlSearchAccessLevel.Text == "---" &&
                 tbControlSearchLogin.Text == "")
             {
                 MessageBox.Show("Заполните любое поле", "Внимание!");
