@@ -39,7 +39,7 @@
             </Button>
         </Grid>
         <Grid Margin="196,0,0,0">
-            <TabControl  x:Name="mainSubsystemTab">
+            <TabControl d:IsHidden="True"  x:Name="mainSubsystemTab">
                 <TabItem Header="Добавление">
                     <Grid>
                         <TabControl>
@@ -2113,7 +2113,7 @@
                     </Grid>
                 </TabItem>
             </TabControl>
-            <TabControl d:IsHidden="True"  x:Name="controlSubsystemTab">
+            <TabControl   x:Name="controlSubsystemTab">
                 <TabItem Header="Журнал">
                     <Grid Background="#FFE5E5E5">
                         <TextBlock x:Name="tbConrolLog" HorizontalAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Top" Height="615" Width="1103" Foreground="Black" Background="White" Margin="0,9,0,0"/>
@@ -2130,155 +2130,169 @@
                     <Grid>
                         <TabControl>
                             <TabItem Header="Добавление">
-                                <Grid Background="#FFE5E5E5">
-                                    <Label Content="Фамилия" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Top" FontSize="20"/>
-                                    <TextBox x:Name="tbControlAddName" Margin="190,37,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="30" FontSize="20" BorderBrush="Black" HorizontalAlignment="Left" Width="160">
+                                <Grid x:Name="gControlAdd" Background="#FFE5E5E5">
+                                    <Label Content="Логин" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" FontSize="20"/>
+                                    <TextBox x:Name="tbControlAddLogin" Margin="10,47,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="30" FontSize="20" BorderBrush="Black" HorizontalAlignment="Left" Width="160" VerticalScrollBarVisibility="Hidden">
                                         <TextBox.Resources>
                                             <Style TargetType="{x:Type Border}">
                                                 <Setter Property="CornerRadius" Value="5"/>
                                             </Style>
                                         </TextBox.Resources>
                                     </TextBox>
-                                    <Label Content="Имя" HorizontalAlignment="Left" Margin="190,0,0,0" VerticalAlignment="Top" FontSize="20"/>
-                                    <TextBox x:Name="tbControlAddPatronymic" Margin="370,37,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="30" FontSize="20" BorderBrush="Black" HorizontalAlignment="Left" Width="160">
+                                    <TextBox x:Name="tbControlAddSurname" Margin="10,119,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="30" FontSize="20" BorderBrush="Black" HorizontalAlignment="Left" Width="160">
                                         <TextBox.Resources>
                                             <Style TargetType="{x:Type Border}">
                                                 <Setter Property="CornerRadius" Value="5"/>
                                             </Style>
                                         </TextBox.Resources>
                                     </TextBox>
-                                    <Label Content="Отчество" HorizontalAlignment="Left" Margin="370,0,0,0" VerticalAlignment="Top" FontSize="20"/>
-                                    <TextBox x:Name="tbControlAddPhoneNumber" Margin="550,37,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="30" FontSize="20" BorderBrush="Black" HorizontalAlignment="Left" Width="160">
+                                    <Label Content="Фамилия" HorizontalAlignment="Left" Margin="10,82,0,0" VerticalAlignment="Top" FontSize="20"/>
+                                    <TextBox x:Name="tbControlAddName" Margin="190,119,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="30" FontSize="20" BorderBrush="Black" HorizontalAlignment="Left" Width="160">
                                         <TextBox.Resources>
                                             <Style TargetType="{x:Type Border}">
                                                 <Setter Property="CornerRadius" Value="5"/>
                                             </Style>
                                         </TextBox.Resources>
                                     </TextBox>
-                                    <Label Content="Номер телефона" HorizontalAlignment="Left" Margin="550,0,0,0" VerticalAlignment="Top" FontSize="20"/>
-                                    <TextBox x:Name="tbControlAddEmail" Margin="730,37,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="30" FontSize="20" BorderBrush="Black" HorizontalAlignment="Left" Width="170">
+                                    <Label Content="Имя" HorizontalAlignment="Left" Margin="190,82,0,0" VerticalAlignment="Top" FontSize="20"/>
+                                    <TextBox x:Name="tbControlAddPatronymic" Margin="370,119,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="30" FontSize="20" BorderBrush="Black" HorizontalAlignment="Left" Width="160">
                                         <TextBox.Resources>
                                             <Style TargetType="{x:Type Border}">
                                                 <Setter Property="CornerRadius" Value="5"/>
                                             </Style>
                                         </TextBox.Resources>
                                     </TextBox>
-                                    <Label Content="Email" HorizontalAlignment="Left" Margin="730,0,0,0" VerticalAlignment="Top" FontSize="20"/>
-                                    <TextBox x:Name="tbControlAddAccessLevel" Margin="920,37,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="30" FontSize="20" BorderBrush="Black" HorizontalAlignment="Left" Width="167">
+                                    <Label Content="Отчество" HorizontalAlignment="Left" Margin="370,82,0,0" VerticalAlignment="Top" FontSize="20"/>
+                                    <TextBox x:Name="tbControlAddPhoneNumber" Margin="550,119,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="30" FontSize="20" BorderBrush="Black" HorizontalAlignment="Left" Width="160">
                                         <TextBox.Resources>
                                             <Style TargetType="{x:Type Border}">
                                                 <Setter Property="CornerRadius" Value="5"/>
                                             </Style>
                                         </TextBox.Resources>
                                     </TextBox>
-                                    <Label Content="Уровень доступа" HorizontalAlignment="Left" Margin="920,0,0,0" VerticalAlignment="Top" FontSize="20"/>
-                                    <TextBox x:Name="tbControlAddSurname" Margin="10,37,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="30" FontSize="20" BorderBrush="Black" HorizontalAlignment="Left" Width="160">
+                                    <Label Content="Номер телефона" HorizontalAlignment="Left" Margin="550,82,0,0" VerticalAlignment="Top" FontSize="20"/>
+                                    <TextBox x:Name="tbControlAddEmail" Margin="730,119,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="30" FontSize="20" BorderBrush="Black" HorizontalAlignment="Left" Width="170">
                                         <TextBox.Resources>
                                             <Style TargetType="{x:Type Border}">
                                                 <Setter Property="CornerRadius" Value="5"/>
                                             </Style>
                                         </TextBox.Resources>
                                     </TextBox>
-                                    <Button x:Name="butControlAdd" Content="Добавить" Margin="0,0,11,10" FontSize="20" HorizontalAlignment="Right" Width="102" VerticalAlignment="Bottom">
+                                    <Label Content="Email" HorizontalAlignment="Left" Margin="730,82,0,0" VerticalAlignment="Top" FontSize="20"/>
+                                    <TextBox x:Name="tbControlAddAccessLevel" Margin="920,119,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="30" FontSize="20" BorderBrush="Black" HorizontalAlignment="Left" Width="166">
+                                        <TextBox.Resources>
+                                            <Style TargetType="{x:Type Border}">
+                                                <Setter Property="CornerRadius" Value="5"/>
+                                            </Style>
+                                        </TextBox.Resources>
+                                    </TextBox>
+                                    <Label Content="Уровень доступа" HorizontalAlignment="Left" Margin="920,82,0,0" VerticalAlignment="Top" FontSize="20"/>
+                                    <PasswordBox  x:Name="pbControlAddPassword" Margin="190,47,0,0" VerticalAlignment="Top" Height="30" FontSize="20" BorderBrush="Black" HorizontalAlignment="Left" Width="160"/>
+                                    <Button x:Name="butControlAdd" Content="Добавить" Margin="0,0,11,10" FontSize="20" HorizontalAlignment="Right" Width="102" VerticalAlignment="Bottom" Click="butControlAdd_Click">
                                         <Button.Resources>
                                             <Style TargetType="{x:Type Border}">
                                                 <Setter Property="CornerRadius" Value="5"/>
                                             </Style>
                                         </Button.Resources>
                                     </Button>
-                                    <Button x:Name="butClearControlAdd" Content="Очистить" Margin="0,0,130,10" FontSize="20" HorizontalAlignment="Right" Width="102" VerticalAlignment="Bottom">
+                                    <Button x:Name="butClearControlAdd" Content="Очистить" Margin="0,0,130,10" FontSize="20" HorizontalAlignment="Right" Width="102" VerticalAlignment="Bottom" Click="butClearControlAdd_Click">
                                         <Button.Resources>
                                             <Style TargetType="{x:Type Border}">
                                                 <Setter Property="CornerRadius" Value="5"/>
                                             </Style>
                                         </Button.Resources>
                                     </Button>
+                                    <Label Content="Пароль" HorizontalAlignment="Left" Margin="190,10,0,0" VerticalAlignment="Top" FontSize="20"/>
                                 </Grid>
                             </TabItem>
                             <TabItem Header="Изменение">
-                                <Grid Background="#FFE5E5E5">
-                                    <Label Content="Код" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Top" FontSize="20"/>
-                                    <TextBox x:Name="tbControlChangeId" Margin="10,37,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="30" FontSize="20" BorderBrush="Black" HorizontalAlignment="Left" Width="140">
+                                <Grid x:Name="gControlChange" Background="#FFE5E5E5">
+                                    <Label Content="Логин" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" FontSize="20"/>
+                                    <TextBox x:Name="tbControlChangeLogin" Margin="10,47,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="30" FontSize="20" BorderBrush="Black" HorizontalAlignment="Left" Width="160">
                                         <TextBox.Resources>
                                             <Style TargetType="{x:Type Border}">
                                                 <Setter Property="CornerRadius" Value="5"/>
                                             </Style>
                                         </TextBox.Resources>
                                     </TextBox>
-                                    <Label Content="Фамилия" HorizontalAlignment="Left" Margin="10,73,0,0" VerticalAlignment="Top" FontSize="20"/>
-                                    <TextBox x:Name="tbControlChangeName" Margin="190,110,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="30" FontSize="20" BorderBrush="Black" HorizontalAlignment="Left" Width="160">
-                                        <TextBox.Resources>
-                                            <Style TargetType="{x:Type Border}">
-                                                <Setter Property="CornerRadius" Value="5"/>
-                                            </Style>
-                                        </TextBox.Resources>
-                                    </TextBox>
-                                    <Label Content="Имя" HorizontalAlignment="Left" Margin="190,73,0,0" VerticalAlignment="Top" FontSize="20"/>
-                                    <TextBox x:Name="tbControlChangePatronymic" Margin="370,110,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="30" FontSize="20" BorderBrush="Black" HorizontalAlignment="Left" Width="160">
-                                        <TextBox.Resources>
-                                            <Style TargetType="{x:Type Border}">
-                                                <Setter Property="CornerRadius" Value="5"/>
-                                            </Style>
-                                        </TextBox.Resources>
-                                    </TextBox>
-                                    <Label Content="Отчество" HorizontalAlignment="Left" Margin="370,73,0,0" VerticalAlignment="Top" FontSize="20"/>
-                                    <TextBox x:Name="tbControlChangePhoneNumber" Margin="550,110,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="30" FontSize="20" BorderBrush="Black" HorizontalAlignment="Left" Width="160">
-                                        <TextBox.Resources>
-                                            <Style TargetType="{x:Type Border}">
-                                                <Setter Property="CornerRadius" Value="5"/>
-                                            </Style>
-                                        </TextBox.Resources>
-                                    </TextBox>
-                                    <Label Content="Номер телефона" HorizontalAlignment="Left" Margin="550,73,0,0" VerticalAlignment="Top" FontSize="20"/>
-                                    <TextBox x:Name="tbControlChangeEmail" Margin="730,110,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="30" FontSize="20" BorderBrush="Black" HorizontalAlignment="Left" Width="170">
-                                        <TextBox.Resources>
-                                            <Style TargetType="{x:Type Border}">
-                                                <Setter Property="CornerRadius" Value="5"/>
-                                            </Style>
-                                        </TextBox.Resources>
-                                    </TextBox>
-                                    <Label Content="Email" HorizontalAlignment="Left" Margin="730,73,0,0" VerticalAlignment="Top" FontSize="20"/>
-                                    <TextBox x:Name="tbControlChangeAccessLevel" Margin="920,110,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="30" FontSize="20" BorderBrush="Black" HorizontalAlignment="Left" Width="167">
-                                        <TextBox.Resources>
-                                            <Style TargetType="{x:Type Border}">
-                                                <Setter Property="CornerRadius" Value="5"/>
-                                            </Style>
-                                        </TextBox.Resources>
-                                    </TextBox>
-                                    <Label Content="Уровень доступа" HorizontalAlignment="Left" Margin="920,73,0,0" VerticalAlignment="Top" FontSize="20"/>
-                                    <TextBox x:Name="tbControlChangeSurname" Margin="10,110,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="30" FontSize="20" BorderBrush="Black" HorizontalAlignment="Left" Width="160">
-                                        <TextBox.Resources>
-                                            <Style TargetType="{x:Type Border}">
-                                                <Setter Property="CornerRadius" Value="5"/>
-                                            </Style>
-                                        </TextBox.Resources>
-                                    </TextBox>
-                                    <Button x:Name="butControlChange" Content="Изменить" Margin="0,0,11,10" FontSize="20" HorizontalAlignment="Right" Width="102" VerticalAlignment="Bottom">
+                                    <Grid x:Name="gControlChangeOther">
+                                        <TextBox x:Name="tbControlChangeSurname" Margin="10,119,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="30" FontSize="20" BorderBrush="Black" HorizontalAlignment="Left" Width="160">
+                                            <TextBox.Resources>
+                                                <Style TargetType="{x:Type Border}">
+                                                    <Setter Property="CornerRadius" Value="5"/>
+                                                </Style>
+                                            </TextBox.Resources>
+                                        </TextBox>
+                                        <Label Content="Фамилия" HorizontalAlignment="Left" Margin="10,82,0,0" VerticalAlignment="Top" FontSize="20"/>
+                                        <TextBox x:Name="tbControlChangeName" Margin="190,119,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="30" FontSize="20" BorderBrush="Black" HorizontalAlignment="Left" Width="160">
+                                            <TextBox.Resources>
+                                                <Style TargetType="{x:Type Border}">
+                                                    <Setter Property="CornerRadius" Value="5"/>
+                                                </Style>
+                                            </TextBox.Resources>
+                                        </TextBox>
+                                        <Label Content="Имя" HorizontalAlignment="Left" Margin="190,82,0,0" VerticalAlignment="Top" FontSize="20"/>
+                                        <TextBox x:Name="tbControlChangePatronymic" Margin="370,119,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="30" FontSize="20" BorderBrush="Black" HorizontalAlignment="Left" Width="160">
+                                            <TextBox.Resources>
+                                                <Style TargetType="{x:Type Border}">
+                                                    <Setter Property="CornerRadius" Value="5"/>
+                                                </Style>
+                                            </TextBox.Resources>
+                                        </TextBox>
+                                        <Label Content="Отчество" HorizontalAlignment="Left" Margin="370,82,0,0" VerticalAlignment="Top" FontSize="20"/>
+                                        <TextBox x:Name="tbControlChangePhoneNumber" Margin="550,119,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="30" FontSize="20" BorderBrush="Black" HorizontalAlignment="Left" Width="160">
+                                            <TextBox.Resources>
+                                                <Style TargetType="{x:Type Border}">
+                                                    <Setter Property="CornerRadius" Value="5"/>
+                                                </Style>
+                                            </TextBox.Resources>
+                                        </TextBox>
+                                        <Label Content="Номер телефона" HorizontalAlignment="Left" Margin="550,82,0,0" VerticalAlignment="Top" FontSize="20"/>
+                                        <TextBox x:Name="tbControlChangeEmail" Margin="730,119,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="30" FontSize="20" BorderBrush="Black" HorizontalAlignment="Left" Width="170">
+                                            <TextBox.Resources>
+                                                <Style TargetType="{x:Type Border}">
+                                                    <Setter Property="CornerRadius" Value="5"/>
+                                                </Style>
+                                            </TextBox.Resources>
+                                        </TextBox>
+                                        <Label Content="Email" HorizontalAlignment="Left" Margin="730,82,0,0" VerticalAlignment="Top" FontSize="20"/>
+                                        <TextBox x:Name="tbControlChangeAccessLevel" Margin="920,119,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="30" FontSize="20" BorderBrush="Black" HorizontalAlignment="Left" Width="167">
+                                            <TextBox.Resources>
+                                                <Style TargetType="{x:Type Border}">
+                                                    <Setter Property="CornerRadius" Value="5"/>
+                                                </Style>
+                                            </TextBox.Resources>
+                                        </TextBox>
+                                        <Label Content="Уровень доступа" HorizontalAlignment="Left" Margin="920,82,0,0" VerticalAlignment="Top" FontSize="20"/>
+                                        <PasswordBox x:Name="pbControlChangePassword" Margin="190,47,0,0" VerticalAlignment="Top" Height="30" FontSize="20" BorderBrush="Black" HorizontalAlignment="Left" Width="160"/>
+                                    </Grid>
+                                    <Button x:Name="butControlChange" Content="Изменить" Margin="0,0,11,10" FontSize="20" HorizontalAlignment="Right" Width="102" VerticalAlignment="Bottom" Click="butControlChange_Click">
                                         <Button.Resources>
                                             <Style TargetType="{x:Type Border}">
                                                 <Setter Property="CornerRadius" Value="5"/>
                                             </Style>
                                         </Button.Resources>
                                     </Button>
-                                    <Button x:Name="butClearControlChange" Content="Очистить" Margin="0,0,130,10" FontSize="20" HorizontalAlignment="Right" Width="102" VerticalAlignment="Bottom">
+                                    <Button x:Name="butClearControlChange" Content="Очистить" Margin="0,0,130,10" FontSize="20" HorizontalAlignment="Right" Width="102" VerticalAlignment="Bottom" Click="butClearControlChange_Click">
                                         <Button.Resources>
                                             <Style TargetType="{x:Type Border}">
                                                 <Setter Property="CornerRadius" Value="5"/>
                                             </Style>
                                         </Button.Resources>
                                     </Button>
+                                    <Label Content="Пароль" HorizontalAlignment="Left" Margin="190,10,0,0" VerticalAlignment="Top" FontSize="20"/>
                                 </Grid>
                             </TabItem>
                             <TabItem Header="Отчет">
-                                <Grid Background="#FFE5E5E5">
-                                    <Button x:Name="butrControlSearch" Content="Поиск" Margin="0,89,10,0" FontSize="20" HorizontalAlignment="Right" Width="102" VerticalAlignment="Top">
+                                <Grid x:Name="gControlSearch" Background="#FFE5E5E5">
+                                    <Button x:Name="butrControlSearch" Content="Поиск" Margin="0,110,10,0" FontSize="20" HorizontalAlignment="Right" Width="102" VerticalAlignment="Top">
                                         <Button.Resources>
                                             <Style TargetType="{x:Type Border}">
                                                 <Setter Property="CornerRadius" Value="5"/>
                                             </Style>
                                         </Button.Resources>
                                     </Button>
-                                    <Button x:Name="butClearControlSearch" Content="Очистить" Margin="0,89,130,0" FontSize="20" HorizontalAlignment="Right" Width="102" VerticalAlignment="Top">
+                                    <Button x:Name="butClearControlSearch" Content="Очистить" Margin="0,110,130,0" FontSize="20" HorizontalAlignment="Right" Width="102" VerticalAlignment="Top">
                                         <Button.Resources>
                                             <Style TargetType="{x:Type Border}">
                                                 <Setter Property="CornerRadius" Value="5"/>
@@ -2333,7 +2347,15 @@
                                             </Style>
                                         </TextBox.Resources>
                                     </TextBox>
-                                    <DataGrid x:Name="dgControlSearch" Margin="0,142,0,0"/>
+                                    <DataGrid x:Name="dgControlSearch" Margin="0,163,0,0"/>
+                                    <Label Content="Логин" HorizontalAlignment="Left" Margin="10,72,0,0" VerticalAlignment="Top" FontSize="20"/>
+                                    <TextBox x:Name="tbControlSearchLogin" Margin="10,109,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="30" FontSize="20" BorderBrush="Black" HorizontalAlignment="Left" Width="160">
+                                        <TextBox.Resources>
+                                            <Style TargetType="{x:Type Border}">
+                                                <Setter Property="CornerRadius" Value="5"/>
+                                            </Style>
+                                        </TextBox.Resources>
+                                    </TextBox>
                                 </Grid>
                             </TabItem>
                         </TabControl>
@@ -2357,7 +2379,33 @@
                     </TextBox.Resources>
                 </TextBox>
             </Grid>
-
         </Grid>
     </Grid>
+
+    <Window.Resources>
+        <Style x:Key="MyControlBorder" TargetType="Border">
+            <Setter Property="BorderBrush" Value="Black" />
+            <Setter Property="Background" Value="White" />
+            <Setter Property="BorderThickness" Value="1" />
+            <Setter Property="CornerRadius" Value="5" />
+        </Style>
+
+        <!-- TextBox and PasswordBox Style -->
+        <Style x:Key="MyControlInputBox" TargetType="Control">
+            <Setter Property="Height" Value="30" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Control}">
+                        <Border>
+                            <Border Name="Border" Style="{StaticResource MyControlBorder}">
+                                <ScrollViewer x:Name="PART_ContentHost" />
+                            </Border>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style TargetType="{x:Type PasswordBox}" BasedOn="{StaticResource MyControlInputBox}" />
+    </Window.Resources>
 </Window>

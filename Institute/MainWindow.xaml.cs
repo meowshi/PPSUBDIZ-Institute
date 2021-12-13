@@ -35,6 +35,7 @@ namespace Institute
         private readonly string[] StudentFields = { "surname", "name", "patronymic", "inn", "phone_number", "email", "speciality_name", "chair_name", "group_name", "start_date", "end_date", "education_cost", "passport_data_id" };
         private readonly string[] EnrolleeFields = { "surname", "name", "patronymic", "document_type", "total_score", "passport_data_id" };
         private readonly string[] PassportColumns = PassportColumnsStr.Split(',');
+        private readonly string[] UserFields = { "surname", "name", "patronymic", "phone_number", "email", "access_level", "password" };
 
         public MainWindow()
         {
@@ -61,18 +62,17 @@ namespace Institute
             
             foreach (var child in childs)
             {
-                var textBox = child as TextBox;
-                if (textBox != null)
+                if (child is TextBox textBox)
                 {
                     textBox.Clear();
                 }
-                else
+                else if (child is DatePicker datePicker)
                 {
-                    var datePicker = child as DatePicker;
-                    if (datePicker != null)
-                    {
-                        datePicker.Text = String.Empty;
-                    }
+                    datePicker.Text = "";
+                }
+                else if (child is PasswordBox passwordBox)
+                {
+                    passwordBox.Clear();
                 }
             }
         }
@@ -123,6 +123,10 @@ namespace Institute
                 {
                     return true;
                 }
+                else if (child is PasswordBox passwordBox && !passwordBox.Password.ToString().Equals(String.Empty))
+                {
+                    return true;
+                }
             }
             return false;
         }
@@ -146,17 +150,21 @@ namespace Institute
                 if (child is TextBox textBox)
                 {
                     querySB.Append($"'{textBox.Text}',");
-                    Trace.WriteLine(textBox.Text);
                 }
                 else if (child is DatePicker datePicker)
                 {
                     querySB.Append($"'{datePicker.Text}',");
-                    Trace.WriteLine(datePicker.Text);
+                }
+                else if (child is PasswordBox passwordBox)
+                {
+                    querySB.Append($"'{passwordBox.Password}',");
                 }
             }
 
             querySB.Remove(querySB.Length - 1, 1);
             querySB.Append(')');
+
+            Trace.WriteLine(querySB.ToString());
 
             return querySB.ToString();
         }
@@ -413,14 +421,28 @@ namespace Institute
                 int i = 0;
                 foreach (var child in childs)
                 {
-                    if (child is TextBox textBox && !textBox.Text.Equals(""))
+                    if (child is TextBox textBox)
                     {
-                        querySB.Append(columns[i] + $" = '{textBox.Text}',");
+                        if (!textBox.Text.Equals(""))
+                        {
+                            querySB.Append(columns[i] + $" = '{textBox.Text}',");
+                        }
                         i++;
                     }
-                    else if (child is DatePicker datePicker && !datePicker.Text.Equals(""))
+                    else if (child is DatePicker datePicker)
                     {
-                        querySB.Append(columns[i] + $" = '{datePicker.Text}',");
+                        if (!datePicker.Text.Equals(""))
+                        {
+                            querySB.Append(columns[i] + $" = '{datePicker.Text}',");
+                        }
+                        i++;
+                    }
+                    else if (child is PasswordBox passwordBox)
+                    {
+                        if (!passwordBox.Password.ToString().Equals(""))
+                        {
+                            querySB.Append(columns[i] + $" = '{passwordBox.Password}',");
+                        }
                         i++;
                     }
                 }
@@ -689,6 +711,33 @@ namespace Institute
         private void butClearChangeEnrolleeSpec_Click(object sender, RoutedEventArgs e)
         {
             ClearGrid(gChangeEnrolleeSpec);
+        }
+
+        private void butControlAdd_Click(object sender, RoutedEventArgs e)
+        {
+            Add("user", gControlAdd);
+        }
+
+        private void butClearControlAdd_Click(object sender, RoutedEventArgs e)
+        {
+            ClearGrid(gControlAdd);
+        }
+
+        private void butControlChange_Click(object sender, RoutedEventArgs e)
+        {
+            if (tbControlChangeLogin.Text == "")
+            {
+                MessageBox.Show("Вы не заполнили ключевое поле!", "Внимание!");
+                return;
+            }
+
+            Change(gControlChangeOther, "user", UserFields, "login", tbControlChangeLogin.Text);
+        }
+
+        private void butClearControlChange_Click(object sender, RoutedEventArgs e)
+        {
+            ClearGrid(gControlChange);
+            ClearGrid(gControlChangeOther);
         }
     }
 }
