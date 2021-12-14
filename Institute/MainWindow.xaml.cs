@@ -1117,6 +1117,7 @@ namespace Institute
                 AddErrorMessage();
                 return;
             }
+            AddSuccessMessage(tbControlAddLogin.Text);
             AddLog("Добавление пользователя", tbControlAddLogin.Text);
         }
 
