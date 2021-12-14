@@ -39,7 +39,7 @@
             </Button>
         </Grid>
         <Grid Margin="196,0,0,0">
-            <TabControl d:IsHidden="True" x:Name="mainSubsystemTab" SelectionChanged="mainSubsystemTab_SelectionChanged">
+            <TabControl  x:Name="mainSubsystemTab" SelectionChanged="mainSubsystemTab_SelectionChanged">
                 <TabItem Header="Добавление">
                     <Grid>
                         <TabControl x:Name="tcAdd">
@@ -795,29 +795,29 @@
                                         </TextBox.Resources>
                                     </TextBox>
                                     <Label Content="Наименование" HorizontalAlignment="Left" Margin="10,0,0,0" VerticalAlignment="Top" FontSize="20"/>
-                                    <TextBox x:Name="tbChangeChairFacultyName" HorizontalAlignment="Left" Margin="210,37,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="186" Height="30" FontSize="20" BorderBrush="Black">
-                                        <TextBox.Resources>
-                                            <Style TargetType="{x:Type Border}">
-                                                <Setter Property="CornerRadius" Value="5"/>
-                                            </Style>
-                                        </TextBox.Resources>
-                                    </TextBox>
                                     <Grid x:Name="gChangeChairOther">
-                                        <Label Content="Наименование факультета" HorizontalAlignment="Left" Margin="210,0,0,0" VerticalAlignment="Top" FontSize="20"/>
-                                        <Button x:Name="butChangeChair" Content="Изменить" Margin="0,0,10,10" FontSize="20" HorizontalAlignment="Right" Width="101" VerticalAlignment="Bottom" Click="butChangeChair_Click">
-                                            <Button.Resources>
+                                        <TextBox x:Name="tbChangeChairFacultyName" HorizontalAlignment="Left" Margin="210,37,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="186" Height="30" FontSize="20" BorderBrush="Black">
+                                            <TextBox.Resources>
                                                 <Style TargetType="{x:Type Border}">
                                                     <Setter Property="CornerRadius" Value="5"/>
                                                 </Style>
-                                            </Button.Resources>
-                                        </Button>
+                                            </TextBox.Resources>
+                                        </TextBox>
                                     </Grid>
-                                    <Button x:Name="butClearChangeChair" Content="Очистить" Margin="0,0,130,10" FontSize="20" HorizontalAlignment="Right" Width="101" VerticalAlignment="Bottom" Click="butClearChangeChair_Click">
+                                    <Label Content="Наименование факультета" HorizontalAlignment="Left" Margin="210,0,0,0" VerticalAlignment="Top" FontSize="20"/>
+                                    <Button x:Name="butChangeChair" Content="Изменить" Margin="0,0,10,10" FontSize="20" HorizontalAlignment="Right" Width="101" VerticalAlignment="Bottom" Click="butChangeChair_Click">
                                         <Button.Resources>
                                             <Style TargetType="{x:Type Border}">
                                                 <Setter Property="CornerRadius" Value="5"/>
                                             </Style>
                                         </Button.Resources>
+                                    </Button>
+                                    <Button x:Name="butClearChangeChair" Content="Очистить" Margin="0,0,130,10" FontSize="20" HorizontalAlignment="Right" Width="101" VerticalAlignment="Bottom" Click="butClearChangeChair_Click">
+                                    <Button.Resources>
+                                        <Style TargetType="{x:Type Border}">
+                                            <Setter Property="CornerRadius" Value="5"/>
+                                        </Style>
+                                    </Button.Resources>
                                     </Button>
                                 </Grid>
                             </TabItem>
@@ -1464,7 +1464,7 @@
                     </Grid>
                 </TabItem>
             </TabControl>
-            <TabControl d:IsHidden="True"  x:Name="repotSubsystemTab">
+            <TabControl d:IsHidden="True" x:Name="repotSubsystemTab">
                 <TabItem Header="Отдел">
                     <Grid x:Name="departmentGrid" Background="#FFE5E5E5">
                         <Grid.ColumnDefinitions>
@@ -1743,7 +1743,7 @@
                                 </Style>
                             </Button.Resources>
                         </Button>
-                        <DataGrid x:Name="dgSearchEmployee" ColumnWidth="*" Margin="0,144,0,0" Grid.ColumnSpan="2"></DataGrid>
+                        <DataGrid x:Name="dgSearchEmployee" ColumnWidth="*" Margin="0,158,0,0" Grid.ColumnSpan="2"></DataGrid>
                     </Grid>
                 </TabItem>
                 <TabItem x:Name="tabSearchTeacher" Header="Преподаватель">
@@ -1926,7 +1926,7 @@
                                 </Style>
                             </Button.Resources>
                         </Button>
-                        <DataGrid x:Name="dgSearchStudentTable" Margin="0,171,0,0" Grid.ColumnSpan="2"/>
+                        <DataGrid x:Name="dgSearchStudentTable" Margin="0,184,0,0" Grid.ColumnSpan="2"/>
                     </Grid>
                 </TabItem>
                 <TabItem x:Name="tabSearchEnrollee" Header="Абитуриент">
@@ -1985,7 +1985,7 @@
                                 </Style>
                             </Button.Resources>
                         </Button>
-                        <DataGrid x:Name="dgSearchEnrolleeTable" ColumnWidth="*" Margin="0,106,0,0"/>
+                        <DataGrid x:Name="dgSearchEnrolleeTable" ColumnWidth="*" Margin="0,130,0,0"/>
                     </Grid>
                 </TabItem>
                 <TabItem x:Name="dgSearchDisciplineTeacher" Header="Дисц.-Препод.">
@@ -2020,7 +2020,7 @@
                                 </Style>
                             </Button.Resources>
                         </Button>
-                        <DataGrid x:Name="dgSearchDisciplineTeacherTable" ColumnWidth="*" Margin="0,106,0,0"/>
+                        <DataGrid x:Name="dgSearchDisciplineTeacherTable" ColumnWidth="*" Margin="0,130,0,0"/>
                     </Grid>
                 </TabItem>
                 <TabItem x:Name="dgSearchDisciplineEnrollee" Header="Абитур.-Направ.">
@@ -2055,11 +2055,11 @@
                                 </Style>
                             </Button.Resources>
                         </Button>
-                        <DataGrid x:Name="dgSearchDisciplineEnrolleeTable" ColumnWidth="*" Margin="0,106,0,0"/>
+                        <DataGrid x:Name="dgSearchDisciplineEnrolleeTable" ColumnWidth="*" Margin="0,130,0,0"/>
                     </Grid>
                 </TabItem>
             </TabControl>
-            <TabControl x:Name="controlSubsystemTab">
+            <TabControl d:IsHidden="True"  x:Name="controlSubsystemTab">
                 <TabItem Header="Журнал">
                     <Grid Background="#FFE5E5E5">
                         <ScrollViewer x:Name="svControlLog" Margin="0,0,0,54">
@@ -2127,13 +2127,17 @@
                                         </TextBox.Resources>
                                     </TextBox>
                                     <Label Content="Email" HorizontalAlignment="Left" Margin="730,82,0,0" VerticalAlignment="Top" FontSize="20"/>
-                                    <TextBox x:Name="tbControlAddAccessLevel" Margin="920,119,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="30" FontSize="20" BorderBrush="Black" HorizontalAlignment="Left" Width="166">
-                                        <TextBox.Resources>
-                                            <Style TargetType="{x:Type Border}">
-                                                <Setter Property="CornerRadius" Value="5"/>
-                                            </Style>
-                                        </TextBox.Resources>
-                                    </TextBox>
+                                    <ComboBox x:Name="tbControlAddAccessLevel" SelectedIndex="0" Margin="920,119,0,0" Height="30" FontSize="20" HorizontalAlignment="Left" Width="160" VerticalAlignment="Top" Background="White" Foreground="Black" BorderBrush="Black" >
+                                        <ComboBoxItem x:Name="addDefaultUserAccess">---</ComboBoxItem>
+                                        <ComboBoxItem Content="Minimal"/>
+                                        <ComboBoxItem Content="Full"/>
+                                        <ComboBoxItem Content="AdmissionCommittee"/>
+                                        <ComboBoxItem Content="ChairHead"/>
+                                        <ComboBoxItem Content="FacultyHead"/>
+                                        <ComboBoxItem Content="HR"/>
+                                        <ComboBoxItem Content="Rector"/>
+                                        <ComboBoxItem Content="Teacher"/>
+                                    </ComboBox>
                                     <Label Content="Уровень доступа" HorizontalAlignment="Left" Margin="920,82,0,0" VerticalAlignment="Top" FontSize="20"/>
                                     <PasswordBox  x:Name="pbControlAddPassword" Margin="190,47,0,0" VerticalAlignment="Top" Height="30" FontSize="20" BorderBrush="Black" HorizontalAlignment="Left" Width="160"/>
                                     <Button x:Name="butControlAdd" Content="Добавить" Margin="0,0,11,10" FontSize="20" HorizontalAlignment="Right" Width="102" VerticalAlignment="Bottom" Click="butControlAdd_Click">
@@ -2204,14 +2208,18 @@
                                             </TextBox.Resources>
                                         </TextBox>
                                         <Label Content="Email" HorizontalAlignment="Left" Margin="730,82,0,0" VerticalAlignment="Top" FontSize="20"/>
-                                        <TextBox x:Name="tbControlChangeAccessLevel" Margin="920,119,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="30" FontSize="20" BorderBrush="Black" HorizontalAlignment="Left" Width="167">
-                                            <TextBox.Resources>
-                                                <Style TargetType="{x:Type Border}">
-                                                    <Setter Property="CornerRadius" Value="5"/>
-                                                </Style>
-                                            </TextBox.Resources>
-                                        </TextBox>
                                         <Label Content="Уровень доступа" HorizontalAlignment="Left" Margin="920,82,0,0" VerticalAlignment="Top" FontSize="20"/>
+                                        <ComboBox x:Name="tbControlChangeAccessLevel" SelectedIndex="0" Margin="920,119,0,0" Height="30" FontSize="20" HorizontalAlignment="Left" Width="160" VerticalAlignment="Top" Background="White" Foreground="Black" BorderBrush="Black" >
+                                            <ComboBoxItem x:Name="changeDefaultUserAccess">---</ComboBoxItem>
+                                            <ComboBoxItem Content="Minimal"/>
+                                            <ComboBoxItem Content="Full"/>
+                                            <ComboBoxItem Content="AdmissionCommittee"/>
+                                            <ComboBoxItem Content="ChairHead"/>
+                                            <ComboBoxItem Content="FacultyHead"/>
+                                            <ComboBoxItem Content="HR"/>
+                                            <ComboBoxItem Content="Rector"/>
+                                            <ComboBoxItem Content="Teacher"/>
+                                        </ComboBox>
                                         <PasswordBox x:Name="pbControlChangePassword" Margin="190,47,0,0" VerticalAlignment="Top" Height="30" FontSize="20" BorderBrush="Black" HorizontalAlignment="Left" Width="160"/>
                                     </Grid>
                                     <Button x:Name="butControlChange" Content="Изменить" Margin="0,0,11,10" FontSize="20" HorizontalAlignment="Right" Width="102" VerticalAlignment="Bottom" Click="butControlChange_Click">
@@ -2297,16 +2305,16 @@
                                             </Style>
                                         </TextBox.Resources>
                                     </TextBox>
-                                    <ComboBox x:Name="tbControlSearchAccessLevel" SelectedIndex="0" Margin="924,37,0,0" Height="30" FontSize="20" BorderBrush="Black" HorizontalAlignment="Left" Width="160" VerticalAlignment="Top" >
+                                    <ComboBox x:Name="tbControlSearchAccessLevel" SelectedIndex="0" Margin="924,37,0,0" Height="30" FontSize="20" HorizontalAlignment="Left" Width="160" VerticalAlignment="Top" Background="White" Foreground="Black" BorderBrush="Black" >
                                         <ComboBoxItem x:Name="defaultUserAccess">---</ComboBoxItem>
+                                        <ComboBoxItem>Minimal</ComboBoxItem>
                                         <ComboBoxItem>Full</ComboBoxItem>
                                         <ComboBoxItem>AdmissionCommittee</ComboBoxItem>
                                         <ComboBoxItem>ChairHead</ComboBoxItem>
                                         <ComboBoxItem>FacultyHead</ComboBoxItem>
                                         <ComboBoxItem>HR</ComboBoxItem>
-                                        <ComboBoxItem>minimal</ComboBoxItem>
                                         <ComboBoxItem>Rector</ComboBoxItem>
-                                        <ComboBoxItem>teacher</ComboBoxItem>
+                                        <ComboBoxItem>Teacher</ComboBoxItem>
                                     </ComboBox>
                                 </Grid>
                             </TabItem>

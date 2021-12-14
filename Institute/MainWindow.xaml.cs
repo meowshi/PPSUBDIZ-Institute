@@ -6,16 +6,8 @@ using System.Linq;
 using System.Net;
 using System.Net.Mail;
 using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using Institute.tables;
 
 namespace Institute
@@ -153,6 +145,10 @@ namespace Institute
                 {
                     passwordBox.Clear();
                 }
+                else if (child is ComboBox comboBox)
+                {
+                    comboBox.SelectedIndex = 0;
+                }
             }
         }
 
@@ -187,7 +183,15 @@ namespace Institute
                 {
                     if (showMB)
                     {
-                        MessageBox.Show("Не все поля заполнены", "Внимаение");
+                        MessageBox.Show("Не все поля заполнены", "Внимание!");
+                    }
+                    return false;
+                }
+                else if (child is ComboBox comboBox && comboBox.Text.Equals("---"))
+                {
+                    if (showMB)
+                    {
+                        MessageBox.Show("Не все поля заполнены", "Внимание!");
                     }
                     return false;
                 }
@@ -211,6 +215,10 @@ namespace Institute
                     return true;
                 }
                 else if (child is PasswordBox passwordBox && !passwordBox.Password.ToString().Equals(String.Empty))
+                {
+                    return true;
+                }
+                else if (child is ComboBox comboBox && !comboBox.Text.Equals("---"))
                 {
                     return true;
                 }
@@ -245,6 +253,10 @@ namespace Institute
                 else if (child is PasswordBox passwordBox)
                 {
                     querySB.Append($"'{passwordBox.Password}',");
+                }
+                else if (child is ComboBox comboBox)
+                {
+                    querySB.Append($"'{comboBox.Text}',");
                 }
             }
 
@@ -687,6 +699,15 @@ namespace Institute
                         if (!passwordBox.Password.ToString().Equals(""))
                         {
                             querySB.Append(columns[i] + $" = '{passwordBox.Password}',");
+                        }
+                        i++;
+                    }
+                    else if (child is ComboBox comboBox)
+                    {
+                        if (!comboBox.Text.Equals("---"))
+                        {
+                            Trace.WriteLine(i);
+                            querySB.Append(columns[i] + $" = '{comboBox.Text}',");
                         }
                         i++;
                     }
@@ -1782,7 +1803,7 @@ namespace Institute
                         AccessLevel = table.Rows[i][6].ToString(),
                     });
                 }
-
+                
                 dgControlSearch.ItemsSource = userTable;
                 dgControlSearch.Columns[0].Header = "Логин";
                 dgControlSearch.Columns[1].Header = "Фамилия";
