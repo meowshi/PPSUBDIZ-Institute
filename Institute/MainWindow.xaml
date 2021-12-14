@@ -39,7 +39,7 @@
             </Button>
         </Grid>
         <Grid Margin="196,0,0,0">
-            <TabControl  x:Name="mainSubsystemTab" SelectionChanged="mainSubsystemTab_SelectionChanged">
+            <TabControl d:IsHidden="True" x:Name="mainSubsystemTab" SelectionChanged="mainSubsystemTab_SelectionChanged">
                 <TabItem Header="Добавление">
                     <Grid>
                         <TabControl x:Name="tcAdd">
@@ -2322,7 +2322,7 @@
                     </Grid>
                 </TabItem>
             </TabControl>
-            <Grid d:IsHidden="True"  x:Name="feedbackSubsystemGrid" Background="#FFE5E5E5" >
+            <Grid  x:Name="feedbackSubsystemGrid" Background="#FFE5E5E5" >
                 <Label Content="Сообщение" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" FontSize="20"/>
                 <Button x:Name="butFeedbackSend" Content="Отправить" Margin="0,0,10,10" FontSize="20" HorizontalAlignment="Right" Width="102" VerticalAlignment="Bottom" Click="butFeedbackSend_Click">
                     <Button.Resources>

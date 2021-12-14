@@ -974,15 +974,19 @@ namespace Institute
                 return;
             }
 
-            var from = new MailAddress("topwowerintheworld@gmail.com", "INSTITUTE");
-            var to = new MailAddress("denlas31@gmail.com", "Glava");
+            MailAddress from = new MailAddress("topwowerintheworld@gmail.com", "INSTITUTE");
+            MailAddress to = new MailAddress("denlas31@gmail.com", "Glava");
             const string fromPassword = "qvbqbebiycujtedc";
             const string subject = "Обратная связь";
             string body = message;
 
             try
             {
-                var smtpClient = new SmtpClient
+                SmtpClient smtpClient = new SmtpClient("smtp.gmail.com", 587);
+                smtpClient.Credentials = new NetworkCredential(from.Address, fromPassword);
+                smtpClient.EnableSsl = true;
+                //smtpClient.Send(m);
+                /*var smtpClient = new SmtpClient
                 {
                     Host = "smtp.google.com",
                     Port = 25,
@@ -990,7 +994,7 @@ namespace Institute
                     DeliveryMethod = SmtpDeliveryMethod.Network,
                     UseDefaultCredentials = false,
                     Credentials = new NetworkCredential(from.Address, fromPassword)
-                };
+                };*/
 
                 using (var mailMessage = new MailMessage(from, to) { Subject = subject, Body = body })
                 {
