@@ -735,7 +735,7 @@ namespace Institute
 
         private void ChangeErrorMessage()
         {
-            MessageBox.Show("При изменении произошла ошибка!", "Внимание!");
+            MessageBox.Show("Данные не изменены!", "Внимание!");
         }
 
         private void ChangeNotify(int result, string target, string key)
